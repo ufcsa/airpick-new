@@ -22,11 +22,11 @@ ReactDOM.render(
     <BrowserRouter>
       <div>
         <AuthRoute></AuthRoute>
-        <NavBar></NavBar>
-        <Switch>
+        {/* <NavBar></NavBar> */}
+        {/* <Switch>
           <Route path='/login' component={Login}></Route>
           <Route path='/register' component={Register}></Route>
-        </Switch>
+        </Switch> */}
       </div>
     </BrowserRouter>
   </Provider>

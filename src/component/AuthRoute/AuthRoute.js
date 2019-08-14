@@ -22,7 +22,7 @@ class AuthRoute extends React.Component {
   }
 
   render() {
-    const isAuth = this.props.user.isAuth;
+    const isAuth = this.props.isAuth;
     const navList = [
       {
         path: '/home',
@@ -53,10 +53,9 @@ class AuthRoute extends React.Component {
     ];
 
     return (
-      <Fragment>
-        <NavBar data={navList}>
-        </NavBar>
-      </Fragment>
+      <NavBar data={navList}></NavBar>
     )
   }
 }
+
+export default AuthRoute;
