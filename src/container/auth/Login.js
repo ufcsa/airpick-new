@@ -11,21 +11,15 @@ const { Paragraph } = Typography;
 class LoginForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      userInput: '',
-      pwd: ''
-    };
-
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit() {
-    this.props.login(this.state);
-  }
-
-  handleChange(key, val) {
-    this.setState({
-      [key]: val
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        this.props.login(values);
+      }
     });
   }
 
@@ -52,7 +46,7 @@ class LoginForm extends React.Component {
         <Paragraph>
           <Form {...formItemLayout} onSubmit={this.handleSubmit}>
             <Form.Item label='Username or Email'>
-              {getFieldDecorator('username', {
+              {getFieldDecorator('input', {
                 rules: [{ required: true, message: 'Please input your username or email!' }],
               })(
                 <Input
@@ -62,7 +56,7 @@ class LoginForm extends React.Component {
               )}
             </Form.Item>
             <Form.Item label='Password'>
-              {getFieldDecorator('password', {
+              {getFieldDecorator('pwd', {
                 rules: [{ required: true, message: 'Please input your Password!' }],
               })(
                 <Input
@@ -75,10 +69,10 @@ class LoginForm extends React.Component {
             <Form.Item
               wrapperCol={{
                 xs: { span: 18, offset: 0 },
-                sm: { span: 10, offset: 11 },
+                sm: { span: 10, offset: 10 },
               }}
             >
-              <Button type="primary" htmlType="submit">
+              <Button type="primary" htmlType='submit'>
                 Log in
               </Button>
               &nbsp; Or <a href="/register">register now!</a>

@@ -45,10 +45,11 @@ export function loadData(userinfo) {
 };
 
 export function login({input, pwd}) {
+  console.log(input, pwd);
   if(!input || !pwd) {
     return errorMsg('You are missing some fields!');
   }
-  
+
   return dispatch => {
     axios.post('/api/user/login', {input, pwd})
       .then(res => {

@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const db = require('./server/config/config');
 const app = express();
 const Router = express.Router();
+const userRouter = require('./server/api/user-api')(Router);
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
@@ -20,6 +21,7 @@ app.use(function(req, res, next) {
   next();
 })
 
+app.use('/api/user', userRouter);
 //bound with io server+express instead of express app itself
 server.listen(port, function() {
   console.log('Node app starts at port ', port)
