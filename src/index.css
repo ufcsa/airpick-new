@@ -21,3 +21,9 @@ code {
 .login-form-button {
   width: 100%;
 }
+.title-middle {
+  text-align: center;
+  position: relative;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}

@@ -1,11 +1,11 @@
 import React from 'react';
-import { Form, Input, Icon, Button, Row, Col } from 'antd';
+import { Form, Input, Icon, Typography } from 'antd';
 import { connect } from 'react-redux';
 import { login } from '../../redux/user.redux';
 import { Redirect } from 'react-router-dom';
-
+const { Paragraph } = Typography;
 @connect(
-  state=>state.user,
+  state => state.user,
   { login }
 )
 class LoginForm extends React.Component {
@@ -30,7 +30,7 @@ class LoginForm extends React.Component {
   }
 
   render() {
-    const { getFieldDecorator }  = this.props.form;
+    const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: {
         xs: { span: 18 },
@@ -42,30 +42,39 @@ class LoginForm extends React.Component {
       },
     };
 
-    return(
-      <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-        <Form.Item label='Username or Email'>
-          {getFieldDecorator('username', {
-            rules: [{ required: true, message: 'Please input your username or email!' }],
-          })(
-            <Input
-              prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-              placeholder="Username or Email"
-            />,
-          )}
-        </Form.Item>
-        <Form.Item label='Password'>
-          {getFieldDecorator('password', {
-            rules: [{ required: true, message: 'Please input your Password!' }],
-          })(
-            <Input
-              prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-              type="password"
-              placeholder="Password"
-            />,
-          )}
-        </Form.Item>
-      </Form>
+    return (
+      <div>
+        <Paragraph className='title-middle'>
+          <h3>
+            Log in to AirPick
+          </h3>
+        </Paragraph>
+        <Paragraph>
+          <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+            <Form.Item label='Username or Email'>
+              {getFieldDecorator('username', {
+                rules: [{ required: true, message: 'Please input your username or email!' }],
+              })(
+                <Input
+                  prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                  placeholder="Username or Email"
+                />,
+              )}
+            </Form.Item>
+            <Form.Item label='Password'>
+              {getFieldDecorator('password', {
+                rules: [{ required: true, message: 'Please input your Password!' }],
+              })(
+                <Input
+                  prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                  type="password"
+                  placeholder="Password"
+                />,
+              )}
+            </Form.Item>
+          </Form>
+        </Paragraph>
+      </div>
     )
   }
 }
