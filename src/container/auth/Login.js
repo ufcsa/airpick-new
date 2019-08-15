@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Icon, Typography } from 'antd';
+import { Form, Input, Icon, Typography, Button } from 'antd';
 import { connect } from 'react-redux';
 import { login } from '../../redux/user.redux';
 import { Redirect } from 'react-router-dom';
@@ -72,6 +72,17 @@ class LoginForm extends React.Component {
                 />,
               )}
             </Form.Item>
+            <Form.Item
+              wrapperCol={{
+                xs: { span: 18, offset: 0 },
+                sm: { span: 10, offset: 11 },
+              }}
+            >
+              <Button type="primary" htmlType="submit">
+                Log in
+              </Button>
+              &nbsp; Or <a href="/register">register now!</a>
+            </Form.Item>   
           </Form>
         </Paragraph>
       </div>
