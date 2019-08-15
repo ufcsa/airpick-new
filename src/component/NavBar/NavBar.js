@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Menu, Icon } from 'antd';
 
-
 @withRouter
 @connect(
   state=>state
@@ -17,7 +16,9 @@ class NavBar extends React.Component {
       <div>
         <Menu mode='horizontal'>
           {list.map(choice => (
-            <Item>
+            <Item
+            key={choice.text}
+            onClick={() => (this.props.history.push(choice.path))}>
               {choice.text}
             </Item>
           ))}
