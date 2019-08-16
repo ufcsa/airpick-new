@@ -5,7 +5,7 @@ import thunk from 'redux-thunk';  //for async in redux
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './index.css';
-import './config';
+import './loading';
 import reducers from './reducers';
 import NavBar from './component/NavBar/NavBar'
 import Login from './container/auth/Login';
