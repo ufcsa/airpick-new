@@ -2,6 +2,7 @@ const express = require('express');
 const User = require('../model/user.model');
 const bcrypt = require('bcrypt-nodejs');
 //const _filter = { 'pwd': 0, '__v': 0 };
+//User.deleteMany({}, () => (console.log('deleted')));
 
 module.exports = function (router) {
   router.post('/login', (req, res) => {
@@ -20,7 +21,7 @@ module.exports = function (router) {
             msg: 'username / password error'
           })
         } else {
-          console.log(doc)
+          console.log('login success')
           res.cookie('userid', doc._id)
           res.json({
             code: 0,
@@ -48,7 +49,6 @@ module.exports = function (router) {
     let user = new User();
     const { email, firstName, lastName, pwd, confirm, gender, phone, wechatId, username, displayName } = req.body;
     user.username = username;
-    user.pwd = pwd;
     user.email = email;
     user.phone = phone;
     user.firstName = firstName;
@@ -57,34 +57,37 @@ module.exports = function (router) {
     user.wechatId = wechatId;
     user.gender = gender;
 
-    user.save((err, doc) => {
-      if(err) {
-        console.log(err);
-        let errorMsg = err.errmsg;
-        if(err.code === 11000) {
-          errorMsg = 'Username of email already exists!';
-        }
-        return res.json({
-          code: 1,
-          msg: errorMsg
-        });
-      } else {
-        console.log(`user ${username} saved suc`);
-        const {_id} = doc;
-        res.cookie('userId', _id);
-        return res.json({
-          code: 0,
-          data: {
-            username,
-            displayName,
-            gender,
-            wechatId,
-            phone,
-            email
+    bcrypt.hash(pwd, null, null, (err, hash) => {
+      user.pwd = hash;
+      user.save((err, doc) => {
+        if(err) {
+          console.log(err);
+          let errorMsg = err.errmsg;
+          if(err.code === 11000) {
+            errorMsg = 'Username of email already exists!';
           }
-        })
-      }
-    })
+          return res.json({
+            code: 1,
+            msg: errorMsg
+          });
+        } else {
+          console.log(`user ${username} saved suc`);
+          const {_id} = doc;
+          res.cookie('userId', _id);
+          return res.json({
+            code: 0,
+            data: {
+              username,
+              displayName,
+              gender,
+              wechatId,
+              phone,
+              email
+            }
+          })
+        }
+      });
+    });
   })
 
 

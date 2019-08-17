@@ -20,7 +20,6 @@ class RegisterForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
-      console.log('validating')
       if (!err) {
         this.props.register(values);
       } else {
@@ -31,7 +30,6 @@ class RegisterForm extends React.Component {
 
   phoneValidator = (rule, value, callback) => {
     if((/^\d+$/.test(value) && value.length === 10) || !value.length) {
-      console.log('phone num pass valid')
       callback();
     } else {
       callback('Invalid US Phone Number');
