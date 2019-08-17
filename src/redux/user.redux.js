@@ -20,7 +20,7 @@ export function user(state=initState, action) {
     case LOAD_DATA: 
       return {...state, ...action.payload};
     case AUTH_SUCC:
-      return {...state, msg: '', ...action.payload};
+      return {...state, msg: '', ...action.payload, isAuth: true};
     case ERROR_MSG:
       return {...state, isAuth:false, msg:action.msg};
     default:

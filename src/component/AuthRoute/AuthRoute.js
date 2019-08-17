@@ -51,7 +51,7 @@ class AuthRoute extends React.Component {
         hide: !isAuth
       }
     ];
-
+    console.log(isAuth);
     return (
       <NavBar data={navList}></NavBar>
     )
