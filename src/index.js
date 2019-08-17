@@ -7,8 +7,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './index.css';
 import './loading';
 import reducers from './reducers';
-import NavBar from './component/NavBar/NavBar'
 import Login from './container/auth/Login';
+import Register from './container/auth/Resgiter';
 import AuthRoute from './component/AuthRoute/AuthRoute';
 import * as serviceWorker from './serviceWorker';
 
@@ -25,7 +25,7 @@ ReactDOM.render(
         {/* <NavBar></NavBar> */}
         <Switch>
           <Route path='/login' component={Login}></Route>
-          {/* <Route path='/register' component={Register}></Route> */}
+          <Route path='/register' component={Register}></Route>
         </Switch>
       </div>
     </BrowserRouter>
