@@ -90,6 +90,26 @@ class RegisterForm extends React.Component {
                 />,
               )}
             </Form.Item>
+            <Form.Item label='First Name'>
+              {getFieldDecorator('firstName', {
+                rules: [{ required: true, message: 'Please input your first name!' }],
+              })(
+                <Input
+                  prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                  placeholder="First Name"
+                />,
+              )}
+            </Form.Item>
+            <Form.Item label='Last Name'>
+              {getFieldDecorator('lastName', {
+                rules: [{ required: true, message: 'Please input your last name!' }],
+              })(
+                <Input
+                  prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                  placeholder="Last Name"
+                />,
+              )}
+            </Form.Item>
             <Form.Item label="E-mail">
               {getFieldDecorator('email', {
                 rules: [
