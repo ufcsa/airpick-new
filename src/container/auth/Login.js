@@ -69,7 +69,7 @@ class LoginForm extends React.Component {
             <Form.Item
               wrapperCol={{
                 xs: { span: 18, offset: 0 },
-                sm: { span: 10, offset: 10 },
+                sm: { span: 10, offset: 8 },
               }}
             >
               <Button type="primary" htmlType='submit'>

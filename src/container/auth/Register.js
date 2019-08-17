@@ -1,12 +1,12 @@
 import React from 'react';
-import { Form, Input, Icon, Typography, Button, Radio } from 'antd';
+import { Form, Input, Icon, Typography, Button, Radio, Alert } from 'antd';
 import { connect } from 'react-redux';
-import { login } from '../../redux/user.redux';
+import { register } from '../../redux/user.redux';
 import { Redirect } from 'react-router-dom';
 const { Paragraph } = Typography;
 @connect(
   state => state.user,
-  { login }
+  { register }
 )
 class RegisterForm extends React.Component {
   constructor(props) {
@@ -19,16 +19,19 @@ class RegisterForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      console.log('validating')
       if (!err) {
-        console.log(values);
+        this.props.register(values);
+      } else {
+        console.log(err);
       }
     });
   };
 
   phoneValidator = (rule, value, callback) => {
-    if(/^\d+$/.test(value) && value.length === 10) {
-      console.log(value);
+    if((/^\d+$/.test(value) && value.length === 10) || !value.length) {
+      console.log('phone num pass valid')
       callback();
     } else {
       callback('Invalid US Phone Number');
@@ -38,12 +41,12 @@ class RegisterForm extends React.Component {
   handleConfirmBlur = e => {
     const { value } = e.target;
     this.setState({ confirmDirty: this.state.confirmDirty || !!value });
-    console.log(this.state.confirmDirty)
   };
 
   compareToFirstPassword = (rule, value, callback) => {
     const { form } = this.props;
-    if (value && value !== form.getFieldValue('password')) {
+    
+    if (value && value !== form.getFieldValue('pwd')) {
       callback('Two passwords that you enter is inconsistent!');
     } else {
       callback();
@@ -75,7 +78,7 @@ class RegisterForm extends React.Component {
       <div>
         <Paragraph className='title-middle'>
           <h3>
-            Log in to AirPick
+            Register
           </h3>
         </Paragraph>
         <Paragraph>
@@ -125,7 +128,7 @@ class RegisterForm extends React.Component {
               })(<Input />)}
             </Form.Item>
             <Form.Item label="Password" hasFeedback>
-              {getFieldDecorator('password', {
+              {getFieldDecorator('pwd', {
                 rules: [
                   {
                     required: true,
@@ -164,7 +167,7 @@ class RegisterForm extends React.Component {
               </Radio.Group>)}
             </Form.Item>
             <Form.Item label='Wechat ID'>
-              {getFieldDecorator('wechat', {
+              {getFieldDecorator('wechatId', {
                 rules: [{ required: true, message: 'Please input your wechat ID!' }],
               })(
                 <Input
@@ -174,7 +177,8 @@ class RegisterForm extends React.Component {
             </Form.Item>
             <Form.Item label='US Phone Number'>
               {getFieldDecorator('phone', {
-                rules: [{ validator: this.phoneValidator }],
+                initialValue: "",
+                rules: [{ validator: this.phoneValidator }]
               })(
                 <Input
                   type='String'
@@ -185,7 +189,14 @@ class RegisterForm extends React.Component {
             <Form.Item
               wrapperCol={{
                 xs: { span: 18, offset: 0 },
-                sm: { span: 10, offset: 10 },
+                sm: { span: 10, offset: 8 },
+              }}>
+              {this.props.msg? <Alert type='error' message='Error' description={this.props.msg}></Alert>: null}
+            </Form.Item>
+            <Form.Item
+              wrapperCol={{
+                xs: { span: 18, offset: 0 },
+                sm: { span: 10, offset: 8 },
               }}
             >
               <Button type="primary" htmlType='submit'>
@@ -193,7 +204,8 @@ class RegisterForm extends React.Component {
               </Button>
               &nbsp; Already have an account? <a href="/register">Log in</a>
             </Form.Item>
-          </Form>
+            
+          </Form>   
         </Paragraph>
       </div>
     )

@@ -29,10 +29,7 @@ const UserSchema = new Schema({
   },
   email: {
     type: String,
-    index: {
-      unique: true,
-      sparse: true
-    },
+    unique: true,
     lowercase: true,
     trim: true,
     required: true,

@@ -35,8 +35,56 @@ module.exports = function (router) {
    * todo: finish register
    */
   router.post('/register', (req, res) => {
+    // confirm: "test"
+// email: "test@test.test"
+//displayName: 'test test'
+// firstName: "test"
+// gender: "male"
+// lastName: "test"
+// pwd: "test"
+// phone: "3523280696"
+// username: "test"
+// wechat: "test"
     let user = new User();
-    
+    const { email, firstName, lastName, pwd, confirm, gender, phone, wechatId, username, displayName } = req.body;
+    user.username = username;
+    user.pwd = pwd;
+    user.email = email;
+    user.phone = phone;
+    user.firstName = firstName;
+    user.lastName = lastName;
+    user.displayName = displayName;
+    user.wechatId = wechatId;
+    user.gender = gender;
+
+    user.save((err, doc) => {
+      if(err) {
+        console.log(err);
+        let errorMsg = err.errmsg;
+        if(err.code === 11000) {
+          errorMsg = 'Username of email already exists!';
+        }
+        return res.json({
+          code: 1,
+          msg: errorMsg
+        });
+      } else {
+        console.log(`user ${username} saved suc`);
+        const {_id} = doc;
+        res.cookie('userId', _id);
+        return res.json({
+          code: 0,
+          data: {
+            username,
+            displayName,
+            gender,
+            wechatId,
+            phone,
+            email
+          }
+        })
+      }
+    })
   })
 
 
