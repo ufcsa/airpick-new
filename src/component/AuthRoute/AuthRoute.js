@@ -20,8 +20,8 @@ class AuthRoute extends React.Component {
     super(props);
     console.log('checking if logged')
 
-    const publicList = ['/login', '/register']
-    const pathname = this.props.location.pathname
+    const publicList = ['/login', '/register'];
+    const pathname = this.props.location.pathname;
     if (publicList.indexOf(pathname) === -1) {
       axios.get('/api/user/info')
         .then(res => {
@@ -29,6 +29,7 @@ class AuthRoute extends React.Component {
             if (res.data.code === 0) {
               this.props.loadData(res.data.data);
             } else {
+              console.log('going to login')
               this.props.history.push('/login');
             }
           }

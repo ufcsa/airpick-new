@@ -26,7 +26,6 @@ class NavBar extends React.Component {
   }
 
   handleOk = e => {
-    console.log(e);
     this.setState({
       modalVisible: false
     });
@@ -37,7 +36,6 @@ class NavBar extends React.Component {
   }
 
   handleCancel = e => {
-    console.log(e);
     this.setState({
       modalVisible: false
     })

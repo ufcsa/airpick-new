@@ -1,5 +1,7 @@
 import React from 'react';
 import { Layout, Menu, Icon } from 'antd';
+import PickReq from '../../component/Requests/PickReq';
+import LodgeReq from '../../component/Requests/LodgeReq';
 
 const { Header, Sider, Content } = Layout;
 
@@ -39,7 +41,7 @@ class MyRequest extends React.Component {
           </Menu>
         </Sider>
         <Layout>
-          Pick Req
+          {this.state.choice === 1 ? <PickReq></PickReq> : <LodgeReq></LodgeReq>}
         </Layout>
       </Layout>
         )
