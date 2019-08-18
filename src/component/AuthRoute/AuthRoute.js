@@ -12,11 +12,24 @@ function Home() {
   return <h2>Airpick homepage</h2>
 }
 
+function MyRequest() {
+  return <h2>My Request</h2>
+}
+
 @withRouter
 @connect(state => state.user, { loadData })
 class AuthRoute extends React.Component {
   componentWillMount() {
-
+    axios.get('/api/user/info')
+      .then(res => {
+        if(res.status === 200) {
+          if(res.data.code === 0) {
+            this.props.loadData(res.data.data);
+          } else {
+            this.props.history.push('/login');
+          }
+        }
+      })
   }
 
   render() {
@@ -25,11 +38,18 @@ class AuthRoute extends React.Component {
     const navList = [
       {
         path: '/home',
-        text: 'Airpick',
+        text: 'UF CSA Airpick',
         key: 'home',
         component: Home,
-        className: '',
+        className: 'navbar-title',
         hide: false
+      },
+      {
+        path: '/addreq',
+        text: 'My Requests',
+        component: MyRequest,
+        className: '',
+        hide: !isAuth
       },
       {
         path: '/register',

@@ -1,7 +1,7 @@
 const express = require('express');
 const User = require('../model/user.model');
 const bcrypt = require('bcrypt-nodejs');
-//const _filter = { 'pwd': 0, '__v': 0 };
+const _filter = { 'pwd': 0, '__v': 0 };
 //User.deleteMany({}, () => (console.log('deleted')));
 
 module.exports = function (router) {
@@ -36,16 +36,6 @@ module.exports = function (router) {
    * todo: finish register
    */
   router.post('/register', (req, res) => {
-    // confirm: "test"
-// email: "test@test.test"
-//displayName: 'test test'
-// firstName: "test"
-// gender: "male"
-// lastName: "test"
-// pwd: "test"
-// phone: "3523280696"
-// username: "test"
-// wechat: "test"
     let user = new User();
     const { email, firstName, lastName, pwd, confirm, gender, phone, wechatId, username, displayName } = req.body;
     user.username = username;
@@ -88,8 +78,37 @@ module.exports = function (router) {
         }
       });
     });
-  })
+  });
 
+  router.get('/info', (req, res) => {
+    const { userid } = req.cookies;
+    if(!userid) {
+      return res.json({
+        code: 1,
+        msg: 'user not authorized!'
+      });
+    }
+
+    console.log(req.cookies);
+    User.findOne({_id: userid}, _filter, (err, doc) => {
+      if(err) {
+        return res.json({
+          code: 1,
+          msg: 'Internal server error'
+        });
+      } else if(!doc) {
+        return res.json({
+          code: 1,
+          msg: 'No User Info!'
+        });
+      } else {
+        return res.json({
+          code: 0,
+          data: doc
+        });
+      }
+    });
+  });
 
   return router;
 }

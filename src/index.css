@@ -32,3 +32,6 @@ code {
   float: right;
   margin-right: 15px;
 }
+.navbar-title {
+  font-size: 16pt
+}

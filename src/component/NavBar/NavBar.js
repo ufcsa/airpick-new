@@ -31,7 +31,7 @@ class NavBar extends React.Component {
       modalVisible: false
     });
 
-    browserCookie.erase('userId');
+    browserCookie.erase('userid');
     this.props.history.push('/login');
     this.props.logoutRedux();
   }
@@ -46,7 +46,6 @@ class NavBar extends React.Component {
   render() {
     const list = this.props.data.filter(v => !v.hide);
     const Item = Menu.Item;
-    const { pathname } = this.props.location;
     return (
       <div>
         <Menu mode='horizontal'>
