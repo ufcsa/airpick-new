@@ -7,13 +7,10 @@ import NavBar from '../NavBar/NavBar';
 import { Route, Switch } from 'react-router-dom';
 import Login from '../../container/auth/Login';
 import Register from '../../container/auth/Register';
+import MyRequest from '../../container/myRequest/MyRequest';
 
 function Home() {
   return <h2>Airpick homepage</h2>
-}
-
-function MyRequest() {
-  return <h2>My Request</h2>
 }
 
 @withRouter
