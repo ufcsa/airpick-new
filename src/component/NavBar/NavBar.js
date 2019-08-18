@@ -50,7 +50,7 @@ class NavBar extends React.Component {
       <div>
         <Menu mode='horizontal'>
           {list.map(choice => {
-            if (choice.text !== 'logout') {
+            if (choice.text !== 'Logout') {
               return <Item
                 key={choice.text}
                 className={choice.className}

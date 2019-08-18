@@ -41,7 +41,6 @@ class AuthRoute extends React.Component {
       {
         path: '/home',
         text: 'UF CSA Airpick',
-        key: 'home',
         component: Home,
         className: 'navbar-title',
         hide: false
@@ -55,23 +54,20 @@ class AuthRoute extends React.Component {
       },
       {
         path: '/register',
-        text: 'register',
-        key: 'register',
+        text: 'Register',
         component: Register,
         className: rightNavbarClass,
         hide: isAuth
       },
       {
         path: '/login',
-        text: 'login',
-        key: 'login',
+        text: 'Login',
         component: Login,
         className: rightNavbarClass,
         hide: isAuth
       },
       {
-        text: 'logout',
-        key: 'logout',
+        text: 'Logout',
         className: rightNavbarClass,
         hide: !isAuth
       }
@@ -82,8 +78,8 @@ class AuthRoute extends React.Component {
         <NavBar data={navList}></NavBar>
         <Switch>
           {navList.map(op => {
-            if(op.text !== 'logout') {
-              return <Route key={op.path} path={op.path} component={op.component}></Route>
+            if(op.text !== 'Logout') {
+              return <Route key={op.text} path={op.path} component={op.component}></Route>
             } else {
               
             }
