@@ -19,7 +19,9 @@ function MyRequest() {
 @withRouter
 @connect(state => state.user, { loadData })
 class AuthRoute extends React.Component {
-  componentWillMount() {
+  constructor(props) {
+    super(props);
+    console.log('checking if logged')
     axios.get('/api/user/info')
       .then(res => {
         if(res.status === 200) {
@@ -29,7 +31,7 @@ class AuthRoute extends React.Component {
             this.props.history.push('/login');
           }
         }
-      })
+      });
   }
 
   render() {
