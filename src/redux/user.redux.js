@@ -3,14 +3,11 @@ const LOAD_DATA = 'LOAD_DATA';
 const AUTH_SUCC = 'AUTH_SUCC';
 const LOGOUT = 'LOGOUT';
 const ERROR_MSG = 'ERROR_MSG';
-/*
-  todo: finish logout
-*/
+
 const initState = {
   redirectTo: '',
   msg: '',
   username: '',
-  type: '',
   isAuth: false
 };
 
