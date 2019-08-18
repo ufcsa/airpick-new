@@ -19,16 +19,21 @@ class AuthRoute extends React.Component {
   constructor(props) {
     super(props);
     console.log('checking if logged')
-    axios.get('/api/user/info')
-      .then(res => {
-        if(res.status === 200) {
-          if(res.data.code === 0) {
-            this.props.loadData(res.data.data);
-          } else {
-            this.props.history.push('/login');
+
+    const publicList = ['/login', '/register']
+    const pathname = this.props.location.pathname
+    if (publicList.indexOf(pathname) === -1) {
+      axios.get('/api/user/info')
+        .then(res => {
+          if (res.status === 200) {
+            if (res.data.code === 0) {
+              this.props.loadData(res.data.data);
+            } else {
+              this.props.history.push('/login');
+            }
           }
-        }
-      });
+        });
+    }
   }
 
   render() {
@@ -75,10 +80,10 @@ class AuthRoute extends React.Component {
         <NavBar data={navList}></NavBar>
         <Switch>
           {navList.map(op => {
-            if(op.text !== 'Logout') {
+            if (op.text !== 'Logout') {
               return <Route key={op.text} path={op.path} component={op.component}></Route>
             } else {
-              
+
             }
           })}
         </Switch>

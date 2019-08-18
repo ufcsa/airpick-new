@@ -72,8 +72,10 @@ class RegisterForm extends React.Component {
       },
     };
 
+    
     return (
       <div>
+        {console.log(this.props.redirectTo ? 'yes' : 'no')}
         {this.props.redirectTo? <Redirect to={this.props.redirectTo}></Redirect> : null}
         <Paragraph className='title-middle'>
           <h3>
