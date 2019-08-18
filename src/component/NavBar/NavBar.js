@@ -1,13 +1,48 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Menu, Icon } from 'antd';
+import { Menu, Modal } from 'antd';
+import browserCookie from 'browser-cookies';
+import { logoutRedux } from '../../redux/user.redux';
 
 @withRouter
 @connect(
-  state=>state
+  state => state,
+  { logoutRedux }
 )
 class NavBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalVisible: false
+    };
+  }
+
+  logout() {
+    console.log('logout');
+    this.setState({
+      modalVisible: true
+    });
+  }
+
+  handleOk = e => {
+    console.log(e);
+    this.setState({
+      modalVisible: false
+    });
+
+    browserCookie.erase('userId');
+    this.props.history.push('/login');
+    this.props.logoutRedux();
+  }
+
+  handleCancel = e => {
+    console.log(e);
+    this.setState({
+      modalVisible: false
+    })
+  }
+
   render() {
     const list = this.props.data.filter(v => !v.hide);
     const Item = Menu.Item;
@@ -15,14 +50,30 @@ class NavBar extends React.Component {
     return (
       <div>
         <Menu mode='horizontal'>
-          {list.map(choice => (
-            <Item
-            key={choice.text}
-            onClick={() => (this.props.history.push(choice.path))}>
-              {choice.text}
-            </Item>
-          ))}
+          {list.map(choice => {
+            if (choice.text !== 'logout') {
+              return <Item
+                key={choice.text}
+                className={choice.className}
+                onClick={() => (this.props.history.push(choice.path))}>
+                {choice.text}
+                </Item>;
+            } else {
+              return <Item
+                key={choice.text}
+                className={choice.className}
+                onClick={() => (this.logout())}>
+                  {choice.text}
+                </Item>
+            }
+          })}
         </Menu>
+        <Modal
+          title='Log out?'
+          visible={this.state.modalVisible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+          >Are you sure you want to log out?</Modal>
       </div>
     )
   }

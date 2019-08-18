@@ -18,6 +18,7 @@
 		"babel-preset-react-app": "^9.0.0",
 		"bcrypt-nodejs": "0.0.3",
 		"body-parser": "^1.19.0",
+		"browser-cookies": "^1.2.0",
 		"camelcase": "^5.2.0",
 		"case-sensitive-paths-webpack-plugin": "2.2.0",
 		"cookie-parser": "^1.4.4",

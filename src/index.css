@@ -27,3 +27,8 @@ code {
   margin-top: 15px;
   margin-bottom: 15px;
 }
+
+.navbar-right {
+  float: right;
+  margin-right: 15px;
+}

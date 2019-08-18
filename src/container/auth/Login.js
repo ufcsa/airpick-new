@@ -38,6 +38,7 @@ class LoginForm extends React.Component {
 
     return (
       <div>
+        {this.props.redirectTo? <Redirect to={this.props.redirectTo}></Redirect> : null}
         <Paragraph className='title-middle'>
           <h3>
             Log in to AirPick

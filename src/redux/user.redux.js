@@ -20,9 +20,11 @@ export function user(state=initState, action) {
     case LOAD_DATA: 
       return {...state, ...action.payload};
     case AUTH_SUCC:
-      return {...state, msg: '', ...action.payload, isAuth: true};
+      return {...state, msg: '', ...action.payload, isAuth: true, redirectTo: '/home'};
     case ERROR_MSG:
       return {...state, isAuth:false, msg:action.msg};
+    case LOGOUT:
+      return {...initState, redirectTo: '/login'}
     default:
       return state;
   }
@@ -43,6 +45,10 @@ export function loadData(userinfo) {
   return { type: LOAD_DATA, payload: userinfo };
 };
 
+export function logoutRedux() {
+  return { type: LOGOUT };
+};
+
 export function login({input, pwd}) {
   console.log(input, pwd);
   if(!input || !pwd) {
@@ -59,7 +65,7 @@ export function login({input, pwd}) {
         }
       })
   }
-}
+};
 
 export function register(userInput) {
 // confirm: "test"
@@ -90,4 +96,4 @@ console.log(userInput);
         }
       })
   }
-}
+};

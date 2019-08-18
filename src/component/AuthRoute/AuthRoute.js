@@ -21,31 +21,36 @@ class AuthRoute extends React.Component {
 
   render() {
     const isAuth = this.props.isAuth;
+    const rightNavbarClass = 'navbar-right'
     const navList = [
       {
         path: '/home',
         text: 'Airpick',
         key: 'home',
         component: Home,
+        className: '',
         hide: false
-      },
-      {
-        path: '/login',
-        text: 'login',
-        key: 'login',
-        component: Login,
-        hide: isAuth
       },
       {
         path: '/register',
         text: 'register',
         key: 'register',
         component: Register,
+        className: rightNavbarClass,
+        hide: isAuth
+      },
+      {
+        path: '/login',
+        text: 'login',
+        key: 'login',
+        component: Login,
+        className: rightNavbarClass,
         hide: isAuth
       },
       {
         text: 'logout',
         key: 'logout',
+        className: rightNavbarClass,
         hide: !isAuth
       }
     ];
