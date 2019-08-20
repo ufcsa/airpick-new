@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { Menu, Modal } from 'antd';
 import browserCookie from 'browser-cookies';
 import { logoutRedux } from '../../redux/user.redux';
+import { SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS } from 'constants';
+
+const { SubMenu } = Menu;
 
 @withRouter
 @connect(
@@ -48,7 +51,23 @@ class NavBar extends React.Component {
       <div>
         <Menu mode='horizontal'>
           {list.map(choice => {
-            if (choice.text !== 'Logout') {
+            if(choice.text === 'My Requests') {
+              return <SubMenu
+                key={choice.text}
+                title={
+                  <span className='submenu-title-wrapper'
+                    >{choice.text}</span>
+                }>
+                  {choice.subItem.map(sub => {
+                    return <Item 
+                      key={sub.text}
+                      onClick={() => (this.props.history.push(sub.path))}>
+                        {sub.text}
+                      </Item>
+                  })}
+                </SubMenu>
+            }
+            else if (choice.text !== 'Logout') {
               return <Item
                 key={choice.text}
                 className={choice.className}

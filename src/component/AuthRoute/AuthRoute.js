@@ -8,6 +8,8 @@ import { Route, Switch } from 'react-router-dom';
 import Login from '../../container/auth/Login';
 import Register from '../../container/auth/Register';
 import MyRequest from '../../container/myRequest/MyRequest';
+import PickReq from '../Requests/PickReq';
+import LodgeReq from '../Requests/LodgeReq';
 
 function Home() {
   return <h2>Airpick homepage</h2>
@@ -49,11 +51,18 @@ class AuthRoute extends React.Component {
         hide: false
       },
       {
-        path: '/addreq',
         text: 'My Requests',
-        component: MyRequest,
         className: '',
-        hide: !isAuth
+        hide: !isAuth,
+        subItem: [{
+          path: '/pickrequest',
+          text: 'need pickup',
+          component: PickReq
+        }, {
+          path: '/lodgerequest',
+          text: 'need lodging',
+          component: LodgeReq
+        }]
       },
       {
         path: '/register',
@@ -81,7 +90,12 @@ class AuthRoute extends React.Component {
         <NavBar data={navList}></NavBar>
         <Switch>
           {navList.map(op => {
-            if (op.text !== 'Logout') {
+            if(op.text === 'My Requests') {
+              return op.subItem.map(sub => {
+                return <Route key={sub.text} path={sub.path} component={sub.component}></Route>
+              })
+            }
+            else if (op.text !== 'Logout') {
               return <Route key={op.text} path={op.path} component={op.component}></Route>
             } else {
 
