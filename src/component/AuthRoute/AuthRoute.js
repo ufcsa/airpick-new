@@ -7,9 +7,8 @@ import NavBar from '../NavBar/NavBar';
 import { Route, Switch } from 'react-router-dom';
 import Login from '../../container/auth/Login';
 import Register from '../../container/auth/Register';
-import MyRequest from '../../container/myRequest/MyRequest';
-import PickReq from '../Requests/PickReq';
-import LodgeReq from '../Requests/LodgeReq';
+import PickReq from '../../container/myRequest/PickReq';
+import LodgeReq from '../../container/myRequest/LodgeReq';
 
 function Home() {
   return <h2>Airpick homepage</h2>
