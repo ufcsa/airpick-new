@@ -7,8 +7,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './index.css';
 import './loading';
 import reducers from './reducers';
-import Login from './container/auth/Login';
-import Register from './container/auth/Register';
 import AuthRoute from './component/AuthRoute/AuthRoute';
 import * as serviceWorker from './serviceWorker';
 

@@ -7,6 +7,7 @@ const _filter = { 'pwd': 0, '__v': 0 };
 module.exports = function (router) {
   router.post('/login', (req, res) => {
     const { input, pwd } = req.body;
+    // console.log(input, pwd)
     User.findOne({ '$or': [{ username: input }, { email: input }] })
       .exec((err, doc) => {
         if (err) console.log(err)

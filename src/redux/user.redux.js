@@ -47,7 +47,7 @@ export function logoutRedux() {
 };
 
 export function login({input, pwd}) {
-  console.log(input, pwd);
+  // console.log(input, pwd);
   if(!input || !pwd) {
     return errorMsg('missing fields!');
   }

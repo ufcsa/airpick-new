@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Icon, Typography, Button } from 'antd';
+import { Form, Input, Icon, Typography, Button, Alert } from 'antd';
 import { connect } from 'react-redux';
 import { login } from '../../redux/user.redux';
 import { Redirect } from 'react-router-dom';
@@ -12,7 +12,7 @@ class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
+  }  // console.log(input, pwd);
 
   handleSubmit(e) {
     e.preventDefault();
@@ -66,6 +66,13 @@ class LoginForm extends React.Component {
                   placeholder="Password"
                 />,
               )}
+            </Form.Item>
+            <Form.Item
+              wrapperCol={{
+                xs: { span: 18, offset: 0 },
+                sm: { span: 10, offset: 8 },
+              }}>
+              {this.props.msg? <Alert type='error' message='Error' description={this.props.msg}></Alert>: null}
             </Form.Item>
             <Form.Item
               wrapperCol={{
