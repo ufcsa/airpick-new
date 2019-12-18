@@ -1,4 +1,5 @@
 import axios from 'axios';
+import moment from 'moment-timezone';
 const LOAD_REQ = 'LOAD_REQ';
 const ERROR_MSG = 'ERROR_MSG';
 
@@ -37,6 +38,8 @@ export function updatePickreq(userInput) {
     return errorMsg('Missing key fields!');
   }
   const username = userInput.username;
+  const time = new Date(userInput.date + ' ' + userInput.time);
+  const nyTime = moment(time);
   const request = {
     published: userInput.publish,
     volunteer: userInput.volunteer,
