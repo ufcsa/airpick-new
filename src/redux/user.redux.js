@@ -65,16 +65,7 @@ export function login({input, pwd}) {
 };
 
 export function register(userInput) {
-// confirm: "test"
-// email: "test@test.test"
-// firstName: "test"
-// gender: "male"
-// lastName: "test"
-// pwd: "test"
-// phone: "3523280696"
-// username: "test"
-// wechat: "test"
-console.log(userInput);
+  console.log(userInput);
   const { email, firstName, lastName, pwd, confirm, gender, phone, wechatId, username } = userInput;
   if(!email || !firstName || !lastName || !pwd || pwd !== confirm || !gender
     || !wechatId || !username) {

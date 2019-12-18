@@ -21,3 +21,36 @@ export function request(state=initState, action) {
   }
 };
 
+//helper
+function errorMsg(msg) {
+  return { type: ERROR_MSG, msg: msg} 
+}
+
+// action creator
+export function loadPickreq(username) {
+  // load pickreq from db once and save it inside the redux store
+}
+
+export function updatePickreq(userInput) {
+  console.log('From request redux: ', userInput)
+  if(!userInput.airport || !userInput.date || !userInput.time || !userInput.publish) {
+    return errorMsg('Missing key fields!');
+  }
+  const username = userInput.username;
+  const request = {
+    published: userInput.publish,
+    volunteer: userInput.volunteer,
+    airport: userInput.airport,
+    arrivalTime: new Date(userInput.date + ' ' + userInput.time),
+    carryon: userInput.carryon,
+    luggage: userInput.luggage,
+    notes: userInput.notes
+  }
+ 
+  return dispatch => {
+    console.log('dispatching')
+    axios.put(`/api/requests/${username}`, request)
+      .then(res => dispatch(errorMsg('Sent')))
+  }
+}
+

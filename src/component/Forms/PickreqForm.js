@@ -1,6 +1,14 @@
 import React from 'react';
-import { Form, Input, DatePicker, TimePicker, Button } from 'antd';
+import { Form, Input, DatePicker, TimePicker, InputNumber,Button, Switch } from 'antd';
+import { updatePickreq } from '../../redux/request.redux'
+import { connect } from 'react-redux';
+import moment from 'moment';
 
+const { TextArea } = Input
+@connect(
+  state => state,
+  { updatePickreq }
+)
 class PickreqForm extends React.Component {
   // handle submit form info
   handleSubmit = e => {
@@ -12,53 +20,83 @@ class PickreqForm extends React.Component {
       }
 
       // Should format date value before submit.
-      const rangeValue = fieldsValue['range-picker'];
-      const rangeTimeValue = fieldsValue['range-time-picker'];
       const values = {
         ...fieldsValue,
-        'date-picker': fieldsValue['date-picker'].format('YYYY-MM-DD'),
-        'date-time-picker': fieldsValue['date-time-picker'].format('YYYY-MM-DD HH:mm:ss'),
-        'month-picker': fieldsValue['month-picker'].format('YYYY-MM'),
-        'range-picker': [rangeValue[0].format('YYYY-MM-DD'), rangeValue[1].format('YYYY-MM-DD')],
-        'range-time-picker': [
-          rangeTimeValue[0].format('YYYY-MM-DD HH:mm:ss'),
-          rangeTimeValue[1].format('YYYY-MM-DD HH:mm:ss'),
-        ],
-        'time-picker': fieldsValue['time-picker'].format('HH:mm:ss'),
+        'publish': fieldsValue['publish'] ? fieldsValue['publish'] : true,
+        'notes': fieldsValue['notes'] ? fieldsValue['notes'] : '',
+        'date': fieldsValue['date'].format('YYYY-MM-DD'),
+        'time': fieldsValue['time'].format('HH:mm'),
+        'username': this.props.user.username,
+        'volunteer': this.props.user.volunteer
       };
-      console.log('Received values of form: ', values);
+      this.props.updatePickreq(values)
+      //console.log('Received values of form: ', values);
       // TODO: add submit event to redux
       // TODO: Check if time is before today
     });
   };
 
   render() {
+    console.log(this.props.user)
+    if(!this.props.request.detail) {
+      console.log('no request detail yet');
+      // TODO: load previous request detail
+    }
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: {
-        xs: { span: 24 },
+        xs: { span: 18 },
         sm: { span: 8 },
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 },
+        xs: { span: 18 },
+        sm: { span: 6 },
       },
     };
 
     const requirement = {
       rules: [{
-        type: 'object', required: true, message: 'Please select a time!'
+        required: true, message: 'Please fill this field!'
       }],
     };
 
     
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+        <Form.Item label='Publish'>
+          {getFieldDecorator('publish')(<Switch autoFocus defaultChecked></Switch>)}
+        </Form.Item>
         <Form.Item label='Date'>
           {getFieldDecorator('date', requirement)(<DatePicker />)}
         </Form.Item>
         <Form.Item label='Time'>
-          {getFieldDecorator('time', requirement)(<TimePicker />)}
+          {getFieldDecorator('time', requirement)
+          (<TimePicker format={'HH:mm'}/>)}
+        </Form.Item>
+        <Form.Item label='Airport/Location'>
+          {getFieldDecorator('airport', requirement)(<Input placeholder='MCO'/>)}
+        </Form.Item>
+        <Form.Item label='Number of Carry-ons'>
+          {getFieldDecorator('carryon', requirement)
+          (<InputNumber min={0} max={10} placeholder={2}></InputNumber>)}
+        </Form.Item>
+        <Form.Item label='Number of large luggages'>
+          {getFieldDecorator('luggage', requirement)
+          (<InputNumber min={0} max={10} placeholder={2}></InputNumber>)}
+        </Form.Item>
+        <Form.Item label='Notes'>
+          {getFieldDecorator('notes')
+          (<TextArea placeholder='How many people coming with you?'></TextArea>)}
+        </Form.Item>
+        <Form.Item
+          wrapperCol={{
+            xs: { span: 24, offset: 0 },
+            sm: { span: 16, offset: 8 },
+          }}
+        >
+          <Button type='primary' htmlType='submit'>
+            Submit My Updates!
+          </Button>
         </Form.Item>
       </Form>
     );

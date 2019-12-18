@@ -55,12 +55,15 @@ class AuthRoute extends React.Component {
         hide: !isAuth,
         subItem: [{
           path: '/pickrequest',
-          text: 'need pickup',
+          text: 'Need pickup!',
           component: PickReq
         }, {
           path: '/lodgerequest',
-          text: 'need lodging',
+          text: 'Need Lodging!',
           component: LodgeReq
+        }, {
+          path: '/myrequest',
+          text: 'Request Status'
         }]
       },
       {

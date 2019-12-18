@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Menu, Modal } from 'antd';
 import browserCookie from 'browser-cookies';
 import { logoutRedux } from '../../redux/user.redux';
-import { SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS } from 'constants';
 
 const { SubMenu } = Menu;
 

@@ -6,6 +6,7 @@ module.exports = router => {
   //middleware to search requester info
   router.param('username', (req, res, next, username) => {
     req.username = username;
+    console.log('middleware get useranem:', req.username)
     /**
      * todo: if the user is updating,
      * then directly return next();
@@ -51,13 +52,14 @@ module.exports = router => {
       });
     })
     .put((req, res) => {
-      if(req.body.request) {
+      if(req.body) {
+        console.log(req.body)
         //if the user unpublished the request, then remove the volunteer
-        if(!req.body.request.published) {
-          req.body.request.volunteer = '';
+        if(!req.body.published) {
+          req.body.volunteer = '';
         }
-        Pickreq.findOneAndUpdate({username: req.username}, req.body.request,
-          { upsert: true }, (err, doc) => {
+        Pickreq.findOneAndUpdate({username: req.username}, req.body,
+          { upsert: true, setDefaultsOnInsert: true, new: true }, (err, doc) => {
             if(err) {
               console.log(err.stack);
               return res.status(422).json({
@@ -67,6 +69,10 @@ module.exports = router => {
             } else {
               console.log('successfully update');
               console.log(doc);
+              return res.status(200).json({
+                code: 0,
+                msg: 'Successfully update!'
+              })
             }
           });
       }

@@ -1,9 +1,8 @@
 import React from 'react';
-import { Layout, Menu, Icon } from 'antd';
+import { Layout } from 'antd';
 import PickReq from '../../component/Requests/PickReq';
 import LodgeReq from '../../component/Requests/LodgeReq';
 
-const { Header, Sider, Content } = Layout;
 
 class MyRequest extends React.Component {
   constructor(props) {
