@@ -14,7 +14,7 @@ const initState = {
 export function request(state=initState, action) {
   switch(action.type) {
     case LOAD_REQ:
-      return { ...state, ...action.payload };
+      return { ...state, request: action.payload };
     case ERROR_MSG:
       return { ...state,  msg: action.msg };
     default:
@@ -27,13 +27,20 @@ function errorMsg(msg) {
   return { type: ERROR_MSG, msg: msg} 
 }
 
+function loadReq(request) {
+  console.log(request)
+  return { type: LOAD_REQ, payload: request }
+}
 // action creator
 export function loadPickreq(username) {
   // load pickreq from db once and save it inside the redux store
+  return dispatch => {
+    axios.get(`/api/requests/${username}`)
+      .then(res => dispatch(loadReq(res.data)))
+  }
 }
 
 export function updatePickreq(userInput) {
-  console.log('From request redux: ', userInput)
   if(!userInput.airport || !userInput.date || !userInput.time || !userInput.publish) {
     return errorMsg('Missing key fields!');
   }

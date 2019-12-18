@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, DatePicker, TimePicker, InputNumber,Button, Switch } from 'antd';
+import { Form, Input, DatePicker, TimePicker, InputNumber,Button, Switch, Spin } from 'antd';
 import { updatePickreq } from '../../redux/request.redux'
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -10,6 +10,12 @@ const { TextArea } = Input
   { updatePickreq }
 )
 class PickreqForm extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      loading: true,
+    }
+  }
   // handle submit form info
   handleSubmit = e => {
     e.preventDefault();
@@ -37,11 +43,14 @@ class PickreqForm extends React.Component {
   };
 
   render() {
-    console.log(this.props.user)
-    if(!this.props.request.detail) {
-      console.log('no request detail yet');
-      // TODO: load previous request detail
+    this.previousReq = null;
+    if(!this.props.request.request) {
+      console.log('loading previous request!');
+    } else {
+      this.previousReq = this.props.request.request.data.request;
+      this.state.loading = false;
     }
+
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: {
@@ -62,12 +71,13 @@ class PickreqForm extends React.Component {
 
     
     return (
+      this.state.loading ? <Spin size="large" style={{display:'flex', justifyContent:'center'}}></Spin> :
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
         <Form.Item label='Publish'>
-          {getFieldDecorator('publish')(<Switch autoFocus defaultChecked></Switch>)}
+          {getFieldDecorator('publish')(<Switch autoFocus defaultChecked={this.previousReq.published}></Switch>)}
         </Form.Item>
         <Form.Item label='Date'>
-          {getFieldDecorator('date', requirement)(<DatePicker />)}
+          {getFieldDecorator('date', requirement)(<DatePicker  />)}
         </Form.Item>
         <Form.Item label='Time'>
           {getFieldDecorator('time', requirement)

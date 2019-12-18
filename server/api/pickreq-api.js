@@ -21,7 +21,7 @@ module.exports = router => {
           return next();
         } else {
           req.currRequest = doc;
-          let volunteer = request.volunteer;
+          let volunteer = req.currRequest.volunteer;
           if(volunteer && volunteer.length) {
             User.findOne({ username: volunteer })
               .exec((err, volunteerInfo) => {
@@ -43,7 +43,8 @@ module.exports = router => {
 
   router.route('/:username') 
     .get((req, res) => {
-      res.json({
+      console.log(req.currRequest)
+      return res.json({
         code: 0,
         data: {
           request: req.currRequest,

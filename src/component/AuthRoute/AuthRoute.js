@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import { loadData } from '../../redux/user.redux';
+import { loadPickreq } from '../../redux/request.redux'; 
 import { connect } from 'react-redux';
 import NavBar from '../NavBar/NavBar';
 import { Route, Switch } from 'react-router-dom';
@@ -15,7 +16,7 @@ function Home() {
 }
 
 @withRouter
-@connect(state => state.user, { loadData })
+@connect(state => state, { loadData, loadPickreq })
 class AuthRoute extends React.Component {
   constructor(props) {
     super(props);
@@ -29,6 +30,7 @@ class AuthRoute extends React.Component {
           if (res.status === 200) {
             if (res.data.code === 0) {
               this.props.loadData(res.data.data);
+              this.props.loadPickreq(this.props.user.username);
             } else {
               console.log('going to login')
               this.props.history.push('/login');
@@ -39,7 +41,7 @@ class AuthRoute extends React.Component {
   }
 
   render() {
-    const isAuth = this.props.isAuth;
+    const isAuth = this.props.user.isAuth;
     const rightNavbarClass = 'navbar-right'
     const navList = [
       {
