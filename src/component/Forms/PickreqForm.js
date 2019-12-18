@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, DatePicker, TimePicker, InputNumber,Button, Switch, Spin } from 'antd';
+import { Form, Input, DatePicker, TimePicker, InputNumber,Button, Switch, Spin, Alert, message } from 'antd';
 import { updatePickreq } from '../../redux/request.redux'
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -41,6 +41,14 @@ class PickreqForm extends React.Component {
       // TODO: Check if time is before today
     });
   };
+
+  successPrompt = msg => {
+    message.success(msg, 5000);
+  }
+
+  errorPrompt = msg => {
+    message.error(msg, 5000);
+  }
 
   render() {
     this.previousReq = null;

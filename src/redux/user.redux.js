@@ -12,7 +12,7 @@ const initState = {
 };
 
 //reducer
-export function user(state=initState, action) {
+export function userRedux(state=initState, action) {
   switch(action.type) {
     case LOAD_DATA: 
       return {...state, ...action.payload, isAuth: true};

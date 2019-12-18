@@ -69,10 +69,12 @@ module.exports = router => {
               });
             } else {
               console.log('successfully update');
-              console.log(doc);
               return res.status(200).json({
                 code: 0,
-                msg: 'Successfully update!'
+                msg: 'Successfully update!',
+                data: {
+                  request: doc
+                }
               })
             }
           });
