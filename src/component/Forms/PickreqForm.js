@@ -62,7 +62,8 @@ class PickreqForm extends React.Component {
         sm: { span: 6 },
       },
     };
-
+    const dateFormat = 'YYYY-MM-DD';
+    const timeFormat = 'HH:mm';
     const requirement = {
       rules: [{
         required: true, message: 'Please fill this field!'
@@ -77,25 +78,26 @@ class PickreqForm extends React.Component {
           {getFieldDecorator('publish')(<Switch autoFocus defaultChecked={this.previousReq.published}></Switch>)}
         </Form.Item>
         <Form.Item label='Date'>
-          {getFieldDecorator('date', requirement)(<DatePicker  />)}
+          {getFieldDecorator('date', {...requirement, initialValue: moment(this.previousReq.arrivalTime, dateFormat)})
+          (<DatePicker format={dateFormat} />)}
         </Form.Item>
         <Form.Item label='Time'>
-          {getFieldDecorator('time', requirement)
-          (<TimePicker format={'HH:mm'}/>)}
+          {getFieldDecorator('time', {...requirement, initialValue: moment(this.previousReq.arrivalTime, timeFormat)})
+          (<TimePicker format={timeFormat} />)}
         </Form.Item>
         <Form.Item label='Airport/Location'>
-          {getFieldDecorator('airport', requirement)(<Input placeholder='MCO'/>)}
+          {getFieldDecorator('airport', {...requirement, initialValue: this.previousReq.airport})(<Input placeholder='MCO'/>)}
         </Form.Item>
         <Form.Item label='Number of Carry-ons'>
-          {getFieldDecorator('carryon', requirement)
+          {getFieldDecorator('carryon', {...requirement, initialValue: this.previousReq.carryon})
           (<InputNumber min={0} max={10} placeholder={2}></InputNumber>)}
         </Form.Item>
         <Form.Item label='Number of large luggages'>
-          {getFieldDecorator('luggage', requirement)
+          {getFieldDecorator('luggage', {...requirement, initialValue: this.previousReq.luggage})
           (<InputNumber min={0} max={10} placeholder={2}></InputNumber>)}
         </Form.Item>
         <Form.Item label='Notes'>
-          {getFieldDecorator('notes')
+          {getFieldDecorator('notes', {initialValue: this.previousReq.notes})
           (<TextArea placeholder='How many people coming with you?'></TextArea>)}
         </Form.Item>
         <Form.Item

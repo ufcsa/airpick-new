@@ -60,7 +60,7 @@ export function updatePickreq(userInput) {
   return dispatch => {
     console.log('dispatching')
     axios.put(`/api/requests/${username}`, request)
-      .then(res => dispatch(errorMsg('Sent')))
+      .then(res => console.log('sent'))
   }
 }
 
