@@ -35,20 +35,12 @@ class PickreqForm extends React.Component {
         'username': this.props.user.username,
         'volunteer': this.props.user.volunteer
       };
-      this.props.updatePickreq(values)
+      this.props.updatePickreq(values);
       //console.log('Received values of form: ', values);
       // TODO: add submit event to redux
       // TODO: Check if time is before today
     });
   };
-
-  successPrompt = msg => {
-    message.success(msg, 5000);
-  }
-
-  errorPrompt = msg => {
-    message.error(msg, 5000);
-  }
 
   render() {
     this.previousReq = null;
