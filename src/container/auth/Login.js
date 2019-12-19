@@ -67,13 +67,13 @@ class LoginForm extends React.Component {
                 />,
               )}
             </Form.Item>
-            <Form.Item
+            {/* <Form.Item
               wrapperCol={{
                 xs: { span: 18, offset: 0 },
                 sm: { span: 10, offset: 8 },
               }}>
               {this.props.msg? <Alert type='error' message='Error' description={this.props.msg}></Alert>: null}
-            </Form.Item>
+            </Form.Item> */}
             <Form.Item
               wrapperCol={{
                 xs: { span: 18, offset: 0 },

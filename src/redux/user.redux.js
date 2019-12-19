@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { message } from 'antd';
 const LOAD_DATA = 'LOAD_DATA';
 const AUTH_SUCC = 'AUTH_SUCC';
 const LOGOUT = 'LOGOUT';
@@ -34,6 +35,7 @@ const authSuccess = (obj) => {
 };
 
 function errorMsg(msg){
+  message.error(msg);
 	return { msg, type:ERROR_MSG }
 }
 
