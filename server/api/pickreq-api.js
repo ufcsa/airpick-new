@@ -43,7 +43,7 @@ module.exports = router => {
 
   router.route('/:username') 
     .get((req, res) => {
-      console.log(req.currRequest)
+      console.log('getting current user info', req.currRequest)
       return res.json({
         code: 0,
         data: {

@@ -30,7 +30,6 @@ class AuthRoute extends React.Component {
           if (res.status === 200) {
             if (res.data.code === 0) {
               this.props.loadData(res.data.data);
-              this.props.loadPickreq(this.props.user.username);
             } else {
               console.log('going to login')
               this.props.history.push('/login');

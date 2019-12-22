@@ -1,13 +1,13 @@
 import React from 'react';
 import { Form, Input, DatePicker, TimePicker, InputNumber,Button, Switch, Spin, Alert, message } from 'antd';
-import { updatePickreq } from '../../redux/request.redux'
+import { updatePickreq, loadPickreq } from '../../redux/request.redux'
 import { connect } from 'react-redux';
 import moment from 'moment';
 
 const { TextArea } = Input
 @connect(
   state => state,
-  { updatePickreq }
+  { updatePickreq, loadPickreq }
 )
 class PickreqForm extends React.Component {
   constructor() {
@@ -24,7 +24,6 @@ class PickreqForm extends React.Component {
       if (err) {
         return;
       }
-
       // Should format date value before submit.
       const values = {
         ...fieldsValue,
@@ -37,15 +36,15 @@ class PickreqForm extends React.Component {
       };
       this.props.updatePickreq(values);
       //console.log('Received values of form: ', values);
-      // TODO: add submit event to redux
       // TODO: Check if time is before today
+      // TODO: Convert time to NY Timezone
     });
   };
 
   render() {
     this.previousReq = null;
     if(!this.props.request.request) {
-      console.log('loading previous request!');
+      this.props.loadPickreq(this.props.user.username);
     } else {
       this.previousReq = this.props.request.request.data.request;
       this.state.loading = false;
