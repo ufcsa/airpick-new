@@ -40,7 +40,12 @@ function loadReq(request) {
 }
 
 function updateSuccess(request) {
-  message.success('Update Successfully!');
+  if(!request.data.request.published) {
+    message.warning('Update Successfully, but your request is not published!')
+  } else {
+    message.success('Update Successfully! Your request has been published!');
+  }
+  
   return { type: UPDATE_SUC, msg: 'Update Successfully!', payload: request}
 }
 // action creator
@@ -54,7 +59,8 @@ export function loadPickreq(username) {
 }
 
 export function updatePickreq(userInput) {
-  if(!userInput.airport || !userInput.date || !userInput.time || !userInput.publish) {
+  if(!userInput.airport || !userInput.date || !userInput.time || userInput.publish == null) {
+    console.log(userInput)
     return errorMsg('Missing key fields!');
   }
   const username = userInput.username;

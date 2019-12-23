@@ -1,12 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { loadPickreq } from '../../redux/request.redux';
 
+@connect(
+  state=> state,
+  { loadPickreq }
+)
 class MyRequest extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      collapsed: true,
-      choice: 1
-    };
+    this.props.loadPickreq(this.props.user.username);
   }
 
   onCollapse = collapsed => {

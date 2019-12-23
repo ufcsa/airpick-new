@@ -2,6 +2,7 @@ import React from 'react';
 import { Form, Input, DatePicker, TimePicker, InputNumber,Button, Switch, Spin } from 'antd';
 import { updatePickreq, loadPickreq } from '../../redux/request.redux';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import moment from 'moment-timezone';
 const { TextArea } = Input;
 
@@ -27,7 +28,7 @@ class PickreqForm extends React.Component {
       // Should format date value before submit.
       const values = {
         ...fieldsValue,
-        'publish': fieldsValue['publish'] ? fieldsValue['publish'] : true,
+        'publish': fieldsValue['publish'] ? fieldsValue['publish'] : false,
         'notes': fieldsValue['notes'] ? fieldsValue['notes'] : '',
         'date': fieldsValue['date'].format('YYYY-MM-DD'),
         'time': fieldsValue['time'].format('HH:mm'),
@@ -46,7 +47,15 @@ class PickreqForm extends React.Component {
     if(!this.props.request.request) {
       this.props.loadPickreq(this.props.user.username);
     } else {
-      this.previousReq = this.props.request.request.data.request;
+      this.previousReq = null;
+      if(this.props.request.request.data.request) {
+        this.previousReq = this.props.request.request.data.request;
+      } else {
+        this.previousReq = {
+          published: false,
+        }
+      }
+ 
       this.state.loading = false;
     }
 
