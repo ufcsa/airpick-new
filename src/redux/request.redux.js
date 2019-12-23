@@ -22,7 +22,7 @@ export function requestRedux(state=initState, action) {
     case ERROR_SUBMIT:
       return { ...state,  msg: action.msg };
     case UPDATE_SUC:
-      return { ...state, msg: action.msg, request: action.payload };
+      return { ...state, msg: action.msg, request: action.payload, redirectTo: '/myrequest' };
     default:
       return state;
   }

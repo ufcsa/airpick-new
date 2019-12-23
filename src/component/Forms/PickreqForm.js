@@ -36,9 +36,6 @@ class PickreqForm extends React.Component {
         'volunteer': this.props.user.volunteer
       };
       this.props.updatePickreq(values);
-      //console.log('Received values of form: ', values);
-      // TODO: Check if time is before today
-      // TODO: Convert time to NY Timezone
     });
   };
 
@@ -80,45 +77,49 @@ class PickreqForm extends React.Component {
 
     
     return (
-      this.state.loading ? <Spin size="large" style={{display:'flex', justifyContent:'center'}}></Spin> :
-      <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-        <Form.Item label='Publish'>
-          {getFieldDecorator('publish')(<Switch autoFocus defaultChecked={this.previousReq.published}></Switch>)}
-        </Form.Item>
-        <Form.Item label='Date'>
-          {getFieldDecorator('date', {...requirement, initialValue: moment(this.previousReq.arrivalTime).tz('America/New_York')})
-          (<DatePicker format={dateFormat} />)}
-        </Form.Item>
-        <Form.Item label='Time'>
-          {getFieldDecorator('time', {...requirement, initialValue: moment(this.previousReq.arrivalTime).tz('America/New_York')})
-          (<TimePicker format={timeFormat} />)}
-        </Form.Item>
-        <Form.Item label='Airport/Location'>
-          {getFieldDecorator('airport', {...requirement, initialValue: this.previousReq.airport})(<Input placeholder='MCO'/>)}
-        </Form.Item>
-        <Form.Item label='Number of Carry-ons'>
-          {getFieldDecorator('carryon', {...requirement, initialValue: this.previousReq.carryon})
-          (<InputNumber min={0} max={10} placeholder={2}></InputNumber>)}
-        </Form.Item>
-        <Form.Item label='Number of large luggages'>
-          {getFieldDecorator('luggage', {...requirement, initialValue: this.previousReq.luggage})
-          (<InputNumber min={0} max={10} placeholder={2}></InputNumber>)}
-        </Form.Item>
-        <Form.Item label='Notes'>
-          {getFieldDecorator('notes', {initialValue: this.previousReq.notes})
-          (<TextArea placeholder='How many people coming with you?'></TextArea>)}
-        </Form.Item>
-        <Form.Item
-          wrapperCol={{
-            xs: { span: 24, offset: 0 },
-            sm: { span: 16, offset: 8 },
-          }}
-        >
-          <Button type='primary' htmlType='submit'>
-            Submit My Updates!
-          </Button>
-        </Form.Item>
-      </Form>
+      <div>
+        {this.props.request.redirectTo? <Redirect to={this.props.request.redirectTo} /> : null}
+        {this.state.loading ? <Spin size="large" style={{display:'flex', justifyContent:'center'}}></Spin> :
+        <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+          <Form.Item label='Publish'>
+            {getFieldDecorator('publish')(<Switch autoFocus defaultChecked={this.previousReq.published}></Switch>)}
+          </Form.Item>
+          <Form.Item label='Date'>
+            {getFieldDecorator('date', {...requirement, initialValue: moment(this.previousReq.arrivalTime).tz('America/New_York')})
+            (<DatePicker format={dateFormat} />)}
+          </Form.Item>
+          <Form.Item label='Time'>
+            {getFieldDecorator('time', {...requirement, initialValue: moment(this.previousReq.arrivalTime).tz('America/New_York')})
+            (<TimePicker format={timeFormat} />)}
+          </Form.Item>
+          <Form.Item label='Airport/Location'>
+            {getFieldDecorator('airport', {...requirement, initialValue: this.previousReq.airport})(<Input placeholder='MCO'/>)}
+          </Form.Item>
+          <Form.Item label='Number of Carry-ons'>
+            {getFieldDecorator('carryon', {...requirement, initialValue: this.previousReq.carryon})
+            (<InputNumber min={0} max={10} placeholder={2}></InputNumber>)}
+          </Form.Item>
+          <Form.Item label='Number of large luggages'>
+            {getFieldDecorator('luggage', {...requirement, initialValue: this.previousReq.luggage})
+            (<InputNumber min={0} max={10} placeholder={2}></InputNumber>)}
+          </Form.Item>
+          <Form.Item label='Notes'>
+            {getFieldDecorator('notes', {initialValue: this.previousReq.notes})
+            (<TextArea placeholder='How many people coming with you?'></TextArea>)}
+          </Form.Item>
+          <Form.Item
+            wrapperCol={{
+              xs: { span: 24, offset: 0 },
+              sm: { span: 16, offset: 8 },
+            }}
+          >
+            <Button type='primary' htmlType='submit'>
+              Submit My Updates!
+            </Button>
+          </Form.Item>
+        </Form>}
+      </div>
+      
     );
   }
 }
