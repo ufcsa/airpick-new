@@ -114,5 +114,5 @@ class PickreqForm extends React.Component {
   }
 }
 
-const WrappedPickreqForm = Form.create({ name: 'pick_time' })(PickreqForm)
-export default WrappedPickreqForm
+const WrappedPickreqForm = Form.create({ name: 'pick_time' })(PickreqForm);
+export default WrappedPickreqForm;

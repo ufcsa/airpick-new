@@ -10,6 +10,7 @@ import Login from '../../container/auth/Login';
 import Register from '../../container/auth/Register';
 import PickReq from '../../container/myRequest/PickReq';
 import LodgeReq from '../../container/myRequest/LodgeReq';
+import MyRequest from '../../container/myRequest/MyRequest'
 
 function Home() {
   return <h2>Airpick homepage</h2>
@@ -64,7 +65,8 @@ class AuthRoute extends React.Component {
           component: LodgeReq
         }, {
           path: '/myrequest',
-          text: 'Request Status'
+          text: 'Request Status',
+          component: MyRequest
         }]
       },
       {
