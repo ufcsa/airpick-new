@@ -1,10 +1,10 @@
 import React from 'react';
-import { Form, Input, DatePicker, TimePicker, InputNumber,Button, Switch, Spin, Alert, message } from 'antd';
-import { updatePickreq, loadPickreq } from '../../redux/request.redux'
+import { Form, Input, DatePicker, TimePicker, InputNumber,Button, Switch, Spin } from 'antd';
+import { updatePickreq, loadPickreq } from '../../redux/request.redux';
 import { connect } from 'react-redux';
-import moment from 'moment';
+import moment from 'moment-timezone';
+const { TextArea } = Input;
 
-const { TextArea } = Input
 @connect(
   state => state,
   { updatePickreq, loadPickreq }
@@ -77,11 +77,11 @@ class PickreqForm extends React.Component {
           {getFieldDecorator('publish')(<Switch autoFocus defaultChecked={this.previousReq.published}></Switch>)}
         </Form.Item>
         <Form.Item label='Date'>
-          {getFieldDecorator('date', {...requirement, initialValue: moment(this.previousReq.arrivalTime, dateFormat)})
+          {getFieldDecorator('date', {...requirement, initialValue: moment(this.previousReq.arrivalTime).tz('America/New_York')})
           (<DatePicker format={dateFormat} />)}
         </Form.Item>
         <Form.Item label='Time'>
-          {getFieldDecorator('time', {...requirement, initialValue: moment(this.previousReq.arrivalTime, timeFormat)})
+          {getFieldDecorator('time', {...requirement, initialValue: moment(this.previousReq.arrivalTime).tz('America/New_York')})
           (<TimePicker format={timeFormat} />)}
         </Form.Item>
         <Form.Item label='Airport/Location'>

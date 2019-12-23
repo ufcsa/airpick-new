@@ -1,7 +1,7 @@
 import axios from 'axios';
 import moment from 'moment-timezone';
 import { message } from 'antd'
-
+// action
 const LOAD_REQ = 'LOAD_REQ';
 const UPDATE_SUC = 'UPDATE_SUC'
 const ERROR_SUBMIT = 'ERROR_SUBMIT';
@@ -12,6 +12,7 @@ const initState = {
   username: '',
   request: null,
 };
+// store
 
 //reducer
 export function requestRedux(state=initState, action) {
@@ -30,7 +31,7 @@ export function requestRedux(state=initState, action) {
 //helper
 function errorMsg(msg) {
   message.error(msg)
-  return { type: ERROR_SUBMIT, msg: msg} 
+  return { type: ERROR_SUBMIT, msg: msg}  // =>action
 }
 
 function loadReq(request) {
@@ -57,13 +58,13 @@ export function updatePickreq(userInput) {
     return errorMsg('Missing key fields!');
   }
   const username = userInput.username;
-  const time = new Date(userInput.date + ' ' + userInput.time);
-  const nyTime = moment(time);
+  const timeStr = userInput.date + ' ' + userInput.time;
+  const nyTime = moment.tz(timeStr, 'America/New_York');
   const request = {
     published: userInput.publish,
     volunteer: userInput.volunteer,
     airport: userInput.airport,
-    arrivalTime: new Date(userInput.date + ' ' + userInput.time),
+    arrivalTime: nyTime,
     carryon: userInput.carryon,
     luggage: userInput.luggage,
     notes: userInput.notes
@@ -71,7 +72,7 @@ export function updatePickreq(userInput) {
  
   return dispatch => {
     console.log('dispatching')
-    axios.put(`/api/requests/${username}`, request)
+    axios.put(`/api/requests/${username}`, request) //promise   //RESTful api
       .then(res => {
         if(res.status === 200 && res.data.code === 0) {
           dispatch(updateSuccess(res.data))

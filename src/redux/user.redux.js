@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { message } from 'antd';
+// action
 const LOAD_DATA = 'LOAD_DATA';
 const AUTH_SUCC = 'AUTH_SUCC';
 const LOGOUT = 'LOGOUT';

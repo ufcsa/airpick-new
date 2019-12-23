@@ -2,17 +2,18 @@
 const User = require('../model/user.model');
 const Pickreq = require('../model/pickreq.model');
 
+
 module.exports = router => {
   //middleware to search requester info
   router.param('username', (req, res, next, username) => {
     req.username = username;
-    console.log('middleware get useranem:', req.username)
+    console.log('middleware get username:', req.username)
     /**
      * todo: if the user is updating,
      * then directly return next();
      */
 
-    Pickreq.findOne({username: username})
+    Pickreq.findOne({ username: username })
       .exec((err, doc) => {
         if(err) {
           return next(err);
@@ -40,6 +41,7 @@ module.exports = router => {
         }
       });
   });
+
 
   router.route('/:username') 
     .get((req, res) => {
