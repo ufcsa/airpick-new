@@ -33,6 +33,7 @@ class RequestCenter extends React.Component {
   }
 
   handleSubmit = () => {
+    console.log('ok clicked')
     const { form } = this.formRef.props;
     form.validateFields((err, fieldsValue) => {
       if (err) {
@@ -45,12 +46,13 @@ class RequestCenter extends React.Component {
         'notes': fieldsValue['notes'] ? fieldsValue['notes'] : '',
         'date': fieldsValue['date'].format('YYYY-MM-DD'),
         'time': fieldsValue['time'].format('HH:mm'),
-        'username': this.formRef.user.username,
-        'volunteer': this.formRef.user.volunteer
+        'username': this.props.user.username,
+        'volunteer': this.props.user.volunteer
       };
-      this.formRef.onSubmit(values);
-      form.resetFields();
-      this.setState({ visible: false });
+      
+      this.props.updatePickreq(values).then(() => {
+        this.setState({ visible: false });
+      });
     });
   }
 

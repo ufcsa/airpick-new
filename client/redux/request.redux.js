@@ -78,11 +78,16 @@ export function updatePickreq(userInput) {
  
   return dispatch => {
     console.log('dispatching')
-    axios.put(`/api/requests/${username}`, request) //promise   //RESTful api
+    return axios.put(`/api/requests/${username}`, request) //promise   //RESTful api
       .then(res => {
         if(res.status === 200 && res.data.code === 0) {
-          dispatch(updateSuccess(res.data))
+          dispatch(updateSuccess(res.data));
+        } else {
+          errorMsg('Error happened when update!');
         }
+      }, err => {
+        console.log(err.stack)
+        errorMsg('Error happened when update!');
       })
   }
 }
