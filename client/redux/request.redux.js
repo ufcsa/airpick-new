@@ -18,11 +18,11 @@ const initState = {
 export function requestRedux(state=initState, action) {
   switch(action.type) {
     case LOAD_REQ:
-      return { ...state, request: action.payload };
+      return { ...state, request: action.payload.data };
     case ERROR_SUBMIT:
       return { ...state,  msg: action.msg };
     case UPDATE_SUC:
-      return { ...state, msg: action.msg, request: action.payload, redirectTo: '/myrequest' };
+      return { ...state, msg: action.msg, request: action.payload.data, redirectTo: '/myrequest' };
     default:
       return state;
   }
@@ -35,7 +35,7 @@ function errorMsg(msg) {
 }
 
 function loadReq(request) {
-  console.log(request)
+  console.log(request.data)
   return { type: LOAD_REQ, payload: request }
 }
 
@@ -78,11 +78,16 @@ export function updatePickreq(userInput) {
  
   return dispatch => {
     console.log('dispatching')
-    axios.put(`/api/requests/${username}`, request) //promise   //RESTful api
+    return axios.put(`/api/requests/${username}`, request) //promise   //RESTful api
       .then(res => {
         if(res.status === 200 && res.data.code === 0) {
-          dispatch(updateSuccess(res.data))
+          dispatch(updateSuccess(res.data));
+        } else {
+          errorMsg('Error happened when update!');
         }
+      }, err => {
+        console.log(err.stack)
+        errorMsg('Error happened when update!');
       })
   }
 }

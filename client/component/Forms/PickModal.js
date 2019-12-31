@@ -1,42 +1,11 @@
 import React from 'react';
-import { Modal, Form, Input, DatePicker, TimePicker, InputNumber,Button, Switch, Spin } from 'antd';
-import { updatePickreq, loadPickreq } from '../../redux/request.redux';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import moment from 'moment-timezone';
+import { Modal, Form, Input, DatePicker, TimePicker, InputNumber, Switch } from 'antd';
 const { TextArea } = Input;
 
 class PickreqForm extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      loading: true,
-    }
-  }
-  // handle submit form info
-  handleSubmit = e => {
-    e.preventDefault();
-
-    this.props.form.validateFields((err, fieldsValue) => {
-      if (err) {
-        return;
-      }
-      // Should format date value before submit.
-      const values = {
-        ...fieldsValue,
-        'publish': fieldsValue['publish'] ? fieldsValue['publish'] : false,
-        'notes': fieldsValue['notes'] ? fieldsValue['notes'] : '',
-        'date': fieldsValue['date'].format('YYYY-MM-DD'),
-        'time': fieldsValue['time'].format('HH:mm'),
-        'username': this.props.user.username,
-        'volunteer': this.props.user.volunteer
-      };
-      // this.props.updatePickreq(values);
-    });
-  };
-
+  
   render() {
-    const { visible, onCancel, onSubmit, form } = this.props;
+    const { visible, onCancel, onSubmit } = this.props;
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: {
