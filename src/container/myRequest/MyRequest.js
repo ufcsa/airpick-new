@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Typography, Divider } from 'antd';
 import { loadPickreq } from '../../redux/request.redux';
+import RequestCenter from '../../component/Forms/RequestCenter'
+const { Title } = Typography;
 
 @connect(
   state=> state,
@@ -19,7 +22,13 @@ class MyRequest extends React.Component {
 
   render() {
     return (
-      <h1>My request</h1>
+      <Typography style={{padding: '15px'}}>
+        <Title level={3} style={{textAlign: 'center'}}>
+          My Request Center
+        </Title>
+        <Divider />
+        <RequestCenter></RequestCenter>
+      </Typography>
     )
   }
 }

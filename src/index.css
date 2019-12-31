@@ -35,3 +35,8 @@ code {
 .navbar-title {
   font-size: 16pt
 }
+
+.col-center {
+  float: none;
+  margin: 0 auto
+}

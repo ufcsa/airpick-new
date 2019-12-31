@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography, Divider } from 'antd';
 import LodgereqForm from '../../component/Forms/LodgereqForm';
-const { Title, Paragraph, Text } = Typography;
+const { Title } = Typography;
 
 class LodgeReq extends React.Component {
 
