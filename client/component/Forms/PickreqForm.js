@@ -42,11 +42,11 @@ class PickreqForm extends React.Component {
   render() {
     this.previousReq = null;
     if(!this.props.request.request) {
-      this.props.loadPickreq(this.props.user.username);
+      if(this.props.user.username) this.props.loadPickreq(this.props.user.username);
     } else {
       this.previousReq = null;
-      if(this.props.request.request.data.request) {
-        this.previousReq = this.props.request.request.data.request;
+      if(this.props.request.request.request) {
+        this.previousReq = this.props.request.request.request;
       } else {
         this.previousReq = {
           published: false,

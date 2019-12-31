@@ -11,11 +11,11 @@ import PickForm from './PickModal';
 
 @connect(
   state => state,
-  { updatePickreq }
+  { updatePickreq, loadPickreq }
 )
 class RequestCenter extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       visible: false,
       confirmLoading: false
@@ -50,18 +50,28 @@ class RequestCenter extends React.Component {
       };
       this.formRef.onSubmit(values);
       form.resetFields();
-      this.setState({ visible: false })
+      this.setState({ visible: false });
     });
   }
 
   saveForm = formRef => {
     this.formRef = formRef;
-    console.log(this.formRef)
   }
 
   render() {
+     // TODO: change this.props.request to an array. One user can have multiple requests
+    let previousReq = null;
+    if(!this.props.request.request) {
+      if(this.props.user.username) this.props.loadPickreq(this.props.user.username);
+    } else {
+      if(this.props.request.request.request) {
+        previousReq = this.props.request.request.request;
+      }
+    }
+
     return (
       <div style={{textAlign: "center"}}>
+        {previousReq ? console.log('has req') : console.log('no req')}
         <Button type="primary" onClick={this.showModal}>
           <Icon type="plus" />Add Request
         </Button>
