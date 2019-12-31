@@ -1,9 +1,5 @@
 import React from 'react';
-import { Modal, Form, Input, DatePicker, TimePicker, InputNumber,Button, Switch, Spin } from 'antd';
-import { updatePickreq, loadPickreq } from '../../redux/request.redux';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import moment from 'moment-timezone';
+import { Modal, Form, Input, DatePicker, TimePicker, InputNumber, Switch } from 'antd';
 const { TextArea } = Input;
 
 class PickreqForm extends React.Component {
