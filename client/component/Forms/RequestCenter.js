@@ -3,11 +3,12 @@
 */
 
 import React from 'react';
-import { Button, Icon } from 'antd';
+import { Button, Icon, Divider } from 'antd';
 import { updatePickreq, loadPickreq } from '../../redux/request.redux';
 import { connect } from 'react-redux';
 import moment from 'moment-timezone';
 import PickForm from './PickModal';
+import MyReqList from './MyReqList'
 
 @connect(
   state => state,
@@ -62,18 +63,22 @@ class RequestCenter extends React.Component {
 
   render() {
      // TODO: change this.props.request to an array. One user can have multiple requests
-    let previousReq = null;
+    let previousReq = undefined;
     if(!this.props.request.request) {
       if(this.props.user.username) this.props.loadPickreq(this.props.user.username);
     } else {
       if(this.props.request.request.request) {
-        previousReq = this.props.request.request.request;
+        previousReq = [];
+        previousReq.push(this.props.request.request.request);
       }
     }
 
     return (
       <div style={{textAlign: "center"}}>
-        {previousReq ? console.log('has req') : console.log('no req')}
+        {previousReq ? 
+        <MyReqList data={previousReq}></MyReqList> : console.log('no req')}
+        <br></br>
+        <br></br>
         <Button type="primary" onClick={this.showModal}>
           <Icon type="plus" />Add Request
         </Button>
