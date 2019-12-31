@@ -12,8 +12,8 @@ const { Title } = Typography;
 class MyRequest extends React.Component {
   constructor(props) {
     super(props);
-    this.props.request.redirectTo = null;
-    this.props.loadPickreq(this.props.user.username);
+    // this.props.request.redirectTo = null;
+    // this.props.loadPickreq(this.props.user.username);
   }
 
   onCollapse = collapsed => {

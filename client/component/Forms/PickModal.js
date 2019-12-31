@@ -6,10 +6,6 @@ import { Redirect } from 'react-router-dom';
 import moment from 'moment-timezone';
 const { TextArea } = Input;
 
-@connect(
-  state => state,
-  { updatePickreq, loadPickreq }
-)
 class PickreqForm extends React.Component {
   constructor() {
     super();
@@ -35,7 +31,7 @@ class PickreqForm extends React.Component {
         'username': this.props.user.username,
         'volunteer': this.props.user.volunteer
       };
-      this.props.onSubmit(values);
+      // this.props.updatePickreq(values);
     });
   };
 
@@ -64,6 +60,7 @@ class PickreqForm extends React.Component {
     return (
       <div>
         <Modal
+          width={700}
           visible={visible}
           title="Add New Pickup Request"
           onOk={onSubmit}

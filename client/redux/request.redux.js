@@ -51,7 +51,7 @@ function updateSuccess(request) {
 // action creator
 export function loadPickreq(username) {
   // load pickreq from db once and save it inside the redux store
-  console.log('loading existing req in redux')
+  console.log('loading existing req in redux %s', username);
   return dispatch => {
     axios.get(`/api/requests/${username}`)
       .then(res => dispatch(loadReq(res.data)))

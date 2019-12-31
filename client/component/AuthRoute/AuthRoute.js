@@ -1,8 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-import { loadData } from '../../redux/user.redux';
-import { loadPickreq } from '../../redux/request.redux'; 
+import { loadData } from '../../redux/user.redux'; 
 import { connect } from 'react-redux';
 import NavBar from '../NavBar/NavBar';
 import { Route, Switch } from 'react-router-dom';
@@ -17,7 +16,7 @@ function Home() {
 }
 
 @withRouter
-@connect(state => state, { loadData, loadPickreq })
+@connect(state => state, { loadData })
 class AuthRoute extends React.Component {
   constructor(props) {
     super(props);
