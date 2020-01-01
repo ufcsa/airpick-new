@@ -76,18 +76,21 @@ class RequestCenter extends React.Component {
     return (
       <div style={{textAlign: "center"}}>
         {previousReq ? 
-        <MyReqList data={previousReq}></MyReqList> : console.log('no req')}
-        <br></br>
-        <br></br>
-        <Button type="primary" onClick={this.showModal}>
-          <Icon type="plus" />Add Request
-        </Button>
-        <PickForm
-          wrappedComponentRef={this.saveForm}
-          visible={this.state.visible}
-          onSubmit={this.handleSubmit}
-          onCancel={this.handleCancel}>
-        </PickForm>
+        <MyReqList data={previousReq}></MyReqList> :
+        <div>
+          <br></br>
+          <br></br>
+          <Button type="primary" onClick={this.showModal}>
+            <Icon type="plus" />Add Request
+          </Button>
+          <PickForm
+            wrappedComponentRef={this.saveForm}
+            visible={this.state.visible}
+            onSubmit={this.handleSubmit}
+            onCancel={this.handleCancel}>
+          </PickForm>
+        </div>
+        }
       </div>
     )
   }
