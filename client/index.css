@@ -40,3 +40,8 @@ code {
   float: none;
   margin: 0 auto
 }
+
+.table-margin {
+  margin-left: 30px;
+  margin-right: 30px
+}

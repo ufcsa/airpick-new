@@ -6,7 +6,7 @@ import RequestCenter from '../../component/Forms/RequestCenter'
 const { Title } = Typography;
 
 @connect(
-  state=> state,
+  state => state,
   { loadPickreq }
 )
 class MyRequest extends React.Component {
@@ -20,8 +20,8 @@ class MyRequest extends React.Component {
 
   render() {
     return (
-      <Typography style={{padding: '15px'}}>
-        <Title level={3} style={{textAlign: 'center'}}>
+      <Typography style={{ padding: '15px' }}>
+        <Title level={3} style={{ textAlign: 'center' }}>
           My Request Center
         </Title>
         <Divider />
