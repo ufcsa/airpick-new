@@ -3,14 +3,14 @@ import { Table, Button, Spin, Tooltip, Steps, Icon } from 'antd';
 import moment from 'moment-timezone';
 import EditModal from './EditModal';
 import { connect } from 'react-redux';
-import { updatePickreq } from '../../redux/request.redux';
+import { updatePickreq, deletePickreq } from '../../redux/request.redux';
 
 const { Column } = Table;
 const { Step } = Steps;
 
 @connect(
   state => state,
-  { updatePickreq }
+  { updatePickreq, deletePickreq }
 )
 class MyReqList extends React.Component {
   constructor(props) {
@@ -25,9 +25,16 @@ class MyReqList extends React.Component {
     if (this.props.data !== undefined) this.setState({ loading: false });
   }
 
+  // open the modal
   handleEdit = request => {
     console.log(request);
     this.setState({ ...this.state, visible: true, data: request });
+  }
+
+  // delete the record
+  handleDelete = request => {
+    // call the function from redux
+    this.props.deletePickreq(request);
   }
 
   handleSubmit = () => {
@@ -97,7 +104,7 @@ class MyReqList extends React.Component {
                       </Tooltip>
 
                       <Tooltip title='Delete'>
-                        <Button type='danger' icon='delete' shape='circle'></Button>
+                        <Button type='danger' icon='delete' shape='circle' onClick={() => this.handleDelete(record)}></Button>
                       </Tooltip>
                     </div>
                   )

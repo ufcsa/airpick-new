@@ -15,22 +15,22 @@ module.exports = router => {
 
     Pickreq.findOne({ username: username })
       .exec((err, doc) => {
-        if(err) {
+        if (err) {
           return next(err);
-        } else if(!doc) {
+        } else if (!doc) {
           req.currRequest = null;
           return next();
         } else {
           req.currRequest = doc;
           let volunteer = req.currRequest.volunteer;
-          if(volunteer && volunteer.length) {
+          if (volunteer && volunteer.length) {
             User.findOne({ username: volunteer })
               .exec((err, volunteerInfo) => {
-                if(err) {
+                if (err) {
                   req.currRequest = null;
                   return next(err);
-                } else if(volunteerInfo) {
-                  const {pwd, ...info} = volunteerInfo;
+                } else if (volunteerInfo) {
+                  const { pwd, ...info } = volunteerInfo;
                   req.volunteer = info;
                   return next();
                 }
@@ -42,8 +42,13 @@ module.exports = router => {
       });
   });
 
+  router.param('requestId', (req, res, next, requestId) => {
+    req.requestId = requestId;
+    return next();
+  });
 
-  router.route('/:username') 
+
+  router.route('/user/:username')
     .get((req, res) => {
       console.log('getting current user info', req.currRequest)
       return res.json({
@@ -55,15 +60,15 @@ module.exports = router => {
       });
     })
     .put((req, res) => {
-      if(req.body) {
+      if (req.body) {
         console.log(req.body)
         //if the user unpublished the request, then remove the volunteer
-        if(!req.body.published) {
+        if (!req.body.published) {
           req.body.volunteer = '';
         }
-        Pickreq.findOneAndUpdate({username: req.username}, req.body,
+        Pickreq.findOneAndUpdate({ username: req.username }, req.body,
           { upsert: true, setDefaultsOnInsert: true, new: true }, (err, doc) => {
-            if(err) {
+            if (err) {
               console.log(err.stack);
               return res.status(422).json({
                 code: 1,
@@ -82,5 +87,24 @@ module.exports = router => {
           });
       }
     });
+
+  router.route('/:requestId')
+    .delete((req, res) => {
+      const id = req.requestId;
+      console.log('delete', id);
+      Pickreq.deleteOne({ _id: id }, err => {
+        if (err) {
+          return res.status(500).json({
+            code: 1,
+            msg: 'Error happened when deleting!'
+          });
+        }
+
+        return res.status(200).json({
+          code: 0,
+          msg: 'Delete successully!'
+        })
+      })
+    })
   return router;
 }
