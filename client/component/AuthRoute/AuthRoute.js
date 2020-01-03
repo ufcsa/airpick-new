@@ -51,22 +51,24 @@ class AuthRoute extends React.Component {
         hide: false
       },
       {
+        path: '/myrequestcenter',
         text: 'My Requests',
         className: '',
         hide: !isAuth,
-        subItem: [{
-          path: '/pickrequest',
-          text: 'Need pickup!',
-          component: PickReq
-        }, {
-          path: '/lodgerequest',
-          text: 'Need Lodging!',
-          component: LodgeReq
-        }, {
-          path: '/myrequest',
-          text: 'Request Status',
-          component: MyRequest
-        }]
+        component: MyRequest,
+        // subItem: [{
+        //   path: '/pickrequest',
+        //   text: 'Need pickup!',
+        //   component: PickReq
+        // }, {
+        //   path: '/lodgerequest',
+        //   text: 'Need Lodging!',
+        //   component: LodgeReq
+        // }, {
+        //   path: '/myrequest',
+        //   text: 'Request Status',
+        //   component: MyRequest
+        // }]
       },
       {
         path: '/register',
@@ -95,9 +97,7 @@ class AuthRoute extends React.Component {
         <Switch>
           {navList.map(op => {
             if(op.text === 'My Requests') {
-              return op.subItem.map(sub => {
-                return <Route key={sub.text} path={sub.path} component={sub.component}></Route>
-              })
+              return <Route key={op.text} path={op.path} component={op.component}></Route>
             }
             else if (op.text !== 'Logout') {
               return <Route key={op.text} path={op.path} component={op.component}></Route>
