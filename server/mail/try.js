@@ -1,4 +1,4 @@
-const sendRequest = require('./sendAddRequestMail');
+const sendRequest = require('./sendMail');
 const sendPick = require('./sendPickMail');
 
 const target = 'ufcsaairpick@gmail.com';
