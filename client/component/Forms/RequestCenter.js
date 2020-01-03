@@ -43,7 +43,7 @@ class RequestCenter extends React.Component {
       // Should format date value before submit.
       const values = {
         ...fieldsValue,
-        'publish': fieldsValue['publish'] ? fieldsValue['publish'] : false,
+        'publish': true,
         'notes': fieldsValue['notes'] ? fieldsValue['notes'] : '',
         'date': fieldsValue['date'].format('YYYY-MM-DD'),
         'time': fieldsValue['time'].format('HH:mm'),
