@@ -1,10 +1,11 @@
 import axios from 'axios';
 import moment from 'moment-timezone';
-import { message } from 'antd'
+import { message } from 'antd';
 // action
 const LOAD_REQ = 'LOAD_REQ';
-const UPDATE_SUC = 'UPDATE_SUC'
+const UPDATE_SUC = 'UPDATE_SUC';
 const ERROR_SUBMIT = 'ERROR_SUBMIT';
+const DELETE_SUC = 'DELETE_SUC';
 
 const initState = {
   msg: '',
@@ -15,14 +16,16 @@ const initState = {
 // store
 
 //reducer
-export function requestRedux(state=initState, action) {
-  switch(action.type) {
+export function requestRedux(state = initState, action) {
+  switch (action.type) {
     case LOAD_REQ:
       return { ...state, request: action.payload.data };
     case ERROR_SUBMIT:
-      return { ...state,  msg: action.msg };
+      return { ...state, msg: action.msg };
     case UPDATE_SUC:
       return { ...state, msg: action.msg, request: action.payload.data, redirectTo: '/myrequest' };
+    case DELETE_SUC:
+      return { ...state, msg: action.msg, request: null };
     default:
       return state;
   }
@@ -31,7 +34,7 @@ export function requestRedux(state=initState, action) {
 //helper
 function errorMsg(msg) {
   message.error(msg)
-  return { type: ERROR_SUBMIT, msg: msg}  // =>action
+  return { type: ERROR_SUBMIT, msg: msg }  // =>action
 }
 
 function loadReq(request) {
@@ -40,26 +43,30 @@ function loadReq(request) {
 }
 
 function updateSuccess(request) {
-  if(!request.data.request.published) {
+  if (!request.data.request.published) {
     message.warning('Update Successfully, but your request is not published!')
   } else {
     message.success('Update Successfully! Your request has been published!');
   }
-  
-  return { type: UPDATE_SUC, msg: 'Update Successfully!', payload: request}
+
+  return { type: UPDATE_SUC, msg: 'Update Successfully!', payload: request }
+}
+
+function deleteSuccess() {
+  return { type: DELETE_SUC, msg: 'delete successfully' };
 }
 // action creator
 export function loadPickreq(username) {
   // load pickreq from db once and save it inside the redux store
   console.log('loading existing req in redux %s', username);
   return dispatch => {
-    axios.get(`/api/requests/${username}`)
+    axios.get(`/api/requests/user/${username}`)
       .then(res => dispatch(loadReq(res.data)))
   }
-}
+};
 
 export function updatePickreq(userInput) {
-  if(!userInput.airport || !userInput.date || !userInput.time || userInput.publish == null) {
+  if (!userInput.airport || !userInput.date || !userInput.time || userInput.publish == null) {
     console.log(userInput)
     return errorMsg('Missing key fields!');
   }
@@ -75,12 +82,12 @@ export function updatePickreq(userInput) {
     luggage: userInput.luggage,
     notes: userInput.notes
   }
- 
+
   return dispatch => {
     console.log('dispatching')
-    return axios.put(`/api/requests/${username}`, request) //promise   //RESTful api
+    return axios.put(`/api/requests/user/${username}`, request) //promise   //RESTful api
       .then(res => {
-        if(res.status === 200 && res.data.code === 0) {
+        if (res.status === 200 && res.data.code === 0) {
           dispatch(updateSuccess(res.data));
         } else {
           errorMsg('Error happened when update!');
@@ -90,5 +97,20 @@ export function updatePickreq(userInput) {
         errorMsg('Error happened when update!');
       })
   }
-}
+};
 
+export function deletePickreq(data) {
+  const id = data.key;
+
+  return dispatch => {
+    console.log('deleting request', id);
+    axios.delete(`/api/requests/${id}`)
+      .then(res => {
+        if (res.status === 200 && res.data.code === 0) {
+          dispatch(deleteSuccess());
+        } else {
+          errorMsg('Error happened when deleting this record!');
+        }
+      });
+  }
+}
