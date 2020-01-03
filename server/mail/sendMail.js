@@ -1,14 +1,12 @@
 const nodemailer = require('nodemailer');
+const authInfo = require('./mail.config');
 
-const authInfo = require('./mail.config')
-
-const sendPickMail = (targetEmail) => {
+const sendMail = (recipent, subject, body) => {
     var mailOptions = {
-        from: 'Lutong',
-        to: targetEmail,
-        subject: 'email from Lutong',
-        text: 'cnm',
-        html: 'Message from: ' + 'Lutong' + '<br></br> Email: ' + 'aa1264126181@gmail.com' + '<br></br> Message: ' + 'cnm',
+        from: authInfo.user,
+        to: recipent,
+        subject: subject,
+        html: body,
     };
 
     var transporter = nodemailer.createTransport({
@@ -24,6 +22,8 @@ const sendPickMail = (targetEmail) => {
         }
     });
 
-}
+};
 
-module.exports = sendPickMail;
+module.exports = sendMail;
+
+
