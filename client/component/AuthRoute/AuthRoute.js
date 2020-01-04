@@ -7,9 +7,8 @@ import NavBar from '../NavBar/NavBar';
 import { Route, Switch } from 'react-router-dom';
 import Login from '../../container/auth/Login';
 import Register from '../../container/auth/Register';
-import PickReq from '../../container/myRequest/PickReq';
-import LodgeReq from '../../container/myRequest/LodgeReq';
 import MyRequest from '../../container/myRequest/MyRequest'
+import AllPickReq from '../../container/volunteer/AllPickReq'
 
 function Home() {
   return <h2>Airpick homepage</h2>
@@ -69,6 +68,12 @@ class AuthRoute extends React.Component {
         //   text: 'Request Status',
         //   component: MyRequest
         // }]
+      },
+      {
+        path: '/list',
+        text: 'Volunteer',
+        hide: !isAuth,
+        component: AllPickReq,
       },
       {
         path: '/register',

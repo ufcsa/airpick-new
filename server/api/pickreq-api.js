@@ -42,12 +42,13 @@ module.exports = router => {
       });
   });
 
+  // middleware to get the requestId param
   router.param('requestId', (req, res, next, requestId) => {
     req.requestId = requestId;
     return next();
   });
 
-
+  // get current user's request
   router.route('/user/:username')
     .get((req, res) => {
       console.log('getting current user info', req.currRequest)
@@ -88,13 +89,14 @@ module.exports = router => {
       }
     });
 
+  // list all requests in the db
   router.route('/:requestId')
     .delete((req, res) => {
       const id = req.requestId;
       console.log('delete', id);
       Pickreq.deleteOne({ _id: id }, err => {
         if (err) {
-          return res.status(500).json({
+          return res.status(422).json({
             code: 1,
             msg: 'Error happened when deleting!'
           });
@@ -105,6 +107,65 @@ module.exports = router => {
           msg: 'Delete successully!'
         })
       })
-    })
+    });
+
+
+  router.route('/list')
+    .get((req, res) => {
+      Pickreq.find({})
+        .exec((err, doc) => {
+          if (err) {
+            console.error(err);
+            return res.status(422).json({
+              msg: err
+            });
+          } else {
+            const result = {
+              reqList: []
+            };
+
+            if (!doc || doc.length === 0) {
+              return res.status(200).json(result);
+            } else {
+              // search user information based on username
+              // TODO: use Redis to save the user information (username -> UserInfo)
+              const promiseList = [];
+              doc.forEach(item => {
+                const username = doc.username;
+
+                promiseList.push(
+                  User.findOne({ username: username }).then(userInfo => {
+                    const data = {
+                      request: item,
+                      userInfo: {
+                        firstName: userInfo.firstName,
+                        lastName: userInfo.lastName,
+                        email: userInfo.email,
+                        phone: userInfo.phone,
+                        wechatId: userInfo.wechatId,
+                        gender: userInfo.gender,
+                        displayName: userInfo.displayName
+                      }
+                    };
+
+                    result.reqList.push(data);
+                  }).catch(err => { throw new Error(err) })
+                );
+              });
+
+
+              // return all promises at once
+              Promise.all(promiseList)
+                .then(() => (res.json(result)))
+                .catch(err => {
+                  console.error(err);
+                  return res.status(422).send({ err: err.message });
+                });
+            }
+          }
+        });
+    });
+
+
   return router;
 }
