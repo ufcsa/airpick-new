@@ -5,6 +5,7 @@ const app = express();
 const Router = express.Router();
 const userRouter = require('./server/api/user-api')(Router);
 const requestRouter = require('./server/api/pickreq-api')(Router);
+const mailRouter = require('./server/api/mail-api')(Router);
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
@@ -24,6 +25,10 @@ app.use(function(req, res, next) {
 
 app.use('/api/user', userRouter);
 app.use('/api/requests', requestRouter);
+
+// for test purpose, won't use these router in production
+app.use('/api/email', mailRouter);
+
 //bound with io server+express instead of express app itself
 server.listen(port, function() {
   console.log('Node app starts at port ', port)
