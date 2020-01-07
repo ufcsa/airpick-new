@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-const authInfo = require('./mail.config');
+const authInfo = require('../config/config').mailer.authInfo;
 
 const sendMail = (recipent, subject, body) => {
     var mailOptions = {
