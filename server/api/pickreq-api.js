@@ -1,4 +1,3 @@
-'use strict';
 const User = require('../model/user.model');
 const Pickreq = require('../model/pickreq.model');
 const CronJob = require('cron').CronJob;
@@ -6,10 +5,9 @@ const CronJob = require('cron').CronJob;
 /*
   A Cron job to clean outdated request every 15 minute. 
 */
-
-const scheduleClean = new CronJob('* */15 * * * *', function() {
+new CronJob('* */15 * * * *', function() {
   console.log('fucking myself');
-  const now = new Date()
+  const now = new Date();
   console.log(now);
 }, null, true, 'America/New_York');
 

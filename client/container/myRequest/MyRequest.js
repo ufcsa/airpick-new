@@ -10,9 +10,6 @@ const { Title } = Typography;
   { loadPickreq }
 )
 class MyRequest extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   onCollapse = collapsed => {
     this.setState({ collapsed });

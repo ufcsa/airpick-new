@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import { Modal, Form, Input, DatePicker, TimePicker, InputNumber, Switch } from 'antd';
+import { Modal, Form, Input, DatePicker, TimePicker, InputNumber } from 'antd';
 import moment from 'moment-timezone';
 
 const { TextArea } = Input;
@@ -46,27 +46,34 @@ class EditForm extends React.Component {
                 {getFieldDecorator('publish')(<Switch autoFocus defaultChecked={data.published}></Switch>)}
               </Form.Item> */}
               <Form.Item label='Date'>
-                {getFieldDecorator('date', { ...requirement, initialValue: moment(data.arrivalTime).tz('America/New_York') })
-                  (<DatePicker format={dateFormat} />)}
+                {getFieldDecorator('date',
+                  { ...requirement, initialValue: moment(data.arrivalTime).tz('America/New_York') }
+                )(<DatePicker format={dateFormat} />)}
               </Form.Item>
               <Form.Item label='Time'>
-                {getFieldDecorator('time', { ...requirement, initialValue: moment(data.arrivalTime).tz('America/New_York') })
-                  (<TimePicker format={timeFormat} />)}
+                {getFieldDecorator('time',
+                  { ...requirement, initialValue: moment(data.arrivalTime).tz('America/New_York') }
+                )(<TimePicker format={timeFormat} />)}
               </Form.Item>
               <Form.Item label='Airport/Location'>
-                {getFieldDecorator('airport', { ...requirement, initialValue: data.airport })(<Input placeholder='MCO' />)}
+                {getFieldDecorator('airport',
+                  { ...requirement, initialValue: data.airport }
+                )(<Input placeholder='MCO' />)}
               </Form.Item>
               <Form.Item label='Number of Carry-ons'>
-                {getFieldDecorator('carryon', { ...requirement, initialValue: data.carryon })
-                  (<InputNumber min={0} max={10} placeholder={2}></InputNumber>)}
+                {getFieldDecorator('carryon',
+                  { ...requirement, initialValue: data.carryon }
+                )(<InputNumber min={0} max={10} placeholder={2}></InputNumber>)}
               </Form.Item>
               <Form.Item label='Number of large luggages'>
-                {getFieldDecorator('luggage', { ...requirement, initialValue: data.luggage })
-                  (<InputNumber min={0} max={10} placeholder={2}></InputNumber>)}
+                {getFieldDecorator('luggage',
+                  { ...requirement, initialValue: data.luggage }
+                )(<InputNumber min={0} max={10} placeholder={2}></InputNumber>)}
               </Form.Item>
               <Form.Item label='Notes'>
-                {getFieldDecorator('notes', { initialValue: data.notes })
-                  (<TextArea placeholder='How many people coming with you?'></TextArea>)}
+                {getFieldDecorator('notes',
+                  { initialValue: data.notes }
+                )(<TextArea placeholder='How many people coming with you?'></TextArea>)}
               </Form.Item>
             </Form>
           </Modal> : null}

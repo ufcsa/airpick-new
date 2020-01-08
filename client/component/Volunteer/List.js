@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Table, Icon, Button } from 'antd';
+import { Table, Button } from 'antd';
 import moment from 'moment-timezone';
 import { loadAllReq } from '../../redux/request.redux';
 
