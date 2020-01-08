@@ -130,6 +130,8 @@ export function loadAllReq() {
     return axios.get('/api/requests/list')
       .then(res => {
         if (res.status === 200 && res.data.code === 0) {
+          console.log(res.data.reqList)
+          res.data.reqList.sort((a, b) => new Date(a.request.arrivalTime).getTime() - new Date(b.request.arrivalTime).getTime());
           dispatch(getListSuc(res.data.reqList));
         } else {
           dispatch(errorMsg('Error happened when getting the request list'));
