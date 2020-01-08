@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const db = require('./server/config/config');
+const config = require('./server/config/config');
 const app = express();
 const Router = express.Router();
 const userRouter = require('./server/api/user-api')(Router);
@@ -11,7 +11,7 @@ const cookieParser = require('cookie-parser');
 
 const server = require('http').Server(app);
 
-mongoose.connect(db, { useNewUrlParser: true });
+mongoose.connect(config.db, { useNewUrlParser: true });
 
 var port = process.env.PORT || 5000;
 
