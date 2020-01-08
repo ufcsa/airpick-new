@@ -1,13 +1,23 @@
 'use strict';
 const User = require('../model/user.model');
 const Pickreq = require('../model/pickreq.model');
+const CronJob = require('cron').CronJob;
 
+/*
+  A Cron job to clean outdated request every 15 minute. 
+*/
+
+const scheduleClean = new CronJob('* */15 * * * *', function() {
+  console.log('fucking myself');
+  const now = new Date()
+  console.log(now);
+}, null, true, 'America/New_York');
 
 module.exports = router => {
   //middleware to search requester info
   router.param('username', (req, res, next, username) => {
     req.username = username;
-    console.log('middleware get username:', req.username)
+    console.log('middleware get username:', req.username);
     /**
      * todo: if the user is updating,
      * then directly return next();

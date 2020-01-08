@@ -77,6 +77,7 @@ class MyReqList extends React.Component {
         key: item._id,
         date: moment(item.arrivalTime).tz('America/New_York').format('YYYY-MM-DD'),
         time: moment(item.arrivalTime).tz('America/New_York').format('HH:mm'),
+        arrivalTime: item.arrivalTime,
         airport: item.airport,
         volunteer: item.volunteer,
         published: item.published,
