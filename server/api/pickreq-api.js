@@ -130,14 +130,20 @@ module.exports = router => {
               // search user information based on username
               // TODO: use Redis to save the user information (username -> UserInfo)
               const promiseList = [];
+              let idx = 0;
               doc.forEach(item => {
-                const username = doc.username;
+                const username = item.username;
+                // if already has a volunteer, then skip it
+                if(item.volunteer !== '' || item.volunteer) {
+                  return;
+                }
 
                 promiseList.push(
                   User.findOne({ username: username }).then(userInfo => {
                     const data = {
+                      key: idx,
                       request: item,
-                      userInfo: {
+                      user: {
                         firstName: userInfo.firstName,
                         lastName: userInfo.lastName,
                         email: userInfo.email,
@@ -147,7 +153,8 @@ module.exports = router => {
                         displayName: userInfo.displayName
                       }
                     };
-
+                    
+                    idx++;
                     result.reqList.push(data);
                   }).catch(err => { throw new Error(err) })
                 );
@@ -156,7 +163,7 @@ module.exports = router => {
 
               // return all promises at once
               Promise.all(promiseList)
-                .then(() => (res.json(result)))
+                .then(() => (res.json({ ...result, code: 0 })))
                 .catch(err => {
                   console.error(err);
                   return res.status(422).send({ err: err.message });
