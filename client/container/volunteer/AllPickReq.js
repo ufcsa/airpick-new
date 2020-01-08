@@ -1,5 +1,6 @@
 import React from 'react';
 import { Typography, Divider, Tag } from 'antd';
+import ReqList from '../../component/Volunteer/List';
 
 const { Title, Paragraph } = Typography;
 
@@ -17,6 +18,7 @@ class AllPickReq extends React.Component {
           This page lists all the airport pick-up requests. To accept one, simply click the 'Accept' button on the left of that request.
         </Paragraph>
         <Divider />
+        <ReqList></ReqList>
       </Typography>
     )
   }

@@ -3,6 +3,7 @@ import moment from 'moment-timezone';
 import { message } from 'antd';
 // action
 const LOAD_REQ = 'LOAD_REQ';
+const LOAD_ALL = 'LOAD_ALL';
 const UPDATE_SUC = 'UPDATE_SUC';
 const ERROR_SUBMIT = 'ERROR_SUBMIT';
 const DELETE_SUC = 'DELETE_SUC';
@@ -12,12 +13,15 @@ const initState = {
   redirectTo: '',
   username: '',
   request: null,
+  list: []
 };
 // store
 
 //reducer
 export function requestRedux(state = initState, action) {
   switch (action.type) {
+    case LOAD_ALL:
+      return { ...state, list: action.payload, msg: action.msg }
     case LOAD_REQ:
       return { ...state, request: action.payload.data };
     case ERROR_SUBMIT:
@@ -49,11 +53,15 @@ function updateSuccess(request) {
     message.success('Update Successfully! Your request has been published!');
   }
 
-  return { type: UPDATE_SUC, msg: 'Update Successfully!', payload: request }
+  return { type: UPDATE_SUC, msg: 'Update Successfully!', payload: request };
 }
 
 function deleteSuccess() {
   return { type: DELETE_SUC, msg: 'delete successfully' };
+}
+
+function getListSuc(list) {
+  return { type: LOAD_ALL, msg: 'Get list success', payload: list };
 }
 // action creator
 export function loadPickreq(username) {
@@ -90,11 +98,11 @@ export function updatePickreq(userInput) {
         if (res.status === 200 && res.data.code === 0) {
           dispatch(updateSuccess(res.data));
         } else {
-          errorMsg('Error happened when update!');
+          dispatch(errorMsg('Error happened when update!'));
         }
       }, err => {
         console.log(err.stack)
-        errorMsg('Error happened when update!');
+        dispatch(errorMsg('Error happened when update!'));
       })
   }
 };
@@ -109,7 +117,24 @@ export function deletePickreq(data) {
         if (res.status === 200 && res.data.code === 0) {
           dispatch(deleteSuccess());
         } else {
-          errorMsg('Error happened when deleting this record!');
+          dispatch(errorMsg('Error happened when deleting this record!'));
+        }
+      });
+  }
+};
+
+// for volunteer center page. List all the current available requests
+export function loadAllReq() {
+  return dispatch => {
+    console.log('loading all the request');
+    return axios.get('/api/requests/list')
+      .then(res => {
+        if (res.status === 200 && res.data.code === 0) {
+          console.log(res.data.reqList)
+          res.data.reqList.sort((a, b) => new Date(a.request.arrivalTime).getTime() - new Date(b.request.arrivalTime).getTime());
+          dispatch(getListSuc(res.data.reqList));
+        } else {
+          dispatch(errorMsg('Error happened when getting the request list'));
         }
       });
   }
