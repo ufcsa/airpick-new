@@ -16,8 +16,21 @@ class NavBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalVisible: false
+      modalVisible: false,
+      screenWidth: window.innerWidth
     };
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.updateWindowSize.bind(this));
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize');
+  }
+
+  updateWindowSize = e => {
+    this.setState({ ...this.state, screenWidth: e.target.innerWidth });
   }
 
   logout() {
@@ -50,22 +63,6 @@ class NavBar extends React.Component {
       <div>
         <Menu mode='horizontal'>
           {list.map(choice => {
-            // if(choice.text === 'My Requests') {
-            //   return <SubMenu
-            //     key={choice.text}
-            //     title={
-            //       <span className='submenu-title-wrapper'
-            //         >{choice.text}</span>
-            //     }>
-            //       {choice.subItem.map(sub => {
-            //         return <Item 
-            //           key={sub.text}
-            //           onClick={() => (this.props.history.push(sub.path))}>
-            //             {sub.text}
-            //           </Item>
-            //       })}
-            //     </SubMenu>
-            // }
             if (choice.text !== 'Logout') {
               return <Item
                 key={choice.text}
@@ -74,12 +71,21 @@ class NavBar extends React.Component {
                 {choice.text}
               </Item>;
             } else {
-              return <Item
-                key={choice.text}
-                className={choice.className}
-                onClick={() => (this.logout())}>
-                {choice.text}
-              </Item>
+              if (this.state.screenWidth > 489) {
+                return <Item
+                  key={choice.text}
+                  className={choice.className}
+                  onClick={() => (this.logout())}>
+                  {choice.text}
+                </Item>
+              } else {
+                return <Item
+                  key={choice.text}
+                  className=''
+                  onClick={() => (this.logout())}>
+                  {choice.text}
+                </Item>
+              }
             }
           })}
         </Menu>

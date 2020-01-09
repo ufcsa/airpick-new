@@ -111,7 +111,7 @@ export function deletePickreq(data) {
   const id = data.key;
 
   return dispatch => {
-    console.log('deleting request', id);
+    // console.log('deleting request', id);
     axios.delete(`/api/requests/${id}`)
       .then(res => {
         if (res.status === 200 && res.data.code === 0) {
@@ -130,7 +130,7 @@ export function loadAllReq() {
     return axios.get('/api/requests/list')
       .then(res => {
         if (res.status === 200 && res.data.code === 0) {
-          console.log(res.data.reqList)
+          // console.log(res.data.reqList)
           res.data.reqList.sort((a, b) => new Date(a.request.arrivalTime).getTime() - new Date(b.request.arrivalTime).getTime());
           dispatch(getListSuc(res.data.reqList));
         } else {

@@ -1,4 +1,3 @@
-const express = require('express');
 const User = require('../model/user.model');
 const bcrypt = require('bcrypt-nodejs');
 const _filter = { 'pwd': 0, '__v': 0 };
@@ -38,7 +37,7 @@ module.exports = function (router) {
    */
   router.post('/register', (req, res) => {
     let user = new User();
-    const { email, firstName, lastName, pwd, confirm, gender, phone, wechatId, username, displayName } = req.body;
+    const { email, firstName, lastName, pwd, gender, phone, wechatId, username, displayName } = req.body;
     user.username = username;
     user.email = email;
     user.phone = phone;
@@ -51,10 +50,10 @@ module.exports = function (router) {
     bcrypt.hash(pwd, null, null, (err, hash) => {
       user.pwd = hash;
       user.save((err, doc) => {
-        if(err) {
+        if (err) {
           console.log(err);
           let errorMsg = err.errmsg;
-          if(err.code === 11000) {
+          if (err.code === 11000) {
             errorMsg = 'Username of email already exists!';
           }
           return res.json({
@@ -63,7 +62,7 @@ module.exports = function (router) {
           });
         } else {
           console.log(`user ${username} saved suc`);
-          const {_id} = doc;
+          const { _id } = doc;
           res.cookie('userId', _id);
           return res.json({
             code: 0,
@@ -83,21 +82,21 @@ module.exports = function (router) {
 
   router.get('/info', (req, res) => {
     const { userid } = req.cookies;
-    if(!userid) {
+    if (!userid) {
       return res.json({
         code: 1,
         msg: 'user not authorized!'
       });
     }
 
-    console.log(req.cookies);
-    User.findOne({_id: userid}, _filter, (err, doc) => {
-      if(err) {
+    // console.log(req.cookies);
+    User.findOne({ _id: userid }, _filter, (err, doc) => {
+      if (err) {
         return res.json({
           code: 1,
           msg: 'Internal server error'
         });
-      } else if(!doc) {
+      } else if (!doc) {
         return res.json({
           code: 1,
           msg: 'No User Info!'

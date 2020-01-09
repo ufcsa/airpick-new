@@ -5,7 +5,7 @@ const CronJob = require('cron').CronJob;
 /*
   A Cron job to clean outdated request every 15 minute. 
 */
-new CronJob('* */15 * * * *', function() {
+new CronJob('0 */15 * * * *', function () {
   console.log('fucking myself');
   const now = new Date();
   console.log(now);
@@ -142,7 +142,7 @@ module.exports = router => {
               doc.forEach(item => {
                 const username = item.username;
                 // if already has a volunteer, then skip it
-                if(item.volunteer !== '' || item.volunteer) {
+                if (item.volunteer !== '' || item.volunteer) {
                   return;
                 }
 
@@ -161,7 +161,7 @@ module.exports = router => {
                         displayName: userInfo.displayName
                       }
                     };
-                    
+
                     idx++;
                     result.reqList.push(data);
                   }).catch(err => { throw new Error(err) })
