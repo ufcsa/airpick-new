@@ -1,8 +1,8 @@
 import React from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
-import { Input, Typography, Button } from 'antd';
+// import { Form } from '@ant-design/compatible';
+// import '@ant-design/compatible/assets/index.css';
+import { Form, Input, Typography, Button } from 'antd';
 import { connect } from 'react-redux';
 import { login } from '../../redux/user.redux';
 import { Redirect } from 'react-router-dom';
@@ -12,29 +12,25 @@ const { Paragraph } = Typography;
   { login }
 )
 class LoginForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }  // console.log(input, pwd);
+  formRef = React.createRef();
 
-  handleSubmit(e) {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        this.props.login(values);
-      }
-    });
+  onFinish = values => {
+    this.props.login(values);
+  }
+
+  onFinishFailed = ({ errorFields }) => {
+    // scroll to the error field
+    this.formRef.current.scrollToField(errorFields[0].name);
   }
 
   render() {
-    const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: {
-        xs: { span: 20 },
+        xs: { span: 24 },
         sm: { span: 8 },
       },
       wrapperCol: {
-        xs: { span: 18 },
+        xs: { span: 24 },
         sm: { span: 10 },
       },
     };
@@ -48,35 +44,44 @@ class LoginForm extends React.Component {
           </h3>
         </Paragraph>
         <Paragraph>
-          <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-            <Form.Item label='Username or Email'>
-              {getFieldDecorator('input', {
-                rules: [{ required: true, message: 'Please input your username or email!' }],
-              })(
-                <Input
-                  prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
-                  placeholder="Username or Email"
-                />,
-              )}
+          <Form
+            {...formItemLayout}
+            ref={this.formRef}
+            onFinish={this.onFinish}
+            onFinishFailed={this.onFinishFailed}
+            name='login'
+          >
+            <Form.Item
+              name='input'
+              label='Username or Email'
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your username or e-mail!',
+                }
+              ]}
+            >
+              <Input
+                prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
+                placeholder="Username or Email"
+              />
             </Form.Item>
-            <Form.Item label='Password'>
-              {getFieldDecorator('pwd', {
-                rules: [{ required: true, message: 'Please input your Password!' }],
-              })(
-                <Input
-                  prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
-                  type="password"
-                  placeholder="Password"
-                />,
-              )}
+            <Form.Item
+              name='pwd'
+              label='Password'
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your password!'
+                }
+              ]}
+            >
+              <Input
+                prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
+                type="password"
+                placeholder="Password"
+              />
             </Form.Item>
-            {/* <Form.Item
-              wrapperCol={{
-                xs: { span: 18, offset: 0 },
-                sm: { span: 10, offset: 8 },
-              }}>
-              {this.props.msg? <Alert type='error' message='Error' description={this.props.msg}></Alert>: null}
-            </Form.Item> */}
             <Form.Item
               wrapperCol={{
                 xs: { span: 18, offset: 0 },
@@ -94,6 +99,6 @@ class LoginForm extends React.Component {
     );
   }
 }
-const Login = Form.create({ name: 'normal_login' })(LoginForm);
-export default Login;
+
+export default LoginForm;
 
