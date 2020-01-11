@@ -3,7 +3,9 @@
  */
 
 import React from 'react';
-import { Modal, Form, Input, DatePicker, TimePicker, InputNumber } from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Modal, Input, DatePicker, TimePicker, InputNumber } from 'antd';
 import moment from 'moment-timezone';
 
 const { TextArea } = Input;

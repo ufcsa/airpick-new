@@ -1,5 +1,7 @@
 import React from 'react';
-import { Form, Input, DatePicker, TimePicker, InputNumber,Button, Switch, Spin } from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, DatePicker, TimePicker, InputNumber, Button, Switch, Spin } from 'antd';
 import { updatePickreq, loadPickreq } from '../../redux/request.redux';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';

@@ -1,5 +1,8 @@
 import React from 'react';
-import { Form, Input, Icon, Typography, Button, Radio } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, Typography, Button, Radio } from 'antd';
 import { connect } from 'react-redux';
 import { register } from '../../redux/user.redux';
 import { Redirect } from 'react-router-dom';
@@ -89,7 +92,7 @@ class RegisterForm extends React.Component {
                 rules: [{ required: true, message: 'Please input your username or email!' }],
               })(
                 <Input
-                  prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                  prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
                   placeholder="Username or Email"
                 />,
               )}
@@ -99,7 +102,7 @@ class RegisterForm extends React.Component {
                 rules: [{ required: true, message: 'Please input your first name!' }],
               })(
                 <Input
-                  prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                  prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
                   placeholder="First Name"
                 />,
               )}
@@ -109,7 +112,7 @@ class RegisterForm extends React.Component {
                 rules: [{ required: true, message: 'Please input your last name!' }],
               })(
                 <Input
-                  prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                  prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
                   placeholder="Last Name"
                 />,
               )}
@@ -209,7 +212,7 @@ class RegisterForm extends React.Component {
           </Form>   
         </Paragraph>
       </div>
-    )
+    );
   }
 }
 const Register = Form.create({ name: 'normal_register' })(RegisterForm);

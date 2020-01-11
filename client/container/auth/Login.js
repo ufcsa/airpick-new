@@ -1,5 +1,8 @@
 import React from 'react';
-import { Form, Input, Icon, Typography, Button } from 'antd';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, Typography, Button } from 'antd';
 import { connect } from 'react-redux';
 import { login } from '../../redux/user.redux';
 import { Redirect } from 'react-router-dom';
@@ -51,7 +54,7 @@ class LoginForm extends React.Component {
                 rules: [{ required: true, message: 'Please input your username or email!' }],
               })(
                 <Input
-                  prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                  prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
                   placeholder="Username or Email"
                 />,
               )}
@@ -61,7 +64,7 @@ class LoginForm extends React.Component {
                 rules: [{ required: true, message: 'Please input your Password!' }],
               })(
                 <Input
-                  prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                  prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
                   type="password"
                   placeholder="Password"
                 />,
@@ -88,7 +91,7 @@ class LoginForm extends React.Component {
           </Form>
         </Paragraph>
       </div>
-    )
+    );
   }
 }
 const Login = Form.create({ name: 'normal_login' })(LoginForm);

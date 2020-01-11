@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Icon, Button } from 'antd';
+import '@ant-design/compatible/assets/index.css';
 
 
 class LodgereqForm extends React.Component {

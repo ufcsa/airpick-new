@@ -3,7 +3,8 @@
 */
 
 import React from 'react';
-import { Button, Icon } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 import { updatePickreq, loadPickreq } from '../../redux/request.redux';
 import { connect } from 'react-redux';
 import PickForm from './PickModal';
@@ -80,7 +81,7 @@ class RequestCenter extends React.Component {
             <br></br>
             <br></br>
             <Button type="primary" onClick={this.showModal}>
-              <Icon type="plus" />Add Request
+              <PlusOutlined />Add Request
           </Button>
             <PickForm
               wrappedComponentRef={this.saveForm}
@@ -91,7 +92,7 @@ class RequestCenter extends React.Component {
           </div>
         }
       </div>
-    )
+    );
   }
 }
 
