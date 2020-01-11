@@ -40,17 +40,17 @@ class ReqList extends React.Component {
               return <Button type='primary' size='small'>Accept</Button>
             }}>
           </Column>
-          <Column title='Name' dataIndex='user.displayName' key='name' />
+          <Column title='Name' dataIndex={['user', 'displayName']} key='name' />
           <Column title='Time'
             key='time'
             render={(text, record) => {
               return moment(record.request.arrivalTime).tz('America/New_York').format('ddd, MMM Do YYYY HH:mm')
             }}>
           </Column>
-          <Column title='Airport/Address' dataIndex='request.airport' key='airport'></Column>
-          <Column title='Luggage' dataIndex='request.luggage' key='luggage'></Column>
-          <Column title='Carryon' dataIndex='request.carryon' key='carryon'></Column>
-          <Column title='Notes' dataIndex='request.notes' key='notes'></Column>
+          <Column title='Airport/Address' dataIndex={['request', 'airport']} key='airport'></Column>
+          <Column title='Luggage' dataIndex={['request', 'luggage']} key='luggage'></Column>
+          <Column title='Carryon' dataIndex={['request', 'carryon']} key='carryon'></Column>
+          <Column title='Notes' dataIndex={['request', 'notes']} key='notes'></Column>
         </Table>
       </div>
     )
