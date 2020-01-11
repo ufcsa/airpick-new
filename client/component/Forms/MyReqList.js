@@ -122,6 +122,7 @@ class MyReqList extends React.Component {
                 key='status'
                 render={(text, record) => {
                   const status = record.volunteer ? 2 : record.published ? 1 : 0;
+                  console.log(record)
                   if (status === 0) {
                     return <Step status='wait' title='Waiting to publish..' icon={<ExclamationCircleOutlined />}></Step>;
                   } else if (status === 1) {

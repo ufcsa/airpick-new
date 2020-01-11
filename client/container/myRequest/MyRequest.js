@@ -1,16 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Typography, Divider } from 'antd';
-import { loadPickreq } from '../../redux/request.redux';
 import RequestCenter from '../../component/Forms/RequestCenter'
 const { Title } = Typography;
 
 @connect(
   state => state,
-  { loadPickreq }
 )
 class MyRequest extends React.Component {
-
   onCollapse = collapsed => {
     this.setState({ collapsed });
   }

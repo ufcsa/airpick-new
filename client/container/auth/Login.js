@@ -4,18 +4,21 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 // import '@ant-design/compatible/assets/index.css';
 import { Form, Input, Typography, Button } from 'antd';
 import { connect } from 'react-redux';
+import { loadPickreq } from '../../redux/request.redux';
 import { login } from '../../redux/user.redux';
 import { Redirect } from 'react-router-dom';
 const { Paragraph } = Typography;
 @connect(
   state => state.user,
-  { login }
+  { login, loadPickreq }
 )
 class LoginForm extends React.Component {
   formRef = React.createRef();
 
   onFinish = values => {
-    this.props.login(values);
+    this.props.login(values)
+      .then(() => { this.props.loadPickreq(this.props.username) })
+      .catch(err => console.error(err));
   }
 
   onFinishFailed = ({ errorFields }) => {
