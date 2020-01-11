@@ -1,5 +1,7 @@
 import React from 'react';
-import { Form, Input, Icon, Typography, Button, Radio } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import '@ant-design/compatible/assets/index.css';
+import { Form, Input, Typography, Button, Radio } from 'antd';
 import { connect } from 'react-redux';
 import { register } from '../../redux/user.redux';
 import { Redirect } from 'react-router-dom';
@@ -14,7 +16,7 @@ class RegisterForm extends React.Component {
     this.state = {
       confirmDirty: false
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.formRef = React.createRef();
   }
 
   handleSubmit(e) {
@@ -28,39 +30,31 @@ class RegisterForm extends React.Component {
     });
   };
 
-  phoneValidator = (rule, value, callback) => {
-    if((/^\d+$/.test(value) && value.length === 10) || !value.length) {
-      callback();
-    } else {
-      callback('Invalid US Phone Number');
-    }
+  onFinish = values => {
+    this.props.register(values);
   }
 
-  handleConfirmBlur = e => {
-    const { value } = e.target;
-    this.setState({ confirmDirty: this.state.confirmDirty || !!value });
-  };
+  onFinishFailed = ({ errorFields }) => {
+    this.formRef.current.scrollToField(errorFields[0].name);
+  }
 
-  compareToFirstPassword = (rule, value, callback) => {
-    const { form } = this.props;
-    
-    if (value && value !== form.getFieldValue('pwd')) {
-      callback('Two passwords that you enter is inconsistent!');
+  phoneValidator = (rule, value) => {
+    if (!value || !value.length || (/^\d+$/.test(value) && value.length === 10)) {
+      return Promise.resolve();
     } else {
-      callback();
+      return Promise.reject('Invalid US Phone Number!');
     }
   };
 
-  validateToNextPassword = (rule, value, callback) => {
-    const { form } = this.props;
-    if (value && this.state.confirmDirty) {
-      form.validateFields(['confirm'], { force: true });
+  compareToFirstPassword = (rule, value) => {
+    if (value && value !== this.formRef.current.getFieldValue('pwd')) {
+      return Promise.reject('Two passwords that you enter is inconsistent!');
+    } else {
+      return Promise.resolve();
     }
-    callback();
   };
 
   render() {
-    const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: {
         xs: { span: 18 },
@@ -72,128 +66,158 @@ class RegisterForm extends React.Component {
       },
     };
 
-    
+
     return (
       <div>
         {console.log(this.props.redirectTo ? 'yes' : 'no')}
-        {this.props.redirectTo? <Redirect to={this.props.redirectTo}></Redirect> : null}
+        {this.props.redirectTo ? <Redirect to={this.props.redirectTo}></Redirect> : null}
         <Paragraph className='title-middle'>
           <h3>
             Register
           </h3>
         </Paragraph>
         <Paragraph>
-          <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-            <Form.Item label='Username'>
-              {getFieldDecorator('username', {
-                rules: [{ required: true, message: 'Please input your username or email!' }],
-              })(
-                <Input
-                  prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                  placeholder="Username or Email"
-                />,
-              )}
+          <Form
+            {...formItemLayout}
+            ref={this.formRef}
+            onFinish={this.onFinish}
+            onFinishFailed={this.onFinishFailed}
+            name='register'
+          >
+            <Form.Item
+              name='username'
+              label='Username'
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your username'
+                }
+              ]}
+            >
+              <Input
+                prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
+                placeholder="Username or Email"
+              />
             </Form.Item>
-            <Form.Item label='First Name'>
-              {getFieldDecorator('firstName', {
-                rules: [{ required: true, message: 'Please input your first name!' }],
-              })(
-                <Input
-                  prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                  placeholder="First Name"
-                />,
-              )}
+            <Form.Item
+              name='firstName'
+              label='First Name'
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your first name!'
+                }
+              ]}
+            >
+              <Input
+                prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
+                placeholder="First Name"
+              />
             </Form.Item>
-            <Form.Item label='Last Name'>
-              {getFieldDecorator('lastName', {
-                rules: [{ required: true, message: 'Please input your last name!' }],
-              })(
-                <Input
-                  prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                  placeholder="Last Name"
-                />,
-              )}
+            <Form.Item
+              name='lastName'
+              label='Last Name'
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your last name!'
+                }
+              ]}
+            >
+              <Input
+                prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
+                placeholder="Last Name"
+              />
             </Form.Item>
-            <Form.Item label="E-mail">
-              {getFieldDecorator('email', {
-                rules: [
-                  {
-                    type: 'email',
-                    message: 'The input is not valid E-mail!',
-                  },
-                  {
-                    required: true,
-                    message: 'Please input your E-mail!',
-                  },
-                ],
-              })(<Input />)}
+            <Form.Item
+              name='email'
+              label="E-mail"
+              rules={[
+                {
+                  type: 'email',
+                  message: 'The input is not a valid E-mail address'
+                },
+                {
+                  required: true,
+                  message: 'Please input your E-mail!'
+                }
+              ]}
+            >
+              <Input />
             </Form.Item>
-            <Form.Item label="Password" hasFeedback>
-              {getFieldDecorator('pwd', {
-                rules: [
-                  {
-                    required: true,
-                    message: 'Please input your password!',
-                  },
-                  {
-                    validator: this.validateToNextPassword,
-                  },
-                ],
-              })(<Input.Password />)}
+            <Form.Item
+              name='pwd'
+              label="Password"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your password!'
+                }
+              ]}
+              hasFeedback
+            >
+              <Input.Password />
             </Form.Item>
-            <Form.Item label="Confirm Password" hasFeedback>
-              {getFieldDecorator('confirm', {
-                rules: [
-                  {
-                    required: true,
-                    message: 'Please confirm your password!',
-                  },
-                  {
-                    validator: this.compareToFirstPassword,
-                  },
-                ],
-              })(<Input.Password onBlur={this.handleConfirmBlur} />)}
+            <Form.Item
+              name='confirm'
+              label="Confirm Password"
+              dependencies={['pwd']}
+              rules={[
+                {
+                  required: true,
+                  message: ''
+                },
+                {
+                  validator: this.compareToFirstPassword
+                }
+              ]}
+              hasFeedback
+            >
+              <Input.Password />
             </Form.Item>
-            <Form.Item label="Gender">
-              {getFieldDecorator('gender', {
-                rules: [
-                  {
-                    required: true,
-                    message: 'Please choose your gender!',
-                  }
-                ],
-              })(<Radio.Group>
+            <Form.Item
+              name='gender'
+              label="Gender"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please choose your gender!'
+                }
+              ]}
+            >
+              <Radio.Group>
                 <Radio value='male'>Male</Radio>
                 <Radio value='female'>Female</Radio>
-              </Radio.Group>)}
+              </Radio.Group>
             </Form.Item>
-            <Form.Item label='Wechat ID'>
-              {getFieldDecorator('wechatId', {
-                rules: [{ required: true, message: 'Please input your wechat ID!' }],
-              })(
-                <Input
-                  placeholder="wechat"
-                />,
-              )}
+            <Form.Item
+              name='wechatId'
+              label='Wechat ID'
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your wechat ID!'
+                }
+              ]}
+            >
+              <Input
+                placeholder="wechat"
+              />
             </Form.Item>
-            <Form.Item label='US Phone Number'>
-              {getFieldDecorator('phone', {
-                initialValue: "",
-                rules: [{ validator: this.phoneValidator }]
-              })(
-                <Input
-                  type='String'
-                  placeholder="US Phone Number"
-                />,
-              )}
+            <Form.Item
+              name='phone'
+              label='US Phone Number'
+              rules={[
+                {
+                  validator: this.phoneValidator
+                }
+              ]}
+            >
+              <Input
+                type='String'
+                placeholder="US Phone Number"
+              />
             </Form.Item>
-            {/* <Form.Item
-              wrapperCol={{
-                xs: { span: 18, offset: 0 },
-                sm: { span: 10, offset: 8 },
-              }}>
-              {this.props.msg? <Alert type='error' message='Error' description={this.props.msg}></Alert>: null}
-            </Form.Item> */}
             <Form.Item
               wrapperCol={{
                 xs: { span: 18, offset: 0 },
@@ -205,12 +229,12 @@ class RegisterForm extends React.Component {
               </Button>
               &nbsp; Already have an account? <a href="/register">Log in</a>
             </Form.Item>
-            
-          </Form>   
+
+          </Form>
         </Paragraph>
       </div>
-    )
+    );
   }
 }
-const Register = Form.create({ name: 'normal_register' })(RegisterForm);
-export default Register;
+
+export default RegisterForm;

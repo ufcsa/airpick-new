@@ -59,7 +59,7 @@ module.exports = router => {
   // get current user's request
   router.route('/user/:username')
     .get((req, res) => {
-      console.log('getting current user info', req.currRequest)
+      console.log('getting current user\'s request info', req.currRequest)
       return res.json({
         code: 0,
         data: {
@@ -97,9 +97,25 @@ module.exports = router => {
       }
     });
 
-  // list all requests in the db
-  router.route('/:requestId')
+  router.route('/request/:requestId')
+    .post((req, res) => {
+      // A volunteer accept the request
+      const id = req.requestId;
+      Pickreq.update({ _id: id }, { volunteer: req.body.volunteer }, (err, doc) => {
+        if (err) {
+          return res.status(422).json({
+            msg: 'Internal error happened when trying to accept this request!',
+            err: err
+          });
+        } else {
+          return res.status(200).json({
+            msg: 'Accepted this request successfully!'
+          })
+        }
+      })
+    })
     .delete((req, res) => {
+      // delete a request
       const id = req.requestId;
       console.log('delete', id);
       Pickreq.deleteOne({ _id: id }, err => {
@@ -117,7 +133,7 @@ module.exports = router => {
       })
     });
 
-
+  // list all requests in the db
   router.route('/list')
     .get((req, res) => {
       Pickreq.find({})

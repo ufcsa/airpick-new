@@ -1,5 +1,12 @@
 import React from 'react';
-import { Table, Button, Spin, Tooltip, Steps, Icon } from 'antd';
+import {
+  DeleteOutlined,
+  EditOutlined,
+  ExclamationCircleOutlined,
+  LoadingOutlined,
+  SmileOutlined,
+} from '@ant-design/icons';
+import { Table, Button, Spin, Tooltip, Steps } from 'antd';
 import moment from 'moment-timezone';
 import EditModal from './EditModal';
 import { connect } from 'react-redux';
@@ -101,26 +108,27 @@ class MyReqList extends React.Component {
                   return (
                     <div>
                       <Tooltip title='Edit'>
-                        <Button type='default' icon='edit' shape='circle' style={{ marginRight: 10 }} onClick={() => this.handleEdit(record)}></Button>
+                        <Button type='default' icon={<EditOutlined />} shape='circle' style={{ marginRight: 10 }} onClick={() => this.handleEdit(record)}></Button>
                       </Tooltip>
 
                       <Tooltip title='Delete'>
-                        <Button type='danger' icon='delete' shape='circle' onClick={() => this.handleDelete(record)}></Button>
+                        <Button type='danger' icon={<DeleteOutlined />} shape='circle' onClick={() => this.handleDelete(record)}></Button>
                       </Tooltip>
                     </div>
-                  )
+                  );
                 }}>
               </Column>
               <Column title='Status'
                 key='status'
                 render={(text, record) => {
                   const status = record.volunteer ? 2 : record.published ? 1 : 0;
+                  console.log(record)
                   if (status === 0) {
-                    return <Step status='wait' title='Waiting to publish..' icon={<Icon type="exclamation-circle" />}></Step>
+                    return <Step status='wait' title='Waiting to publish..' icon={<ExclamationCircleOutlined />}></Step>;
                   } else if (status === 1) {
-                    return <Step status='process' title='Looking for volunteers..' icon={<Icon type='loading' />}></Step>
+                    return <Step status='process' title='Looking for volunteers..' icon={<LoadingOutlined />}></Step>;
                   } else {
-                    return <Step status='finish' title='Found volunteer!' icon={<Icon type='smile-o' />}></Step>
+                    return <Step status='finish' title='Found volunteer!' icon={<SmileOutlined />}></Step>;
                   }
                 }}>
               </Column>
@@ -134,7 +142,7 @@ class MyReqList extends React.Component {
             </EditModal>
           </div>}
       </div>
-    )
+    );
   }
 }
 

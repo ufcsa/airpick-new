@@ -23,7 +23,7 @@ module.exports = function (router) {
         } else {
           console.log('login success')
           res.cookie('userid', doc._id)
-          res.json({
+          return res.json({
             code: 0,
             msg: 'login success!',
             data: doc
@@ -63,7 +63,7 @@ module.exports = function (router) {
         } else {
           console.log(`user ${username} saved suc`);
           const { _id } = doc;
-          res.cookie('userId', _id);
+          res.cookie('userid', _id);
           return res.json({
             code: 0,
             data: {

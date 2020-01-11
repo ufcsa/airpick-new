@@ -56,12 +56,13 @@ export function login({ input, pwd }) {
   }
 
   return dispatch => {
-    axios.post('/api/user/login', { input, pwd })
+    return axios.post('/api/user/login', { input, pwd })
       .then(res => {
         if (res.status === 200 && res.data.code === 0) {
           dispatch(authSuccess(res.data.data));
         } else {
           dispatch(errorMsg(res.data.msg));
+          throw new Error('Failed to authenticate this user!');
         }
       })
   }
