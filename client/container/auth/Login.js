@@ -30,7 +30,7 @@ class LoginForm extends React.Component {
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: {
-        xs: { span: 18 },
+        xs: { span: 20 },
         sm: { span: 8 },
       },
       wrapperCol: {
@@ -41,7 +41,7 @@ class LoginForm extends React.Component {
 
     return (
       <div>
-        {this.props.redirectTo? <Redirect to={this.props.redirectTo}></Redirect> : null}
+        {this.props.redirectTo ? <Redirect to={this.props.redirectTo}></Redirect> : null}
         <Paragraph className='title-middle'>
           <h3>
             Log in to AirPick
@@ -87,7 +87,7 @@ class LoginForm extends React.Component {
                 Log in
               </Button>
               &nbsp; Or <a href="/register">register now!</a>
-            </Form.Item>   
+            </Form.Item>
           </Form>
         </Paragraph>
       </div>
