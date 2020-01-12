@@ -17,7 +17,7 @@ class NavBar extends React.Component {
     super(props);
     this.state = {
       modalVisible: false,
-      screenWidth: window.innerWidth
+      screenWidth: window.innerWidth,
     };
   }
 
