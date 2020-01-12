@@ -2,11 +2,11 @@
  * Showing volunteer info for my request, using react functional component
  */
 import React from 'react';
-import { Modal, List, Typography } from 'antd';
+import { Modal, Row, Col } from 'antd';
 
 const VolunteerInfoModal = ({ visible, volunteerInfo, onCancel, onOk }) => {
-  console.log(volunteerInfo);
-
+  const fontStyle = { fontSize: 16 }
+  const gutter = [0, 5];
 
   return (<div>
     {volunteerInfo ?
@@ -17,11 +17,22 @@ const VolunteerInfoModal = ({ visible, volunteerInfo, onCancel, onOk }) => {
         onCancel={onCancel}
         onOk={onOk}
       >
-        <List>
-          <List.Item>
-            <Typography.Text strong>Name</Typography.Text> {volunteerInfo.displayName}
-          </List.Item>
-        </List>
+        <Row gutter={gutter}>
+          <Col span={6} style={fontStyle}>Name</Col>
+          <Col span={6} style={fontStyle} offset={6}>{volunteerInfo.displayName}</Col>
+        </Row>
+        <Row gutter={gutter}>
+          <Col span={6} style={fontStyle}>E-mail</Col>
+          <Col span={6} style={fontStyle} offset={6}>{volunteerInfo.email}</Col>
+        </Row>
+        <Row gutter={gutter}>
+          <Col span={6} style={fontStyle}>Wechat</Col>
+          <Col span={6} style={fontStyle} offset={6}>{volunteerInfo.wechatId}</Col>
+        </Row>
+        <Row gutter={gutter}>
+          <Col span={6} style={fontStyle}>US Phone</Col>
+          <Col span={6} style={fontStyle} offset={6}>{volunteerInfo.phone}</Col>
+        </Row>
       </Modal> : null}
   </div>
   )

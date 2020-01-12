@@ -36,7 +36,6 @@ class MyReqList extends React.Component {
 
   // open the modal
   handleEdit = request => {
-    console.log(request);
     this.setState({ ...this.state, visible: true, data: request });
   }
 
