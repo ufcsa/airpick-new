@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-import { loadData } from '../../redux/user.redux'; 
+import { loadData } from '../../redux/user.redux';
 import { connect } from 'react-redux';
 import NavBar from '../NavBar/NavBar';
 import { Route, Switch } from 'react-router-dom';
@@ -43,7 +43,7 @@ class AuthRoute extends React.Component {
     const rightNavbarClass = 'navbar-right'
     const navList = [
       {
-        path: '/home',
+        path: '/',
         text: 'UF CSA Airpick',
         component: Home,
         className: 'navbar-title',
@@ -101,7 +101,7 @@ class AuthRoute extends React.Component {
         <NavBar data={navList}></NavBar>
         <Switch>
           {navList.map(op => {
-            if(op.text === 'My Requests') {
+            if (op.text === 'My Requests') {
               return <Route key={op.text} path={op.path} component={op.component}></Route>
             }
             else if (op.text !== 'Logout') {

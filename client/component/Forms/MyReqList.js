@@ -30,7 +30,8 @@ class MyReqList extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.data !== undefined) this.setState({ loading: false });
+    if (this.props.data !== undefined)
+      this.setState({ loading: false });
   }
 
   // open the modal
