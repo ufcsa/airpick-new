@@ -32,14 +32,15 @@ module.exports = router => {
           req.currRequest = doc;
           let volunteer = req.currRequest.volunteer;
           if (volunteer && volunteer.length) {
-            User.findOne({ username: volunteer })
+            // using lean() to return a simple POJO rather than Mongoose document obj
+            User.findOne({ username: volunteer }).lean()
               .exec((err, volunteerInfo) => {
                 if (err) {
                   req.currRequest = null;
                   return next(err);
                 } else if (volunteerInfo) {
-                  const { pwd, ...info } = volunteerInfo;
-                  req.volunteer = info;
+                  const { pwd, _id, ...data } = volunteerInfo;
+                  req.volunteer = data;
                   return next();
                 }
               });

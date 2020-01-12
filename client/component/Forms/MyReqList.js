@@ -9,6 +9,7 @@ import {
 import { Table, Button, Spin, Tooltip, Steps } from 'antd';
 import moment from 'moment-timezone';
 import EditModal from './EditModal';
+import VolunteerModel from './VolunteerInfoModal'
 import { connect } from 'react-redux';
 import { updatePickreq, deletePickreq } from '../../redux/request.redux';
 
@@ -25,6 +26,7 @@ class MyReqList extends React.Component {
     this.state = {
       loading: true,
       visible: false,
+      volunteerInfoVisible: false
     };
   }
 
@@ -78,6 +80,15 @@ class MyReqList extends React.Component {
     this.formRef = formRef;
   }
 
+  showVolunteerInfo = data => {
+    console.log(data);
+    this.setState({ ...this.state, volunteerInfoVisible: true, volunteerInfo: data });
+  }
+
+  closeVolunteerModal = () => {
+    this.setState({ volunteerInfoVisible: false });
+  }
+
   render() {
     const list = this.props.data.map((item) => (
       {
@@ -122,13 +133,12 @@ class MyReqList extends React.Component {
                 key='status'
                 render={(text, record) => {
                   const status = record.volunteer ? 2 : record.published ? 1 : 0;
-                  console.log(record)
                   if (status === 0) {
                     return <Step status='wait' title='Waiting to publish..' icon={<ExclamationCircleOutlined />}></Step>;
                   } else if (status === 1) {
                     return <Step status='process' title='Looking for volunteers..' icon={<LoadingOutlined />}></Step>;
                   } else {
-                    return <Step status='finish' title='Found volunteer!' icon={<SmileOutlined />}></Step>;
+                    return <Button type='primary' onClick={() => this.showVolunteerInfo(this.props.request.request.volunteer)}>Show Volunteer Info</Button>;
                   }
                 }}>
               </Column>
@@ -140,6 +150,13 @@ class MyReqList extends React.Component {
               onCancel={this.handleCancel}
               data={this.state.data}>
             </EditModal>
+            <VolunteerModel
+              visible={this.state.volunteerInfoVisible}
+              volunteerInfo={this.state.volunteerInfo}
+              onCancel={this.closeVolunteerModal}
+              onOk={this.closeVolunteerModal}
+            >
+            </VolunteerModel>
           </div>}
       </div>
     );
