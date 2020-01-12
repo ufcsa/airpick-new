@@ -4,7 +4,6 @@ import {
   EditOutlined,
   ExclamationCircleOutlined,
   LoadingOutlined,
-  SmileOutlined,
 } from '@ant-design/icons';
 import { Table, Button, Spin, Tooltip, Steps } from 'antd';
 import moment from 'moment-timezone';
