@@ -14,6 +14,10 @@ function Home() {
   return <h2>Airpick homepage</h2>
 }
 
+function NoMatch() {
+  return <h2>404 Not Found</h2>
+}
+
 @withRouter
 @connect(state => state, { loadData })
 class AuthRoute extends React.Component {
@@ -90,6 +94,10 @@ class AuthRoute extends React.Component {
         hide: isAuth
       },
       {
+        text: 'No match',
+        component: NoMatch
+      },
+      {
         text: 'Logout',
         className: rightNavbarClass,
         hide: !isAuth
@@ -101,12 +109,16 @@ class AuthRoute extends React.Component {
         <NavBar data={navList}></NavBar>
         <Switch>
           {navList.map(op => {
-            if (op.text === 'My Requests') {
-              return <Route key={op.text} path={op.path} component={op.component}></Route>
+            if (op.text === 'UF CSA Airpick') {
+              return <Route exact key={op.text} path={op.path} component={op.component}></Route>
             }
             else if (op.text !== 'Logout') {
               return <Route key={op.text} path={op.path} component={op.component}></Route>
-            } else {
+            }
+            else if (op.text !== 'No match') {
+              return <Route key={op.text} component={NoMatch}></Route>
+            }
+            else {
               return null;
             }
           })}

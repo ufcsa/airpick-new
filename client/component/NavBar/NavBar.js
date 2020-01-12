@@ -63,14 +63,14 @@ class NavBar extends React.Component {
       <div>
         <Menu mode='horizontal'>
           {list.map(choice => {
-            if (choice.text !== 'Logout') {
+            if (choice.text !== 'Logout' && choice.text !== 'No match') {
               return <Item
                 key={choice.text}
                 className={choice.className}
                 onClick={() => (this.props.history.push(choice.path))}>
                 {choice.text}
               </Item>;
-            } else {
+            } else if (choice.text !== 'No match') {
               if (this.state.screenWidth > 489) {
                 return <Item
                   key={choice.text}
