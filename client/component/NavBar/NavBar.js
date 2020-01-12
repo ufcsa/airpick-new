@@ -5,7 +5,7 @@ import { Menu, Modal } from 'antd';
 import browserCookie from 'browser-cookies';
 import { logoutRedux } from '../../redux/user.redux';
 
-const { SubMenu } = Menu;
+// const { SubMenu } = Menu;
 
 @withRouter
 @connect(
@@ -16,8 +16,21 @@ class NavBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalVisible: false
+      modalVisible: false,
+      screenWidth: window.innerWidth,
     };
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.updateWindowSize.bind(this));
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize');
+  }
+
+  updateWindowSize = e => {
+    this.setState({ ...this.state, screenWidth: e.target.innerWidth });
   }
 
   logout() {
@@ -50,36 +63,29 @@ class NavBar extends React.Component {
       <div>
         <Menu mode='horizontal'>
           {list.map(choice => {
-            // if(choice.text === 'My Requests') {
-            //   return <SubMenu
-            //     key={choice.text}
-            //     title={
-            //       <span className='submenu-title-wrapper'
-            //         >{choice.text}</span>
-            //     }>
-            //       {choice.subItem.map(sub => {
-            //         return <Item 
-            //           key={sub.text}
-            //           onClick={() => (this.props.history.push(sub.path))}>
-            //             {sub.text}
-            //           </Item>
-            //       })}
-            //     </SubMenu>
-            // }
             if (choice.text !== 'Logout') {
               return <Item
                 key={choice.text}
                 className={choice.className}
                 onClick={() => (this.props.history.push(choice.path))}>
                 {choice.text}
-                </Item>;
+              </Item>;
             } else {
-              return <Item
-                key={choice.text}
-                className={choice.className}
-                onClick={() => (this.logout())}>
+              if (this.state.screenWidth > 489) {
+                return <Item
+                  key={choice.text}
+                  className={choice.className}
+                  onClick={() => (this.logout())}>
                   {choice.text}
                 </Item>
+              } else {
+                return <Item
+                  key={choice.text}
+                  className=''
+                  onClick={() => (this.logout())}>
+                  {choice.text}
+                </Item>
+              }
             }
           })}
         </Menu>
@@ -88,7 +94,7 @@ class NavBar extends React.Component {
           visible={this.state.modalVisible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
-          >Are you sure you want to log out?</Modal>
+        >Are you sure you want to log out?</Modal>
       </div>
     )
   }

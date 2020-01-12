@@ -1,79 +1,90 @@
 import React from 'react';
-import { Form, Input, Icon, Typography, Button, Alert } from 'antd';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+// import { Form } from '@ant-design/compatible';
+// import '@ant-design/compatible/assets/index.css';
+import { Form, Input, Typography, Button } from 'antd';
 import { connect } from 'react-redux';
+import { loadPickreq } from '../../redux/request.redux';
 import { login } from '../../redux/user.redux';
 import { Redirect } from 'react-router-dom';
 const { Paragraph } = Typography;
 @connect(
   state => state.user,
-  { login }
+  { login, loadPickreq }
 )
 class LoginForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }  // console.log(input, pwd);
+  formRef = React.createRef();
 
-  handleSubmit(e) {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        this.props.login(values);
-      }
-    });
+  onFinish = values => {
+    this.props.login(values)
+      .then(() => { this.props.loadPickreq(this.props.username) })
+      .catch(err => console.error(err));
+  }
+
+  onFinishFailed = ({ errorFields }) => {
+    // scroll to the error field
+    this.formRef.current.scrollToField(errorFields[0].name);
   }
 
   render() {
-    const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: {
-        xs: { span: 18 },
+        xs: { span: 24 },
         sm: { span: 8 },
       },
       wrapperCol: {
-        xs: { span: 18 },
+        xs: { span: 24 },
         sm: { span: 10 },
       },
     };
 
     return (
       <div>
-        {this.props.redirectTo? <Redirect to={this.props.redirectTo}></Redirect> : null}
+        {this.props.redirectTo ? <Redirect to={this.props.redirectTo}></Redirect> : null}
         <Paragraph className='title-middle'>
           <h3>
             Log in to AirPick
           </h3>
         </Paragraph>
         <Paragraph>
-          <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-            <Form.Item label='Username or Email'>
-              {getFieldDecorator('input', {
-                rules: [{ required: true, message: 'Please input your username or email!' }],
-              })(
-                <Input
-                  prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                  placeholder="Username or Email"
-                />,
-              )}
+          <Form
+            {...formItemLayout}
+            ref={this.formRef}
+            onFinish={this.onFinish}
+            onFinishFailed={this.onFinishFailed}
+            name='login'
+          >
+            <Form.Item
+              name='input'
+              label='Username or Email'
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your username or e-mail!',
+                }
+              ]}
+            >
+              <Input
+                prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
+                placeholder="Username or Email"
+              />
             </Form.Item>
-            <Form.Item label='Password'>
-              {getFieldDecorator('pwd', {
-                rules: [{ required: true, message: 'Please input your Password!' }],
-              })(
-                <Input
-                  prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                  type="password"
-                  placeholder="Password"
-                />,
-              )}
+            <Form.Item
+              name='pwd'
+              label='Password'
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your password!'
+                }
+              ]}
+            >
+              <Input
+                prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
+                type="password"
+                placeholder="Password"
+              />
             </Form.Item>
-            {/* <Form.Item
-              wrapperCol={{
-                xs: { span: 18, offset: 0 },
-                sm: { span: 10, offset: 8 },
-              }}>
-              {this.props.msg? <Alert type='error' message='Error' description={this.props.msg}></Alert>: null}
-            </Form.Item> */}
             <Form.Item
               wrapperCol={{
                 xs: { span: 18, offset: 0 },
@@ -84,13 +95,13 @@ class LoginForm extends React.Component {
                 Log in
               </Button>
               &nbsp; Or <a href="/register">register now!</a>
-            </Form.Item>   
+            </Form.Item>
           </Form>
         </Paragraph>
       </div>
-    )
+    );
   }
 }
-const Login = Form.create({ name: 'normal_login' })(LoginForm);
-export default Login;
+
+export default LoginForm;
 

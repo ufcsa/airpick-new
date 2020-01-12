@@ -107,7 +107,7 @@ class AuthRoute extends React.Component {
             else if (op.text !== 'Logout') {
               return <Route key={op.text} path={op.path} component={op.component}></Route>
             } else {
-
+              return null;
             }
           })}
         </Switch>

@@ -1,7 +1,14 @@
 import React from 'react';
-import { Table, Button, Spin, Tooltip, Steps, Icon } from 'antd';
+import {
+  DeleteOutlined,
+  EditOutlined,
+  ExclamationCircleOutlined,
+  LoadingOutlined,
+} from '@ant-design/icons';
+import { Table, Button, Spin, Tooltip, Steps } from 'antd';
 import moment from 'moment-timezone';
 import EditModal from './EditModal';
+import VolunteerModel from './VolunteerInfoModal'
 import { connect } from 'react-redux';
 import { updatePickreq, deletePickreq } from '../../redux/request.redux';
 
@@ -18,6 +25,7 @@ class MyReqList extends React.Component {
     this.state = {
       loading: true,
       visible: false,
+      volunteerInfoVisible: false
     };
   }
 
@@ -27,7 +35,6 @@ class MyReqList extends React.Component {
 
   // open the modal
   handleEdit = request => {
-    console.log(request);
     this.setState({ ...this.state, visible: true, data: request });
   }
 
@@ -71,6 +78,15 @@ class MyReqList extends React.Component {
     this.formRef = formRef;
   }
 
+  showVolunteerInfo = data => {
+    console.log(data);
+    this.setState({ ...this.state, volunteerInfoVisible: true, volunteerInfo: data });
+  }
+
+  closeVolunteerModal = () => {
+    this.setState({ volunteerInfoVisible: false });
+  }
+
   render() {
     const list = this.props.data.map((item) => (
       {
@@ -101,14 +117,14 @@ class MyReqList extends React.Component {
                   return (
                     <div>
                       <Tooltip title='Edit'>
-                        <Button type='default' icon='edit' shape='circle' style={{ marginRight: 10 }} onClick={() => this.handleEdit(record)}></Button>
+                        <Button type='default' icon={<EditOutlined />} shape='circle' style={{ marginRight: 10 }} onClick={() => this.handleEdit(record)}></Button>
                       </Tooltip>
 
                       <Tooltip title='Delete'>
-                        <Button type='danger' icon='delete' shape='circle' onClick={() => this.handleDelete(record)}></Button>
+                        <Button type='danger' icon={<DeleteOutlined />} shape='circle' onClick={() => this.handleDelete(record)}></Button>
                       </Tooltip>
                     </div>
-                  )
+                  );
                 }}>
               </Column>
               <Column title='Status'
@@ -116,11 +132,11 @@ class MyReqList extends React.Component {
                 render={(text, record) => {
                   const status = record.volunteer ? 2 : record.published ? 1 : 0;
                   if (status === 0) {
-                    return <Step status='wait' title='Waiting to publish..' icon={<Icon type="exclamation-circle" />}></Step>
+                    return <Step status='wait' title='Waiting to publish..' icon={<ExclamationCircleOutlined />}></Step>;
                   } else if (status === 1) {
-                    return <Step status='process' title='Looking for volunteers..' icon={<Icon type='loading' />}></Step>
+                    return <Step status='process' title='Looking for volunteers..' icon={<LoadingOutlined />}></Step>;
                   } else {
-                    return <Step status='finish' title='Found volunteer!' icon={<Icon type='smile-o' />}></Step>
+                    return <Button type='primary' onClick={() => this.showVolunteerInfo(this.props.request.request.volunteer)}>Show Volunteer Info</Button>;
                   }
                 }}>
               </Column>
@@ -132,9 +148,16 @@ class MyReqList extends React.Component {
               onCancel={this.handleCancel}
               data={this.state.data}>
             </EditModal>
+            <VolunteerModel
+              visible={this.state.volunteerInfoVisible}
+              volunteerInfo={this.state.volunteerInfo}
+              onCancel={this.closeVolunteerModal}
+              onOk={this.closeVolunteerModal}
+            >
+            </VolunteerModel>
           </div>}
       </div>
-    )
+    );
   }
 }
 

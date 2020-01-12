@@ -1,4 +1,3 @@
-'use strict';
 const User = require('../model/user.model');
 const Pickreq = require('../model/pickreq.model');
 const CronJob = require('cron').CronJob;
@@ -6,10 +5,9 @@ const CronJob = require('cron').CronJob;
 /*
   A Cron job to clean outdated request every 15 minute. 
 */
-
-const scheduleClean = new CronJob('* */15 * * * *', function() {
+new CronJob('0 */15 * * * *', function () {
   console.log('fucking myself');
-  const now = new Date()
+  const now = new Date();
   console.log(now);
 }, null, true, 'America/New_York');
 
@@ -34,14 +32,15 @@ module.exports = router => {
           req.currRequest = doc;
           let volunteer = req.currRequest.volunteer;
           if (volunteer && volunteer.length) {
-            User.findOne({ username: volunteer })
+            // using lean() to return a simple POJO rather than Mongoose document obj
+            User.findOne({ username: volunteer }).lean()
               .exec((err, volunteerInfo) => {
                 if (err) {
                   req.currRequest = null;
                   return next(err);
                 } else if (volunteerInfo) {
-                  const { pwd, ...info } = volunteerInfo;
-                  req.volunteer = info;
+                  const { pwd, _id, ...data } = volunteerInfo;
+                  req.volunteer = data;
                   return next();
                 }
               });
@@ -61,7 +60,7 @@ module.exports = router => {
   // get current user's request
   router.route('/user/:username')
     .get((req, res) => {
-      console.log('getting current user info', req.currRequest)
+      console.log('getting current user\'s request info', req.currRequest)
       return res.json({
         code: 0,
         data: {
@@ -99,9 +98,25 @@ module.exports = router => {
       }
     });
 
-  // list all requests in the db
-  router.route('/:requestId')
+  router.route('/request/:requestId')
+    .post((req, res) => {
+      // A volunteer accept the request
+      const id = req.requestId;
+      Pickreq.update({ _id: id }, { volunteer: req.body.volunteer }, (err, doc) => {
+        if (err) {
+          return res.status(422).json({
+            msg: 'Internal error happened when trying to accept this request!',
+            err: err
+          });
+        } else {
+          return res.status(200).json({
+            msg: 'Accepted this request successfully!'
+          })
+        }
+      })
+    })
     .delete((req, res) => {
+      // delete a request
       const id = req.requestId;
       console.log('delete', id);
       Pickreq.deleteOne({ _id: id }, err => {
@@ -119,7 +134,7 @@ module.exports = router => {
       })
     });
 
-
+  // list all requests in the db
   router.route('/list')
     .get((req, res) => {
       Pickreq.find({})
@@ -144,7 +159,7 @@ module.exports = router => {
               doc.forEach(item => {
                 const username = item.username;
                 // if already has a volunteer, then skip it
-                if(item.volunteer !== '' || item.volunteer) {
+                if (item.volunteer !== '' || item.volunteer) {
                   return;
                 }
 
@@ -163,7 +178,7 @@ module.exports = router => {
                         displayName: userInfo.displayName
                       }
                     };
-                    
+
                     idx++;
                     result.reqList.push(data);
                   }).catch(err => { throw new Error(err) })

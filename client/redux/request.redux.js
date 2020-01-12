@@ -7,13 +7,14 @@ const LOAD_ALL = 'LOAD_ALL';
 const UPDATE_SUC = 'UPDATE_SUC';
 const ERROR_SUBMIT = 'ERROR_SUBMIT';
 const DELETE_SUC = 'DELETE_SUC';
+const ACCEPT_REQ_SUC = 'ACCEPT_REQ_SUC';
 
 const initState = {
   msg: '',
   redirectTo: '',
   username: '',
-  request: null,
-  list: []
+  request: null, // current user's requust
+  list: []  // all request [{key: int, request: reqObj, user: userObj}]
 };
 // store
 
@@ -30,6 +31,8 @@ export function requestRedux(state = initState, action) {
       return { ...state, msg: action.msg, request: action.payload.data, redirectTo: '/myrequest' };
     case DELETE_SUC:
       return { ...state, msg: action.msg, request: null };
+    case ACCEPT_REQ_SUC:
+      return { ...state, msg: action.msg, list: action.payload };
     default:
       return state;
   }
@@ -63,6 +66,10 @@ function deleteSuccess() {
 function getListSuc(list) {
   return { type: LOAD_ALL, msg: 'Get list success', payload: list };
 }
+
+function acceptSuc(msg, newList) {
+  return { type: ACCEPT_REQ_SUC, msg: msg, payload: newList }
+}
 // action creator
 export function loadPickreq(username) {
   // load pickreq from db once and save it inside the redux store
@@ -89,7 +96,7 @@ export function updatePickreq(userInput) {
     carryon: userInput.carryon,
     luggage: userInput.luggage,
     notes: userInput.notes
-  }
+  };
 
   return dispatch => {
     console.log('dispatching')
@@ -111,8 +118,8 @@ export function deletePickreq(data) {
   const id = data.key;
 
   return dispatch => {
-    console.log('deleting request', id);
-    axios.delete(`/api/requests/${id}`)
+    // console.log('deleting request', id);
+    axios.delete(`/api/requests/request/${id}`)
       .then(res => {
         if (res.status === 200 && res.data.code === 0) {
           dispatch(deleteSuccess());
@@ -130,12 +137,30 @@ export function loadAllReq() {
     return axios.get('/api/requests/list')
       .then(res => {
         if (res.status === 200 && res.data.code === 0) {
-          console.log(res.data.reqList)
+          // console.log(res.data.reqList)
           res.data.reqList.sort((a, b) => new Date(a.request.arrivalTime).getTime() - new Date(b.request.arrivalTime).getTime());
           dispatch(getListSuc(res.data.reqList));
         } else {
           dispatch(errorMsg('Error happened when getting the request list'));
         }
       });
+  }
+};
+
+// for volunteer to accept one request
+export function acceptReq(reqId, username, reqList) {
+  const newList = reqList.filter(item => item.request._id !== reqId);
+  return dispatch => {
+    console.log(`${username} requesting the request ${reqId}`);
+    return axios.post(`/api/requests/request/${reqId}`, { volunteer: username })
+      .then(res => {
+        if (res.status === 200) {
+          console.log(res.data);
+          dispatch(acceptSuc(res.data.msg, newList));
+        } else {
+          console.error(res.data.err);
+          dispatch(errorMsg(res.data.msg));
+        }
+      })
   }
 }
