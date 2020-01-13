@@ -12,7 +12,7 @@
 // let auth = require('./mail.config');
 // let xoauth2gen = xoauth2.createXOAuth2Generator(
 //     auth
-// );
+// ); 
 
 // xoauth2gen.on("token", function (token) {
 //     console.log("User: ", token.user); // e-mail address
