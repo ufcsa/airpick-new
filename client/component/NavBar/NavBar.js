@@ -86,6 +86,8 @@ class NavBar extends React.Component {
                   {choice.text}
                 </Item>
               }
+            } else {
+              return null;
             }
           })}
         </Menu>

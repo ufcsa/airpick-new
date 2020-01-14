@@ -1,17 +1,17 @@
 import React from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-// import { Form } from '@ant-design/compatible';
-// import '@ant-design/compatible/assets/index.css';
 import { Form, Input, Typography, Button } from 'antd';
 import { connect } from 'react-redux';
 import { loadPickreq } from '../../redux/request.redux';
 import { login } from '../../redux/user.redux';
 import { Redirect } from 'react-router-dom';
 const { Paragraph } = Typography;
+
 @connect(
   state => state.user,
   { login, loadPickreq }
 )
+
 class LoginForm extends React.Component {
   formRef = React.createRef();
 
@@ -27,6 +27,7 @@ class LoginForm extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
