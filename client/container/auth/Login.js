@@ -11,6 +11,7 @@ const { Paragraph } = Typography;
   state => state.user,
   { login, loadPickreq }
 )
+
 class LoginForm extends React.Component {
   formRef = React.createRef();
 
