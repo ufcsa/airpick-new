@@ -1,7 +1,5 @@
 import React from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-// import { Form } from '@ant-design/compatible';
-// import '@ant-design/compatible/assets/index.css';
 import { Form, Input, Typography, Button } from 'antd';
 import { connect } from 'react-redux';
 import { loadPickreq } from '../../redux/request.redux';
