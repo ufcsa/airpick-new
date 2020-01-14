@@ -7,7 +7,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import { updatePickreq, loadPickreq } from '../../redux/request.redux';
 import { connect } from 'react-redux';
-import PickForm from './PickModal';
+import PickreqForm from './PickModal';
 import MyReqList from './MyReqList'
 
 @connect(
@@ -33,27 +33,20 @@ class RequestCenter extends React.Component {
     this.setState({ visible: false });
   }
 
-  handleSubmit = () => {
+  handleSubmit = (values) => {
     console.log('ok clicked')
-    const { form } = this.formRef.props;
-    form.validateFields((err, fieldsValue) => {
-      if (err) {
-        return;
-      }
-      // Should format date value before submit.
-      const values = {
-        ...fieldsValue,
-        'publish': true,
-        'notes': fieldsValue['notes'] ? fieldsValue['notes'] : '',
-        'date': fieldsValue['date'].format('YYYY-MM-DD'),
-        'time': fieldsValue['time'].format('HH:mm'),
-        'username': this.props.user.username,
-        'volunteer': this.props.user.volunteer
-      };
-
-      this.props.updatePickreq(values).then(() => {
-        this.setState({ visible: false });
-      });
+    // Should format date value before submit.
+    const updatePickreqValues = {
+      ...values,
+      'publish': true,
+      'notes': values.notes ? values.notes : '',
+      'date': values.date.format('YYYY-MM-DD'),
+      'time': values.time.format('HH:mm'),
+      'username': this.props.user.username,
+      'volunteer': this.props.user.volunteer
+    };
+    this.props.updatePickreq(updatePickreqValues).then(() => {
+      this.setState({ visible: false });
     });
   }
 
@@ -83,12 +76,12 @@ class RequestCenter extends React.Component {
             <Button type="primary" onClick={this.showModal}>
               <PlusOutlined />Add Request
           </Button>
-            <PickForm
+            <PickreqForm
               wrappedComponentRef={this.saveForm}
               visible={this.state.visible}
-              onSubmit={this.handleSubmit}
+              onCreate={this.handleSubmit}
               onCancel={this.handleCancel}>
-            </PickForm>
+            </PickreqForm>
           </div>
         }
       </div>

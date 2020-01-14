@@ -92,7 +92,7 @@ class EditForm extends React.Component {
                 name='time'
                 rules={requirement.rules}
               >
-                <DatePicker format={dateFormat} />
+                <TimePicker format={timeFormat} />
               </Form.Item>
               {/* <Form.Item label='Airport/Location'>
                 {getFieldDecorator('airport',
