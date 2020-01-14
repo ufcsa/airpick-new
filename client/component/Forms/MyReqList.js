@@ -45,30 +45,30 @@ class MyReqList extends React.Component {
     this.props.deletePickreq(request);
   }
 
-  handleSubmit = () => {
+  handleSubmit = (values) => {
     console.log('submitting update');
-    const { form } = this.formRef.props;
 
-    form.validateFields((err, fieldsValue) => {
-      if (err) {
-        console.err(err.stack)
-        return;
-      }
-      // Should format date value before submit.
-      const values = {
-        ...fieldsValue,
-        'publish': true,
-        'notes': fieldsValue['notes'] ? fieldsValue['notes'] : '',
-        'date': fieldsValue['date'].format('YYYY-MM-DD'),
-        'time': fieldsValue['time'].format('HH:mm'),
-        'username': this.props.user.username,
-        'volunteer': this.props.user.volunteer
-      };
-
-      this.props.updatePickreq(values).then(() => {
-        this.setState({ visible: false });
-      });
+    // const { form } = this.formRef.props;
+    // form.validateFields((err, fieldsValue) => {
+    //   if (err) {
+    //     console.err(err.stack)
+    //     return;
+    //   }
+    // Should format date value before submit.
+    const updatePickReqVal = {
+      ...values,
+      'publish': true,
+      'notes': values.notes ? values.notes : '',
+      'date': values.date.format('YYYY-MM-DD'),
+      'time': values.time.format('HH:mm'),
+      'username': this.props.user.username,
+      'volunteer': this.props.user.volunteer
+    };
+    this.props.updatePickreq(updatePickReqVal).then(() => {
+      this.setState({ visible: false });
     });
+
+    // });
   }
 
   handleCancel = () => {
@@ -145,7 +145,7 @@ class MyReqList extends React.Component {
             <EditModal
               wrappedComponentRef={this.updateForm}
               visible={this.state.visible}
-              onSubmit={this.handleSubmit}
+              onCreate={this.handleSubmit}
               onCancel={this.handleCancel}
               data={this.state.data}>
             </EditModal>
