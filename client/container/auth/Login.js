@@ -8,6 +8,7 @@ import { loadPickreq } from '../../redux/request.redux';
 import { login } from '../../redux/user.redux';
 import { Redirect } from 'react-router-dom';
 const { Paragraph } = Typography;
+
 @connect(
   state => state.user,
   { login, loadPickreq }
@@ -27,6 +28,7 @@ class LoginForm extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },

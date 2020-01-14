@@ -19,7 +19,7 @@ export function userRedux(state = initState, action) {
     case LOAD_DATA:
       return { ...state, ...action.payload, isAuth: true };
     case AUTH_SUCC:
-      return { ...state, msg: '', ...action.payload, isAuth: true, redirectTo: '/home' };
+      return { ...state, msg: '', ...action.payload, isAuth: true, redirectTo: '/' };
     case ERROR_MSG:
       return { ...state, isAuth: false, msg: action.msg };
     case LOGOUT:
