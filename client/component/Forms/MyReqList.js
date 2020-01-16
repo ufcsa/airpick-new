@@ -30,6 +30,7 @@ class MyReqList extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.props);
     if (this.props.data !== undefined)
       this.setState({ loading: false });
   }

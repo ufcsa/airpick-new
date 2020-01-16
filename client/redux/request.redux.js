@@ -53,7 +53,7 @@ function updateSuccess(request) {
   if (!request.data.request.published) {
     message.warning('Update Successfully, but your request is not published!')
   } else {
-    message.success('Update Successfully! Your request has been published!');
+    message.success('Update Successfully! Your request has been published!', 1);
   }
 
   return { type: UPDATE_SUC, msg: 'Update Successfully!', payload: request };

@@ -58,18 +58,30 @@ class NavBar extends React.Component {
 
   render() {
     const list = this.props.data.filter(v => !v.hide);
-    const Item = Menu.Item;
+    const { Item, SubMenu } = Menu;
     return (
       <div>
         <Menu mode='horizontal'>
           {list.map(choice => {
-            if (choice.text !== 'Logout' && choice.text !== 'No match') {
-              return <Item
+            if (choice.text !== 'Logout' && choice.text !== 'No match' && choice.text !== 'Volunteer') {
+              return (<Item
                 key={choice.text}
                 className={choice.className}
                 onClick={() => (this.props.history.push(choice.path))}>
                 {choice.text}
-              </Item>;
+              </Item>);
+            } else if (choice.text === 'Volunteer') {
+              const subList = choice.subItem;
+              return <SubMenu key={choice.text} title={choice.text}>
+                {subList.map(item => {
+                  return (<Item
+                    key={item.text}
+                    onClick={() => (this.props.history.push(item.path))}
+                  >
+                    {item.text}
+                  </Item>)
+                })}
+              </SubMenu>
             } else if (choice.text !== 'No match') {
               if (this.state.screenWidth > 489) {
                 return <Item

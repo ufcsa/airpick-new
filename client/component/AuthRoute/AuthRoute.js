@@ -7,8 +7,8 @@ import NavBar from '../NavBar/NavBar';
 import { Route, Switch } from 'react-router-dom';
 import Login from '../../container/auth/Login';
 import Register from '../../container/auth/Register';
-import MyRequest from '../../container/myRequest/MyRequest'
-import AllPickReq from '../../container/volunteer/AllPickReq'
+import MyRequest from '../../container/myRequest/MyRequest';
+import AllPickReq from '../../container/volunteer/AllPickReq';
 
 function Home() {
   return <h2>Airpick homepage</h2>
@@ -74,10 +74,16 @@ class AuthRoute extends React.Component {
         // }]
       },
       {
-        path: '/list',
         text: 'Volunteer',
         hide: !isAuth,
-        component: AllPickReq,
+        subItem: [{
+          path: '/list',
+          text: 'All Requests',
+          component: AllPickReq
+        }, {
+          path: '/accepted',
+          text: 'Accepted',
+        }]
       },
       {
         path: '/register',
@@ -111,6 +117,12 @@ class AuthRoute extends React.Component {
           {navList.map(op => {
             if (op.text === 'UF CSA Airpick') {
               return <Route exact key={op.text} path={op.path} component={op.component}></Route>
+            }
+            else if (op.text === 'Volunteer') {
+              const sublist = op.subItem;
+              return sublist.map(it => {
+                return <Route key={it.text} path={it.path} component={it.component}></Route>
+              })
             }
             else if (op.text !== 'Logout') {
               return <Route key={op.text} path={op.path} component={op.component}></Route>

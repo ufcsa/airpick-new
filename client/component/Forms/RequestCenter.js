@@ -10,6 +10,18 @@ import { connect } from 'react-redux';
 import PickreqForm from './PickModal';
 import MyReqList from './MyReqList'
 
+// decorator
+// const a = () => {
+//   return function (cls) {
+//     return cls.b;
+//   }
+// }
+
+// a()(A);
+
+// class A {
+
+// }
 @connect(
   state => state,
   { updatePickreq, loadPickreq }
@@ -55,6 +67,7 @@ class RequestCenter extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     // TODO: change this.props.request to an array. One user can have multiple requests
     let previousReq = undefined;
     if (!this.props.request.request) {
