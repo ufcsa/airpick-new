@@ -9,6 +9,7 @@ import Login from '../../container/auth/Login';
 import Register from '../../container/auth/Register';
 import MyRequest from '../../container/myRequest/MyRequest';
 import AllPickReq from '../../container/volunteer/AllPickReq';
+import MyAccept from '../../container/volunteer/MyAccept';
 
 function Home() {
   return <h2>Airpick homepage</h2>
@@ -83,6 +84,7 @@ class AuthRoute extends React.Component {
         }, {
           path: '/accepted',
           text: 'Accepted',
+          component: MyAccept
         }]
       },
       {
