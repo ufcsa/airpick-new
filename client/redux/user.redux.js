@@ -42,11 +42,11 @@ function errorMsg(msg) {
 
 //对外暴露的action creator
 export function loadData(userinfo) {
-  return { type: LOAD_DATA, payload: userinfo };
+  return dispatch => dispatch({ type: LOAD_DATA, payload: userinfo });
 };
 
 export function logoutRedux() {
-  return { type: LOGOUT };
+  return dispatch => dispatch({ type: LOGOUT });
 };
 
 export function login({ input, pwd }) {
