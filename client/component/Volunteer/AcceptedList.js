@@ -1,10 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-class AcceptedList extends React.Component {
-  render() {
-    return <h2>This is a list</h2>
-  }
+export const AcceptedList = props => {
+  const userState = useSelector(state => state.user);
+  const reqState = useSelector(state => state.request);
+
+  return <h2>This is a list</h2>
 }
-
-export default AcceptedList;

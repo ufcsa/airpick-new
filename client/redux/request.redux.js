@@ -8,6 +8,7 @@ const UPDATE_SUC = 'UPDATE_SUC';
 const ERROR_SUBMIT = 'ERROR_SUBMIT';
 const DELETE_SUC = 'DELETE_SUC';
 const ACCEPT_REQ_SUC = 'ACCEPT_REQ_SUC';
+const LOAD_ACCEPTED_SUC = 'LOAD_ACCEPTED_SUC';
 
 const initState = {
   msg: '',
@@ -33,6 +34,8 @@ export function requestRedux(state = initState, action) {
       return { ...state, msg: action.msg, request: null };
     case ACCEPT_REQ_SUC:
       return { ...state, msg: action.msg, list: action.payload };
+    case LOAD_ACCEPTED_SUC:
+      return { ...state, msg: action.msg, acceptedList: action.acceptedList }
     default:
       return state;
   }
@@ -69,6 +72,10 @@ function getListSuc(list) {
 
 function acceptSuc(msg, newList) {
   return { type: ACCEPT_REQ_SUC, msg: msg, payload: newList }
+}
+
+function loadAcceptReqSuc(msg, acceptedList) {
+  return { type: LOAD_ACCEPTED_SUC, msg, acceptedList }
 }
 // action creator
 export function loadPickreq(username) {
@@ -160,6 +167,19 @@ export function acceptReq(reqId, username, reqList) {
         } else {
           console.error(res.data.err);
           dispatch(errorMsg(res.data.msg));
+        }
+      })
+  }
+};
+
+// load all accepted request as a volunteer
+export const loadAcceptedReq = volunteer => {
+  return dispatch => {
+    return axios.get(`/api/requests/volunteer/${volunteer}`)
+      .then(res => {
+        if (res.status === 200) {
+          console.log(res.data);
+          dispatch(loadAcceptReqSuc(res.data.msg, res.data.acceptedList));
         }
       })
   }

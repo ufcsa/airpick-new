@@ -57,6 +57,12 @@ module.exports = router => {
     return next();
   });
 
+  // middleware to get volunteer username
+  router.param('volunteer', (req, res, next, volunteer) => {
+    req.volunteer = volunteer;
+    return next();
+  })
+
   // get current user's request
   router.route('/user/:username')
     .get((req, res) => {
@@ -198,6 +204,12 @@ module.exports = router => {
         });
     });
 
+  router.route('/volunteer/:volunteer')
+    .get((req, res) => {
+      Pickreq.find({ volunteer: req.volunteer }).lean().exec((err, doc) => {
+        console.log(doc);
+      })
+    })
 
   return router;
 }

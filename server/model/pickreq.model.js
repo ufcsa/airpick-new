@@ -1,7 +1,5 @@
-'use strict';
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const PATH = require('path');
 
 const PickreqSchema = new Schema({
   createdAt: {
@@ -34,7 +32,8 @@ const PickreqSchema = new Schema({
   },
   volunteer: {
     type: String,
-    default: ''
+    default: '',
+    index: true
   },
   published: {
     type: Boolean,
