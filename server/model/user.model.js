@@ -1,4 +1,3 @@
-'use strict';
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt-nodejs');
 const Schema = mongoose.Schema;
@@ -6,14 +5,14 @@ const validate = require('mongoose-validator');
 
 const emailValidator = [
   validate({
-      validator: 'matches',
-      arguments: /^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$/,
-      message: 'Invalid email format'
+    validator: 'matches',
+    arguments: /^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$/,
+    message: 'Invalid email format'
   }),
   validate({
-      validator: 'isLength',
-      arguments: [3, 40],
-      message: 'Email should be between {ARGS[0]} and {ARGS[1]} characters'
+    validator: 'isLength',
+    arguments: [3, 40],
+    message: 'Email should be between {ARGS[0]} and {ARGS[1]} characters'
   })
 ];
 
@@ -78,7 +77,7 @@ const UserSchema = new Schema({
   }
 });
 
-UserSchema.methods.comparePassword = function(pwd) {
+UserSchema.methods.comparePassword = function (pwd) {
   return bcrypt.compareSync(pwd, this.pwd);
 }
 

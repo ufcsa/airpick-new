@@ -208,6 +208,10 @@ module.exports = router => {
     .get((req, res) => {
       Pickreq.find({ volunteer: req.volunteer }).lean().exec((err, doc) => {
         console.log(doc);
+        return res.status(200).json({
+          msg: 'Get Accepted List Successfully',
+          acceptedList: doc,
+        })
       })
     })
 

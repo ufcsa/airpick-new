@@ -174,6 +174,7 @@ export function acceptReq(reqId, username, reqList) {
 
 // load all accepted request as a volunteer
 export const loadAcceptedReq = volunteer => {
+  console.log('loading accepted req')
   return dispatch => {
     return axios.get(`/api/requests/volunteer/${volunteer}`)
       .then(res => {

@@ -8,7 +8,6 @@ const { Title, Paragraph } = Typography;
 const MyAccept = props => {
   // using useSelector hook to get user store from redux
   const userState = useSelector(state => state.user);
-  console.log(props)
 
   if (userState) {
     return (
