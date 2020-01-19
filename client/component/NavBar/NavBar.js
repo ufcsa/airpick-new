@@ -7,6 +7,20 @@ import { logoutRedux } from '../../redux/user.redux';
 
 // const { SubMenu } = Menu;
 
+// deep filter an item in a high dimensional array
+const deepFilter = (arr, filterFunc) => {
+  for (let i = 0; i < arr.length; i++) {
+    let element = arr[i];
+    if (element.subItem) {
+      const item = deepFilter(element.subItem, filterFunc);
+      if (item) {
+        return item;
+      }
+    }
+  };
+  return arr.filter(filterFunc)[0];
+}
+
 @withRouter
 @connect(
   state => state,
@@ -27,13 +41,8 @@ class NavBar extends React.Component {
     window.addEventListener('resize', this.updateWindowSize.bind(this));
   }
 
-  componentDidUpdate() {
-    // this.setState({ location: this.props.location.pathname });
-    window.addEventListener('resize', this.updateWindowSize.bind(this));
-  }
-
   componentWillUnmount() {
-    window.removeEventListener('resize');
+    window.removeAllListener('resize');
   }
 
   updateWindowSize = e => {
@@ -66,9 +75,8 @@ class NavBar extends React.Component {
   render() {
     let currItem = null;
     if (this.props.location) {
-      currItem = this.props.data.filter(v => v.path === this.props.location.pathname)[0];
+      currItem = deepFilter(this.props.data, (v => v.path === this.props.location.pathname));
     }
-
     const list = this.props.data.filter(v => !v.hide);
     const { Item, SubMenu } = Menu;
     return (
