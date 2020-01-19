@@ -46,6 +46,7 @@ class MyReqList extends React.Component {
     this.props.deletePickreq(request);
   }
 
+  // handle update the current reqeust
   handleSubmit = (values) => {
     console.log('submitting update');
 

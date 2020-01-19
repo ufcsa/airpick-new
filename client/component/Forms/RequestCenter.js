@@ -45,6 +45,7 @@ class RequestCenter extends React.Component {
     this.setState({ visible: false });
   }
 
+  // handle adding a new request
   handleSubmit = (values) => {
     console.log('ok clicked')
     // Should format date value before submit.
