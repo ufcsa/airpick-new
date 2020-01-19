@@ -18,10 +18,17 @@ class NavBar extends React.Component {
     this.state = {
       modalVisible: false,
       screenWidth: window.innerWidth,
+      location: this.props.location.pathname
     };
   }
 
   componentDidMount() {
+    this.setState({ location: this.props.location.pathname });
+    window.addEventListener('resize', this.updateWindowSize.bind(this));
+  }
+
+  componentDidUpdate() {
+    // this.setState({ location: this.props.location.pathname });
     window.addEventListener('resize', this.updateWindowSize.bind(this));
   }
 
@@ -57,11 +64,16 @@ class NavBar extends React.Component {
   }
 
   render() {
+    let currItem = null;
+    if (this.props.location) {
+      currItem = this.props.data.filter(v => v.path === this.props.location.pathname)[0];
+    }
+
     const list = this.props.data.filter(v => !v.hide);
     const { Item, SubMenu } = Menu;
     return (
       <div>
-        <Menu mode='horizontal'>
+        <Menu mode='horizontal' selectedKeys={[currItem.text]}>
           {list.map(choice => {
             if (choice.text !== 'Logout' && choice.text !== 'No match' && choice.text !== 'Volunteer') {
               return (<Item
