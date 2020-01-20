@@ -6,28 +6,29 @@ import moment from 'moment';
 
 const { Column } = Table;
 
-export const AcceptedList = props => {
+export const AcceptedList = () => {
 	const userState = useSelector(state => state.user);
 	const reqState = useSelector(state => state.request);
 	const dispatch = useDispatch();
+
 	useEffect(() => {
 		if (userState.username) {
 			dispatch(loadAcceptedReq(userState.username));
 		}
 	}, [dispatch, userState.username]);
 
-	console.log(reqState.acceptedList);
-
 	if (reqState.acceptedList === undefined) {
 		return null;
 	}
-	// TODO: iterate through reqState.acceptedList to get all accepted list
+
+	const acceptedList = reqState.acceptedList.map(v => ({ ...v, key: v._id }));
+	console.log(acceptedList);
 
 	return (
 		<div>
 			<Table
-				dataSource={reqState.acceptedList}
-				loading={reqState.acceptedList}
+				dataSource={acceptedList}
+				loading={acceptedList ? false : true}
 				pagination={false}
 				tableLayout='fixed'
 			>
@@ -36,7 +37,6 @@ export const AcceptedList = props => {
 					title='Time'
 					key='time'
 					render={(text, record) => {
-						debugger;
 						return moment(record.arrivalTime)
 							.tz('America/New_York')
 							.format('ddd, MMM Do YYYY HH:mm');

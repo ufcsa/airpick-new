@@ -47,7 +47,7 @@ class ReqList extends React.Component {
 							// TODO: add click event
 							if (this.props.user.username === record.request.username) {
 								return (
-									<Button type='ghost' size='small' disabled>
+									<Button type='ghost' size='middle' disabled>
 										Accept
 									</Button>
 								);
@@ -55,7 +55,7 @@ class ReqList extends React.Component {
 							return (
 								<Button
 									type='primary'
-									size='small'
+									size='middle'
 									onClick={() => this.handleAccept(record.request)}
 								>
 									Accept
