@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Table } from 'antd';
+import { Table, Button } from 'antd';
 import { loadAcceptedReq } from '../../redux/request.redux';
 import moment from 'moment';
 
@@ -21,7 +21,10 @@ export const AcceptedList = () => {
 		return null;
 	}
 
-	const acceptedList = reqState.acceptedList.map(v => ({ ...v, key: v._id }));
+	const acceptedList = reqState.acceptedList.map(v => ({
+		...v,
+		key: v.acceptedReq._id
+	}));
 	console.log(acceptedList);
 
 	return (
@@ -32,24 +35,50 @@ export const AcceptedList = () => {
 				pagination={false}
 				tableLayout='fixed'
 			>
-				<Column title='Name' dataIndex={['username']} key='name' />
+				<Column
+					title='Name'
+					key='name'
+					render={(text, record) => {
+						return (
+							<div>
+								{record.userInfo.firstName}
+								&nbsp; &nbsp;
+								<Button type='primary' size='small'>
+									Contact
+								</Button>
+							</div>
+						);
+					}}
+				/>
 				<Column
 					title='Time'
 					key='time'
 					render={(text, record) => {
-						return moment(record.arrivalTime)
+						return moment(record.acceptedReq.arrivalTime)
 							.tz('America/New_York')
 							.format('ddd, MMM Do YYYY HH:mm');
 					}}
 				></Column>
 				<Column
 					title='Airport/Address'
-					dataIndex={['airport']}
+					dataIndex={['acceptedReq', 'airport']}
 					key='airport'
 				></Column>
-				<Column title='Luggage' dataIndex={['luggage']} key='luggage'></Column>
-				<Column title='Carryon' dataIndex={['carryon']} key='carryon'></Column>
-				<Column title='Notes' dataIndex={['notes']} key='notes'></Column>
+				<Column
+					title='Luggage'
+					dataIndex={['acceptedReq', 'luggage']}
+					key='luggage'
+				></Column>
+				<Column
+					title='Carryon'
+					dataIndex={['acceptedReq', 'carryon']}
+					key='carryon'
+				></Column>
+				<Column
+					title='Notes'
+					dataIndex={['acceptedReq', 'notes']}
+					key='notes'
+				></Column>
 			</Table>
 		</div>
 	);

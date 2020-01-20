@@ -226,11 +226,46 @@ module.exports = router => {
 		Pickreq.find({ volunteer: req.volunteer })
 			.lean()
 			.exec((err, doc) => {
-				console.log(doc);
-				return res.status(200).json({
-					msg: 'Get Accepted List Successfully',
-					acceptedList: doc
+				if (err) {
+					console.error(err.stack);
+					return res.status(422).json({
+						msg: 'Internal server error'
+					});
+				}
+
+				const promiseList = [];
+				const result = [];
+
+				doc.forEach(item => {
+					const username = item.username;
+
+					promiseList.push(
+						User.findOne({ username: username })
+							.then(user => {
+								const obj = {
+									userInfo: user,
+									acceptedReq: item
+								};
+
+								result.push(obj);
+							})
+							.catch(err => {
+								throw new Error(err);
+							})
+					);
 				});
+
+				return Promise.all(promiseList)
+					.then(() =>
+						res.json({
+							msg: 'Get Accepted List Successfully',
+							acceptedList: result
+						})
+					)
+					.catch(err => {
+						console.error(err);
+						return res.status(422).send({ err: err.message });
+					});
 			});
 	});
 
