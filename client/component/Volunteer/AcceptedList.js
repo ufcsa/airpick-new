@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Table, Button, message } from 'antd';
-import moment from 'moment-timezone';
+import { Table } from 'antd';
 import { loadAcceptedReq } from '../../redux/request.redux';
+import moment from 'moment';
 
 const { Column } = Table;
 
@@ -16,6 +16,11 @@ export const AcceptedList = props => {
 		}
 	}, [dispatch, userState.username]);
 
+	console.log(reqState.acceptedList);
+
+	if (reqState.acceptedList === undefined) {
+		return null;
+	}
 	// TODO: iterate through reqState.acceptedList to get all accepted list
 
 	return (
