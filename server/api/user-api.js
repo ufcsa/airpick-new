@@ -1,9 +1,25 @@
 const User = require('../model/user.model');
 const bcrypt = require('bcrypt-nodejs');
 const _filter = { pwd: 0, __v: 0 };
+const mailer = require('../mail/sendMail');
+const PATH = require('path');
 //User.deleteMany({}, () => (console.log('deleted')));
 
 module.exports = function(router) {
+	// middleware for user authentication module
+	// For dev purpose. Auto remove a test account for debugging purpose
+	router.use((req, res, next) => {
+		User.deleteOne({ email: 'mayinghan97@gmail.com' }, (err, ret) => {
+			if (err) {
+				console.error(err);
+				next();
+			} else {
+				console.log(ret);
+				next();
+			}
+		});
+	});
+
 	router.post('/login', (req, res) => {
 		const { input, pwd } = req.body;
 		// console.log(input, pwd)
@@ -60,7 +76,7 @@ module.exports = function(router) {
 
 		bcrypt.hash(pwd, null, null, (err, hash) => {
 			user.pwd = hash;
-			user.save((err, doc) => {
+			user.save(async (err, doc) => {
 				if (err) {
 					console.log(err);
 					let errorMsg = err.errmsg;
@@ -75,6 +91,28 @@ module.exports = function(router) {
 					console.log(`user ${username} saved suc`);
 					const { _id } = doc;
 					res.cookie('userid', _id);
+					// send user reg confirm email
+					const regEmailTplt = PATH.resolve(
+						__dirname,
+						'../mail/userTemplate/account-registration-confirm-email.template.html'
+					);
+					try {
+						await res.render(
+							regEmailTplt,
+							{ firstName: firstName },
+							(err, content) => {
+								if (err) {
+									console.error(err.stack);
+								}
+								const recipient = email;
+								const subject = '[AirPick] Registered Successfully!';
+								mailer.sendMail(recipient, subject, content);
+							}
+						);
+					} catch (e) {
+						console.error(e.stack);
+					}
+
 					return res.json({
 						code: 0,
 						data: {

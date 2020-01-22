@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const config = require('./server/config/config');
 const app = express();
 const Router = express.Router();
+const hbs = require('hbs');
 const userRouter = require('./server/api/user-api')(Router);
 const requestRouter = require('./server/api/pickreq-api')(Router);
 const mailRouter = require('./server/api/mail-api')(Router);
@@ -15,6 +16,8 @@ mongoose.connect(config.db, { useNewUrlParser: true, useFindAndModify: false });
 
 var port = process.env.PORT || 5000;
 
+app.set('view engine', 'html');
+app.engine('html', hbs.__express);
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(function(req, res, next) {
