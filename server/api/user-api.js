@@ -8,7 +8,7 @@ const PATH = require('path');
 module.exports = function(router) {
 	// middleware for user authentication module
 	// For dev purpose. Auto remove a test account for debugging purpose
-	router.use((req, res, next) => {
+	router.use('/register', (req, res, next) => {
 		User.deleteOne({ email: 'mayinghan97@gmail.com' }, (err, ret) => {
 			if (err) {
 				console.error(err);

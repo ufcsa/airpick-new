@@ -84,7 +84,7 @@ class AuthRoute extends React.Component {
 					},
 					{
 						path: '/accepted',
-						text: 'Accepted',
+						text: 'My Acception',
 						component: MyAccept
 					}
 				]

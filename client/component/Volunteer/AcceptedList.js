@@ -1,26 +1,41 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Table, Button } from 'antd';
+import { Table, Button, Modal, Row, Col } from 'antd';
 import { loadAcceptedReq } from '../../redux/request.redux';
 import moment from 'moment';
 
 const { Column } = Table;
 
 export const AcceptedList = () => {
+	const fontStyle = { fontSize: 16 };
+	const gutter = [0, 5];
+
+	// hooks
+	const [modalState, setModalState] = useState({
+		visible: false
+	});
 	const userState = useSelector(state => state.user);
 	const reqState = useSelector(state => state.request);
 	const dispatch = useDispatch();
-
 	useEffect(() => {
 		if (userState.username) {
 			dispatch(loadAcceptedReq(userState.username));
 		}
 	}, [dispatch, userState.username]);
 
+	//functions to handle modal
+	const handleOk = e => {
+		setModalState({ ...modalState, visible: false });
+	};
+
+	const handleCancel = e => {
+		setModalState({ ...modalState, visible: false });
+	};
+
+	// wait for loading
 	if (reqState.acceptedList === undefined) {
 		return null;
 	}
-
 	const acceptedList = reqState.acceptedList.map(v => ({
 		...v,
 		key: v.acceptedReq._id
@@ -43,7 +58,16 @@ export const AcceptedList = () => {
 							<div>
 								{record.userInfo.firstName}
 								&nbsp; &nbsp;
-								<Button type='primary' size='small'>
+								<Button
+									type='primary'
+									size='small'
+									onClick={() =>
+										setModalState({
+											visible: true,
+											userInfo: record.userInfo
+										})
+									}
+								>
 									Contact
 								</Button>
 							</div>
@@ -80,6 +104,48 @@ export const AcceptedList = () => {
 					key='notes'
 				></Column>
 			</Table>
+			{modalState.userInfo ? (
+				<Modal
+					width={550}
+					title={modalState.userInfo.firstName + "'s Contact Information"}
+					visible={modalState.visible}
+					onOk={handleOk}
+					onCancel={handleCancel}
+				>
+					<Row gutter={gutter}>
+						<Col span={4} style={fontStyle}>
+							Name
+						</Col>
+						<Col span={14} style={fontStyle} offset={4}>
+							{modalState.userInfo.displayName}
+						</Col>
+					</Row>
+					<Row gutter={gutter}>
+						<Col span={4} style={fontStyle}>
+							E-mail
+						</Col>
+						<Col span={14} style={fontStyle} offset={4}>
+							{modalState.userInfo.email}
+						</Col>
+					</Row>
+					<Row gutter={gutter}>
+						<Col span={4} style={fontStyle}>
+							Wechat
+						</Col>
+						<Col span={14} style={fontStyle} offset={4}>
+							{modalState.userInfo.wechatId}
+						</Col>
+					</Row>
+					<Row gutter={gutter}>
+						<Col span={4} style={fontStyle}>
+							US Phone
+						</Col>
+						<Col span={14} style={fontStyle} offset={4}>
+							{modalState.userInfo.phone}
+						</Col>
+					</Row>
+				</Modal>
+			) : null}
 		</div>
 	);
 };

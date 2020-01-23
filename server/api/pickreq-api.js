@@ -222,6 +222,7 @@ module.exports = router => {
 		});
 	});
 
+	// List all accepted requests
 	router.route('/volunteer/:volunteer').get((req, res) => {
 		Pickreq.find({ volunteer: req.volunteer })
 			.lean()
