@@ -257,12 +257,17 @@ module.exports = router => {
 				});
 
 				return Promise.all(promiseList)
-					.then(() =>
+					.then(() => {
+						result.sort(
+							(a, b) =>
+								new Date(a.acceptedReq.arrivalTime).getTime() -
+								new Date(b.acceptedReq.arrivalTime).getTime()
+						);
 						res.json({
 							msg: 'Get Accepted List Successfully',
 							acceptedList: result
-						})
-					)
+						});
+					})
 					.catch(err => {
 						console.error(err);
 						return res.status(422).send({ err: err.message });
