@@ -28,9 +28,12 @@ code {
 	margin-bottom: 15px;
 }
 
-.navbar-right {
+.navbar-logout {
 	float: right;
 	margin-right: 15px;
+}
+.navbar-right {
+	float: right;
 }
 .navbar-title {
 	font-size: 16pt;

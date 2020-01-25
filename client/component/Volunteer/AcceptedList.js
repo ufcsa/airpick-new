@@ -50,14 +50,13 @@ export const AcceptedList = () => {
 				pagination={false}
 				tableLayout='fixed'
 			>
+				<Column title='Name' dataIndex={['userInfo', 'firstName']}></Column>
 				<Column
-					title='Name'
-					key='name'
+					title='Contact'
+					key='contact'
 					render={(text, record) => {
 						return (
 							<div>
-								{record.userInfo.firstName}
-								&nbsp; &nbsp;
 								<Button
 									type='primary'
 									size='small'

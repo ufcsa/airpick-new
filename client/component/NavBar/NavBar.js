@@ -1,11 +1,11 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Menu, Modal } from 'antd';
+import { Menu, Modal, Avatar } from 'antd';
 import browserCookie from 'browser-cookies';
 import { logoutRedux } from '../../redux/user.redux';
 
-// const { SubMenu } = Menu;
+const { Item, SubMenu } = Menu;
 
 // deep filter an item in a high dimensional array
 const deepFilter = (arr, filterFunc) => {
@@ -69,6 +69,21 @@ class NavBar extends React.Component {
 		});
 	};
 
+	// helper function to handle sign out in a submenu
+	handleUserCenter = subItem => {
+		return subItem.map(item => {
+			if (item.text !== 'Sign out') {
+				return <Item key={item.text}>{item.text}</Item>;
+			} else {
+				return (
+					<Item key='logout' onClick={() => this.logout()}>
+						Sign out
+					</Item>
+				);
+			}
+		});
+	};
+
 	render() {
 		let currItem = null;
 		if (this.props.location) {
@@ -78,15 +93,20 @@ class NavBar extends React.Component {
 			);
 		}
 		const list = this.props.data.filter(v => !v.hide);
-		const { Item, SubMenu } = Menu;
+		const displayName = this.props.user.displayName;
+
+		// if (this.state.screenWidth <= 489) {
+		// 	swapPosition(list, 'Sign out', 'usercenter');
+		// }
 		return (
 			<div>
 				<Menu mode='horizontal' selectedKeys={[currItem.text]}>
 					{list.map(choice => {
 						if (
-							choice.text !== 'Logout' &&
+							choice.text !== 'Sign out' &&
 							choice.text !== 'No match' &&
-							choice.text !== 'Volunteer'
+							choice.text !== 'Volunteer' &&
+							choice.text !== 'usercenter'
 						) {
 							return (
 								<Item
@@ -113,26 +133,63 @@ class NavBar extends React.Component {
 									})}
 								</SubMenu>
 							);
-						} else if (choice.text !== 'No match') {
-							if (this.state.screenWidth > 489) {
+						} else if (choice.text === 'usercenter') {
+							if (this.state.screenWidth >= 560) {
 								return (
-									<Item
+									<SubMenu
 										key={choice.text}
 										className={choice.className}
-										onClick={() => this.logout()}
+										title={
+											<React.Fragment>
+												<Avatar style={{ verticalAlign: 'middle' }}>
+													{displayName.charAt(0)}
+												</Avatar>
+												&nbsp; &nbsp;
+												{displayName}
+											</React.Fragment>
+										}
 									>
-										{choice.text}
-									</Item>
+										{/* {choice.subItem.map(item => {
+											return <Item key={item.text}>{item.text}</Item>;
+										})} */}
+										{this.handleUserCenter(choice.subItem)}
+									</SubMenu>
+								);
+							} else if (this.state.screenWidth >= 477) {
+								return (
+									<SubMenu
+										key={choice.text}
+										className={choice.className}
+										title={
+											<React.Fragment>
+												<Avatar style={{ verticalAlign: 'middle' }}>
+													{displayName.charAt(0)}
+												</Avatar>
+											</React.Fragment>
+										}
+									>
+										{choice.subItem.map(item => {
+											return <Item key={item.text}>{item.text}</Item>;
+										})}
+									</SubMenu>
 								);
 							} else {
 								return (
-									<Item
+									<SubMenu
 										key={choice.text}
-										className=''
-										onClick={() => this.logout()}
+										title={
+											<div style={{ marginLeft: 0, marginRight: 15 }}>
+												<Avatar style={{ verticalAlign: 'middle' }}>
+													{displayName.charAt(0)}
+												</Avatar>
+												&nbsp; {displayName}
+											</div>
+										}
 									>
-										{choice.text}
-									</Item>
+										{choice.subItem.map(item => {
+											return <Item key={item.text}>{item.text}</Item>;
+										})}
+									</SubMenu>
 								);
 							}
 						} else {

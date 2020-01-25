@@ -45,6 +45,7 @@ class AuthRoute extends React.Component {
 	render() {
 		const isAuth = this.props.user.isAuth;
 		const rightNavbarClass = 'navbar-right';
+		const logoutClass = 'navbar-logout';
 		const navList = [
 			{
 				path: '/',
@@ -108,9 +109,22 @@ class AuthRoute extends React.Component {
 				component: NoMatch
 			},
 			{
-				text: 'Logout',
+				text: 'usercenter',
+				hide: !isAuth,
 				className: rightNavbarClass,
-				hide: !isAuth
+				subItem: [
+					{
+						path: '/edit-profile',
+						text: 'Edit Profile'
+					},
+					{
+						path: '/change-password',
+						text: 'Change Password'
+					},
+					{
+						text: 'Sign out'
+					}
+				]
 			}
 		];
 		console.log(isAuth);
