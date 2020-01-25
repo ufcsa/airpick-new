@@ -12,7 +12,12 @@ const cookieParser = require('cookie-parser');
 
 const server = require('http').Server(app);
 
-mongoose.connect(config.db, { useNewUrlParser: true, useFindAndModify: false });
+mongoose.connect(config.db, {
+	useNewUrlParser: true,
+	useFindAndModify: false,
+	useUnifiedTopology: true,
+	useCreateIndex: true
+});
 
 var port = process.env.PORT || 5000;
 
