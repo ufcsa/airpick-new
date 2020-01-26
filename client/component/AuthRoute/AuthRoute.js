@@ -11,7 +11,6 @@ import MyRequest from '../../container/myRequest/MyRequest';
 import AllPickReq from '../../container/volunteer/AllPickReq';
 import MyAccept from '../../container/volunteer/MyAccept';
 import { EditProfile } from '../../container/UserCenter/EditProfile';
-import Item from 'antd/lib/list/Item';
 
 function Home() {
 	return <h2>Airpick homepage</h2>;
@@ -20,6 +19,50 @@ function Home() {
 function NoMatch() {
 	return <h2>404 Not Found</h2>;
 }
+
+const navListRouting = navList => {
+	const routers = [];
+	navList.forEach(op => {
+		if (op.text === 'UF CSA Airpick') {
+			routers.push(
+				<Route
+					exact
+					key={op.text}
+					path={op.path}
+					component={op.component}
+				></Route>
+			);
+		} else if (op.text === 'Volunteer') {
+			const sublist = op.subItem;
+			sublist.forEach(it => {
+				routers.push(
+					<Route key={it.text} path={it.path} component={it.component}></Route>
+				);
+			});
+		} else if (op.text === 'usercenter') {
+			op.subItem.forEach(it => {
+				if (it.text !== 'Sign out') {
+					console.log(it.path);
+					routers.push(
+						<Route
+							key={it.text}
+							path={it.path}
+							component={it.component}
+						></Route>
+					);
+				}
+			});
+		} else {
+			routers.push(
+				<Route key={op.text} path={op.path} component={op.component}></Route>
+			);
+		}
+	});
+
+	routers.push(<Route key='nomatch' component={NoMatch}></Route>);
+	console.log(routers);
+	return routers;
+};
 
 @withRouter
 @connect(state => state, { loadData })
@@ -47,7 +90,6 @@ class AuthRoute extends React.Component {
 	render() {
 		const isAuth = this.props.user.isAuth;
 		const rightNavbarClass = 'navbar-right';
-		const logoutClass = 'navbar-logout';
 		const navList = [
 			{
 				path: '/',
@@ -62,19 +104,6 @@ class AuthRoute extends React.Component {
 				className: '',
 				hide: !isAuth,
 				component: MyRequest
-				// subItem: [{
-				//   path: '/pickrequest',
-				//   text: 'Need pickup!',
-				//   component: PickReq
-				// }, {
-				//   path: '/lodgerequest',
-				//   text: 'Need Lodging!',
-				//   component: LodgeReq
-				// }, {
-				//   path: '/myrequest',
-				//   text: 'Request Status',
-				//   component: MyRequest
-				// }]
 			},
 			{
 				text: 'Volunteer',
@@ -107,10 +136,6 @@ class AuthRoute extends React.Component {
 				hide: isAuth
 			},
 			{
-				text: 'No match',
-				component: NoMatch
-			},
-			{
 				text: 'usercenter',
 				hide: !isAuth,
 				className: rightNavbarClass,
@@ -130,58 +155,12 @@ class AuthRoute extends React.Component {
 				]
 			}
 		];
+
 		console.log(isAuth);
 		return (
 			<div>
 				<NavBar data={navList}></NavBar>
-				<Switch>
-					{navList.map(op => {
-						if (op.text === 'UF CSA Airpick') {
-							return (
-								<Route
-									exact
-									key={op.text}
-									path={op.path}
-									component={op.component}
-								></Route>
-							);
-						} else if (op.text === 'Volunteer') {
-							const sublist = op.subItem;
-							return sublist.map(it => {
-								return (
-									<Route
-										key={it.text}
-										path={it.path}
-										component={it.component}
-									></Route>
-								);
-							});
-						} else if (op.text === 'usercenter') {
-							return op.subItem.map(it => {
-								if (it.text !== 'Sign out') {
-									return (
-										<Route
-											key={op.text}
-											path={op.path}
-											component={op.component}
-										></Route>
-									);
-								} else {
-								}
-							});
-						} else if (op.text !== 'No match') {
-							return (
-								<Route
-									key={op.text}
-									path={op.path}
-									component={op.component}
-								></Route>
-							);
-						} else {
-							return <Route key={op.text} component={NoMatch}></Route>;
-						}
-					})}
-				</Switch>
+				<Switch>{navListRouting(navList)}</Switch>
 			</div>
 		);
 	}

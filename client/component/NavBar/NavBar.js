@@ -73,7 +73,14 @@ class NavBar extends React.Component {
 	handleUserCenter = subItem => {
 		return subItem.map(item => {
 			if (item.text !== 'Sign out') {
-				return <Item key={item.text}>{item.text}</Item>;
+				return (
+					<Item
+						key={item.text}
+						onClick={() => this.props.history.push(item.path)}
+					>
+						{item.text}
+					</Item>
+				);
 			} else {
 				return (
 					<Item key='logout' onClick={() => this.logout()}>
