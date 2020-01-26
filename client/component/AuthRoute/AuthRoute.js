@@ -10,6 +10,8 @@ import Register from '../../container/auth/Register';
 import MyRequest from '../../container/myRequest/MyRequest';
 import AllPickReq from '../../container/volunteer/AllPickReq';
 import MyAccept from '../../container/volunteer/MyAccept';
+import { EditProfile } from '../../container/UserCenter/EditProfile';
+import Item from 'antd/lib/list/Item';
 
 function Home() {
 	return <h2>Airpick homepage</h2>;
@@ -115,7 +117,8 @@ class AuthRoute extends React.Component {
 				subItem: [
 					{
 						path: '/edit-profile',
-						text: 'Edit Profile'
+						text: 'Edit Profile',
+						component: EditProfile
 					},
 					{
 						path: '/change-password',
@@ -153,7 +156,20 @@ class AuthRoute extends React.Component {
 									></Route>
 								);
 							});
-						} else if (op.text !== 'Logout') {
+						} else if (op.text === 'usercenter') {
+							return op.subItem.map(it => {
+								if (it.text !== 'Sign out') {
+									return (
+										<Route
+											key={op.text}
+											path={op.path}
+											component={op.component}
+										></Route>
+									);
+								} else {
+								}
+							});
+						} else if (op.text !== 'No match') {
 							return (
 								<Route
 									key={op.text}
@@ -161,10 +177,8 @@ class AuthRoute extends React.Component {
 									component={op.component}
 								></Route>
 							);
-						} else if (op.text !== 'No match') {
-							return <Route key={op.text} component={NoMatch}></Route>;
 						} else {
-							return null;
+							return <Route key={op.text} component={NoMatch}></Route>;
 						}
 					})}
 				</Switch>

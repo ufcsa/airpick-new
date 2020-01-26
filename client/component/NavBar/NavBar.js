@@ -91,121 +91,131 @@ class NavBar extends React.Component {
 				this.props.data,
 				v => v.path === this.props.location.pathname
 			);
+			console.log(currItem);
 		}
 		const list = this.props.data.filter(v => !v.hide);
 		const displayName = this.props.user.displayName;
 
-		// if (this.state.screenWidth <= 489) {
-		// 	swapPosition(list, 'Sign out', 'usercenter');
-		// }
 		return (
-			<div>
-				<Menu mode='horizontal' selectedKeys={[currItem.text]}>
-					{list.map(choice => {
-						if (
-							choice.text !== 'Sign out' &&
-							choice.text !== 'No match' &&
-							choice.text !== 'Volunteer' &&
-							choice.text !== 'usercenter'
-						) {
-							return (
-								<Item
-									key={choice.text}
-									className={choice.className}
-									onClick={() => this.props.history.push(choice.path)}
-								>
-									{choice.text}
-								</Item>
-							);
-						} else if (choice.text === 'Volunteer') {
-							const subList = choice.subItem;
-							return (
-								<SubMenu key={choice.text} title={choice.text}>
-									{subList.map(item => {
-										return (
-											<Item
-												key={item.text}
-												onClick={() => this.props.history.push(item.path)}
-											>
-												{item.text}
-											</Item>
-										);
-									})}
-								</SubMenu>
-							);
-						} else if (choice.text === 'usercenter') {
-							if (this.state.screenWidth >= 560) {
+			<React.Fragment>
+				{/* {currItem ? ( */}
+				<div>
+					<Menu
+						mode='horizontal'
+						selectedKeys={(() => {
+							if (currItem) return [currItem.text];
+							else {
+								return [];
+							}
+						})()}
+					>
+						{list.map(choice => {
+							if (
+								choice.text !== 'Sign out' &&
+								choice.text !== 'No match' &&
+								choice.text !== 'Volunteer' &&
+								choice.text !== 'usercenter'
+							) {
 								return (
-									<SubMenu
+									<Item
 										key={choice.text}
 										className={choice.className}
-										title={
-											<React.Fragment>
-												<Avatar style={{ verticalAlign: 'middle' }}>
-													{displayName.charAt(0)}
-												</Avatar>
-												&nbsp; &nbsp;
-												{displayName}
-											</React.Fragment>
-										}
+										onClick={() => this.props.history.push(choice.path)}
 									>
-										{/* {choice.subItem.map(item => {
+										{choice.text}
+									</Item>
+								);
+							} else if (choice.text === 'Volunteer') {
+								const subList = choice.subItem;
+								return (
+									<SubMenu key={choice.text} title={choice.text}>
+										{subList.map(item => {
+											return (
+												<Item
+													key={item.text}
+													onClick={() => this.props.history.push(item.path)}
+												>
+													{item.text}
+												</Item>
+											);
+										})}
+									</SubMenu>
+								);
+							} else if (choice.text === 'usercenter') {
+								if (this.state.screenWidth >= 560) {
+									return (
+										<SubMenu
+											key={choice.text}
+											className={choice.className}
+											title={
+												<React.Fragment>
+													<Avatar style={{ verticalAlign: 'middle' }}>
+														{displayName.charAt(0)}
+													</Avatar>
+													&nbsp; &nbsp;
+													{displayName}
+												</React.Fragment>
+											}
+										>
+											{/* {choice.subItem.map(item => {
 											return <Item key={item.text}>{item.text}</Item>;
 										})} */}
-										{this.handleUserCenter(choice.subItem)}
-									</SubMenu>
-								);
-							} else if (this.state.screenWidth >= 477) {
-								return (
-									<SubMenu
-										key={choice.text}
-										className={choice.className}
-										title={
-											<React.Fragment>
-												<Avatar style={{ verticalAlign: 'middle' }}>
-													{displayName.charAt(0)}
-												</Avatar>
-											</React.Fragment>
-										}
-									>
-										{choice.subItem.map(item => {
-											return <Item key={item.text}>{item.text}</Item>;
-										})}
-									</SubMenu>
-								);
+											{this.handleUserCenter(choice.subItem)}
+										</SubMenu>
+									);
+								} else if (this.state.screenWidth >= 477) {
+									return (
+										<SubMenu
+											key={choice.text}
+											className={choice.className}
+											title={
+												<React.Fragment>
+													<Avatar style={{ verticalAlign: 'middle' }}>
+														{displayName.charAt(0)}
+													</Avatar>
+												</React.Fragment>
+											}
+										>
+											{choice.subItem.map(item => {
+												return <Item key={item.text}>{item.text}</Item>;
+											})}
+										</SubMenu>
+									);
+								} else {
+									return (
+										<SubMenu
+											key={choice.text}
+											title={
+												<div style={{ marginLeft: 0, marginRight: 15 }}>
+													<Avatar style={{ verticalAlign: 'middle' }}>
+														{displayName.charAt(0)}
+													</Avatar>
+													&nbsp; {displayName}
+												</div>
+											}
+										>
+											{choice.subItem.map(item => {
+												return <Item key={item.text}>{item.text}</Item>;
+											})}
+										</SubMenu>
+									);
+								}
 							} else {
-								return (
-									<SubMenu
-										key={choice.text}
-										title={
-											<div style={{ marginLeft: 0, marginRight: 15 }}>
-												<Avatar style={{ verticalAlign: 'middle' }}>
-													{displayName.charAt(0)}
-												</Avatar>
-												&nbsp; {displayName}
-											</div>
-										}
-									>
-										{choice.subItem.map(item => {
-											return <Item key={item.text}>{item.text}</Item>;
-										})}
-									</SubMenu>
-								);
+								return null;
 							}
-						} else {
-							return null;
-						}
-					})}
-				</Menu>
-				<Modal
-					title='Log out?'
-					visible={this.state.modalVisible}
-					onOk={this.handleOk}
-					onCancel={this.handleCancel}
-				>
-					Are you sure you want to log out?
-				</Modal>
-			</div>
+						})}
+					</Menu>
+					<Modal
+						title='Log out?'
+						visible={this.state.modalVisible}
+						onOk={this.handleOk}
+						onCancel={this.handleCancel}
+					>
+						Are you sure you want to log out?
+					</Modal>
+				</div>
+				{/* ) : null} */}
+			</React.Fragment>
 		);
 	}
 }
