@@ -1,13 +1,15 @@
 const User = require('../model/user.model');
 const Pickreq = require('../model/pickreq.model');
 const CronJob = require('cron').CronJob;
+const mailer = require('../mail/sendMail');
+const PATH = require('path');
 
 /*
   A Cron job to clean outdated request every 15 minute. 
 */
 new CronJob(
 	'0 */15 * * * *',
-	function() {
+	function () {
 		console.log('fucking myself');
 		const now = new Date();
 		console.log(now);
@@ -120,10 +122,10 @@ module.exports = router => {
 		.post((req, res) => {
 			// A volunteer accept the request
 			const id = req.requestId;
-			Pickreq.update(
+			Pickreq.findOneAndUpdate(
 				{ _id: id },
 				{ volunteer: req.body.volunteer },
-				(err, doc) => {
+				async (err, doc) => {
 					if (err) {
 						return res.status(422).json({
 							msg:
@@ -131,6 +133,43 @@ module.exports = router => {
 							err: err
 						});
 					} else {
+						//send acpt req email
+						let requester = await User.findOne({ username: doc.username });
+						let volunteer = await User.findOne({ username: req.body.volunteer })
+						let infoInsert = {
+							user: { firstName: requester.firstName },
+							request: {
+								airport: doc.airport,
+								arrivalTime: doc.arrivalTime
+							},
+							volunteer: {
+								displayName: volunteer.displayName,
+								wechatId: volunteer.wechatId,
+								email: volunteer.email,
+								phone: volunteer.email
+							}
+						}
+
+
+						const acpReqTplt = PATH.resolve(__dirname,
+							'../mail/pickreqTemplate/request-accepted.html')
+						try {
+							await res.render(
+								acpReqTplt,
+								infoInsert,
+								(err, content) => {
+									if (err) {
+										console.error(err.stack);
+									}
+									const recipient = '1264126181@qq.com';
+									const subject = '[AirPick] Your Request get Accepted!';
+									mailer.sendMail(recipient, subject, content);
+								}
+							);
+						}
+						catch (e) {
+							console.log(e.stack)
+						}
 						return res.status(200).json({
 							msg: 'Accepted this request successfully!'
 						});
