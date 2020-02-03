@@ -78,6 +78,11 @@ class RequestCenter extends React.Component {
 			}
 		}
 
+		if (previousReq === undefined) {
+			console.log('loading previous requests');
+			return null;
+		}
+
 		return (
 			<div style={{ textAlign: 'center' }}>
 				{previousReq ? (

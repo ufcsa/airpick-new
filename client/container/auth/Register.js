@@ -222,7 +222,7 @@ class RegisterForm extends React.Component {
 							<Button type='primary' htmlType='submit'>
 								Register
 							</Button>
-							&nbsp; Already have an account? <a href='/register'>Log in</a>
+							&nbsp; Already have an account? <a href='/login'>Log in</a>
 						</Form.Item>
 					</Form>
 				</Paragraph>
