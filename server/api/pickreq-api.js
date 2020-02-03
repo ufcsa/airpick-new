@@ -134,8 +134,15 @@ module.exports = router => {
 						});
 					} else {
 						//send acpt req email
-						let requester = await User.findOne({ username: doc.username });
-						let volunteer = await User.findOne({ username: req.body.volunteer })
+						let requester;
+						let volunteer;
+						try {
+							requester = await User.findOne({ username: doc.username });
+							volunteer = await User.findOne({ username: req.body.volunteer })
+						}
+						catch (error) {
+							console.log(err)
+						}
 						let infoInsert = {
 							user: { firstName: requester.firstName },
 							request: {
@@ -161,7 +168,7 @@ module.exports = router => {
 									if (err) {
 										console.error(err.stack);
 									}
-									const recipient = '1264126181@qq.com';
+									const recipient = requester.email;
 									const subject = '[AirPick] Your Request get Accepted!';
 									mailer.sendMail(recipient, subject, content);
 								}
