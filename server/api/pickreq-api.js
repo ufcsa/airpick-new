@@ -9,7 +9,7 @@ const PATH = require('path');
 */
 new CronJob(
 	'0 */15 * * * *',
-	function () {
+	function() {
 		console.log('fucking myself');
 		const now = new Date();
 		console.log(now);
@@ -138,10 +138,9 @@ module.exports = router => {
 						let volunteer;
 						try {
 							requester = await User.findOne({ username: doc.username });
-							volunteer = await User.findOne({ username: req.body.volunteer })
-						}
-						catch (error) {
-							console.log(err)
+							volunteer = await User.findOne({ username: req.body.volunteer });
+						} catch (error) {
+							console.error(err);
 						}
 						let infoInsert = {
 							user: { firstName: requester.firstName },
@@ -155,27 +154,23 @@ module.exports = router => {
 								email: volunteer.email,
 								phone: volunteer.email
 							}
-						}
+						};
 
-
-						const acpReqTplt = PATH.resolve(__dirname,
-							'../mail/pickreqTemplate/request-accepted.html')
+						const acpReqTplt = PATH.resolve(
+							__dirname,
+							'../mail/pickreqTemplate/request-accepted.html'
+						);
 						try {
-							await res.render(
-								acpReqTplt,
-								infoInsert,
-								(err, content) => {
-									if (err) {
-										console.error(err.stack);
-									}
-									const recipient = requester.email;
-									const subject = '[AirPick] Your Request get Accepted!';
-									mailer.sendMail(recipient, subject, content);
+							await res.render(acpReqTplt, infoInsert, (err, content) => {
+								if (err) {
+									console.error(err.stack);
 								}
-							);
-						}
-						catch (e) {
-							console.log(e.stack)
+								const recipient = requester.email;
+								const subject = '[AirPick] Your Request get Accepted!';
+								mailer.sendMail(recipient, subject, content);
+							});
+						} catch (e) {
+							console.log(e.stack);
 						}
 						return res.status(200).json({
 							msg: 'Accepted this request successfully!'
