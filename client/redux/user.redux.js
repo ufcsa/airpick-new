@@ -94,7 +94,6 @@ export function editProfile(userProfile) {
 				dispatch(loadData({ ...resdata, displayName }))
 			}
 			else {
-				console.log(res.data)
 				message.error(res.data.msg)
 			}
 		})
