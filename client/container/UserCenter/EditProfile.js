@@ -1,31 +1,23 @@
 import React from 'react';
-import { useState, useEffect } from 'react'
-import { SmileOutlined, UserOutlined } from '@ant-design/icons';
-import { Form, Input, Select, Button, Typography } from 'antd';
-import { useSelector, useDispatch, connect } from 'react-redux'
-import { editProfile } from '../../redux/user.redux'
+import { useEffect } from 'react';
+import { UserOutlined } from '@ant-design/icons';
+import { Form, Input, Button, Typography } from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
+import { editProfile } from '../../redux/user.redux';
 const Paragraph = Typography;
 
 export const EditProfile = () => {
-
 	const user = useSelector(state => state.user);
 
-
 	const dispatch = useDispatch();
-	const { Option } = Select;
 
 	const phoneValidator = (rule, value) => {
-		if (
-			!value ||
-			!value.length ||
-			(/^\d+$/.test(value) && value.length === 10)
-		) {
+		if (!value || !value.length || /^\d{10}$/.test(value)) {
 			return Promise.resolve();
 		} else {
 			return Promise.reject('Invalid US Phone Number!');
 		}
 	};
-
 
 	const formItemLayout = {
 		labelCol: {
@@ -42,13 +34,13 @@ export const EditProfile = () => {
 		wrapperCol: {
 			xs: {
 				span: 24,
-				offset: 0,
+				offset: 0
 			},
 			sm: {
 				span: 16,
-				offset: 8,
-			},
-		},
+				offset: 8
+			}
+		}
 	};
 
 	const [form] = Form.useForm();
@@ -60,47 +52,30 @@ export const EditProfile = () => {
 			email: user.email,
 			phone: user.phone,
 			username: user.username
-		})
-	})
+		});
+	});
 
 	const onFinish = values => {
 		let userProfile = { _id: user._id, ...values };
-		let edit = editProfile(userProfile);
-		let res = edit(dispatch);
-	}
+		dispatch(editProfile(userProfile));
+	};
 
 	const onFinishFailed = ({ errorfields }) => {
 		form.scrollToField(errorfields);
-	}
-
+	};
 
 	return (
 		<div>
 			<Paragraph className='title-middle'>
 				<h3>Edit Profile</h3>
 			</Paragraph>
-			< Form
+			<Form
 				{...formItemLayout}
 				form={form}
-				name="editProfile"
+				name='editProfile'
 				onFinish={onFinish}
 				onFinishFailed={onFinishFailed}
 			>
-				<Form.Item
-					name='username'
-					label='Username'
-					rules={[
-						{
-							required: true,
-							message: 'Please input your username'
-						}
-					]}
-				>
-					<Input
-						prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
-						placeholder='Username'
-					/>
-				</Form.Item>
 				<Form.Item
 					name='firstName'
 					label='First Name'
@@ -132,8 +107,8 @@ export const EditProfile = () => {
 					/>
 				</Form.Item>
 				<Form.Item
-					name="email"
-					label="E-mail"
+					name='email'
+					label='E-mail'
 					rules={[
 						{
 							type: 'email',
@@ -145,7 +120,7 @@ export const EditProfile = () => {
 						}
 					]}
 				>
-					<Input placeholder="Email" />
+					<Input placeholder='Email' />
 				</Form.Item>
 				<Form.Item
 					name='phone'
@@ -159,12 +134,11 @@ export const EditProfile = () => {
 					<Input type='String' placeholder='US Phone Number' />
 				</Form.Item>
 				<Form.Item {...tailFormItemLayout}>
-					<Button type="primary" htmlType="submit">
-						Register
-        		</Button>
+					<Button type='primary' htmlType='submit'>
+						Update
+					</Button>
 				</Form.Item>
-			</Form >
+			</Form>
 		</div>
-	)
+	);
 };
-

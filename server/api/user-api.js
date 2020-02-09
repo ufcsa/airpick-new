@@ -5,7 +5,7 @@ const mailer = require('../mail/sendMail');
 const PATH = require('path');
 //User.deleteMany({}, () => (console.log('deleted')));
 
-module.exports = function (router) {
+module.exports = function(router) {
 	// middleware for user authentication module
 	// For dev purpose. Auto remove a test account for debugging purpose
 	router.use('/register', (req, res, next) => {
@@ -163,11 +163,12 @@ module.exports = function (router) {
 	router.put('/editProfile', (req, res) => {
 		const id = req.body.userProfile._id;
 		const updateContent = req.body.userProfile;
-		console.log(req.body)
-		User.updateOne({ _id: id }, updateContent, (err) => {
+		console.log(req.body);
+		User.updateOne({ _id: id }, updateContent, err => {
 			if (err) {
 				console.log('err', err);
 				let errorMsg = err.errmsg;
+				// the following check is unneccessary
 				if (err.code === 11000) {
 					errorMsg = 'Username or Email already exists!';
 				}
@@ -175,16 +176,15 @@ module.exports = function (router) {
 					code: 1,
 					msg: errorMsg
 				});
-			}
-			else {
-				console.log('success')
+			} else {
+				console.log('success');
 				return res.json({
 					code: 0,
 					data: updateContent
-				})
+				});
 			}
-		})
-	})
+		});
+	});
 
 	return router;
 };

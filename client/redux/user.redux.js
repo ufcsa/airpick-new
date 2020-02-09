@@ -15,7 +15,6 @@ const initState = {
 
 //reducer
 export function userRedux(state = initState, action) {
-	console.log(action)
 	switch (action.type) {
 		case LOAD_DATA:
 			return { ...state, ...action.payload, isAuth: true };
@@ -76,28 +75,26 @@ export function login({ input, pwd }) {
 
 //editProfile
 export function editProfile(userProfile) {
-	console.log(userProfile)
-	if (
-		!userProfile.username ||
-		!userProfile.firstName ||
-		!userProfile.lastName ||
-		!userProfile.email
-	) {
-		return 'missing Fields'
+	console.log(userProfile);
+	if (!userProfile.firstName || !userProfile.lastName || !userProfile.email) {
+		return errorMsg('missing Fields');
 	}
+
+	const displayName = [userProfile.firstName, userProfile.lastName].join(' ');
+	userProfile = { ...userProfile, displayName: displayName };
 
 	return dispatch => {
 		axios.put(`/api/user/editProfile`, { userProfile }).then(res => {
 			if (res.status === 200 && res.data.code === 0) {
 				const resdata = res.data.data;
-				const displayName = [resdata.firstName, resdata.lastName].join(' ');
-				dispatch(loadData({ ...resdata, displayName }))
+
+				dispatch(loadData({ ...resdata, displayName }));
+				message.success('Update Successfully!');
+			} else {
+				message.error(res.data.msg);
 			}
-			else {
-				message.error(res.data.msg)
-			}
-		})
-	}
+		});
+	};
 }
 
 export function register(userInput) {
