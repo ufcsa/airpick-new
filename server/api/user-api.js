@@ -1,11 +1,12 @@
 const User = require('../model/user.model');
+const Pickreq = require('../model/pickreq.model');
 const bcrypt = require('bcrypt-nodejs');
 const _filter = { pwd: 0, __v: 0 };
 const mailer = require('../mail/sendMail');
 const PATH = require('path');
 //User.deleteMany({}, () => (console.log('deleted')));
 
-module.exports = function(router) {
+module.exports = function (router) {
 	// middleware for user authentication module
 	// For dev purpose. Auto remove a test account for debugging purpose
 	router.use('/register', (req, res, next) => {
@@ -163,8 +164,9 @@ module.exports = function(router) {
 	router.put('/editProfile', (req, res) => {
 		const id = req.body.userProfile._id;
 		const updateContent = req.body.userProfile;
-		console.log(req.body);
-		User.updateOne({ _id: id }, updateContent, err => {
+
+
+		User.findOneAndUpdate({ _id: id }, updateContent, async (err, oldProfile) => {
 			if (err) {
 				console.log('err', err);
 				let errorMsg = err.errmsg;
@@ -177,6 +179,48 @@ module.exports = function(router) {
 					msg: errorMsg
 				});
 			} else {
+				//email to volunteer
+				if (updateContent.phone !== oldProfile.phone)
+					try {
+						const req = await Pickreq.find({ username: oldProfile.username });
+
+						req.forEach((val) => {
+							const volunteer = val.volunteer;
+							User.findOne({ username: volunteer }, async (err, val) => {
+								if (err) {
+									console.log(err);
+								}
+								const volEmail = val.email;
+
+								const reqContactChangeTplt = PATH.resolve(__dirname, '../mail/toVolunteerTemplate/requesterContactChange.html')
+								const infoInsert = {
+									volunteer: { firstName: val.firstName },
+									requester: { phone: updateContent.phone }
+								}
+
+								try {
+									await res.render(reqContactChangeTplt, infoInsert, (err, content) => {
+										if (err) {
+											console.error(err.stack);
+										}
+										console.log(content)
+										const recipient = volEmail;
+										const subject = '[AirPick] The Requester\' phone numebr is changed!';
+										mailer.sendMail(recipient, subject, content);
+									});
+								} catch (e) {
+									console.log(e.stack);
+								}
+							})
+						})
+
+					}
+					catch (e) {
+						console.log(e)
+					}
+
+
+				//
 				console.log('success');
 				return res.json({
 					code: 0,

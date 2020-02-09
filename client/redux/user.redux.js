@@ -75,10 +75,10 @@ export function login({ input, pwd }) {
 
 //editProfile
 export function editProfile(userProfile) {
-	console.log(userProfile);
 	if (!userProfile.firstName || !userProfile.lastName || !userProfile.email) {
 		return errorMsg('missing Fields');
 	}
+
 
 	const displayName = [userProfile.firstName, userProfile.lastName].join(' ');
 	userProfile = { ...userProfile, displayName: displayName };
