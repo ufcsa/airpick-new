@@ -71,6 +71,28 @@ module.exports = router => {
 		return next();
 	});
 
+	// middleware to parse the requestId that to be cancelled by volunteer
+	router.param('cancelId', (req, res, next, cancelId) => {
+		req.cancelId = cancelId;
+		return next();
+	});
+
+	// cancel volunteer
+	router.route('/cancel/:cancelId').put((req, res) => {
+		console.log('gonna cancel the volunteer in req ', req.cancelId);
+		Pickreq.updateOne({ _id: req.cancelId }, { volunteer: '' }, (err, doc) => {
+			if (err) {
+				return res.json({
+					code: 1,
+					msg: 'Cancel failed!'
+				});
+			}
+			return res.json({
+				code: 0,
+				msg: 'Cancel successfully!'
+			});
+		});
+	});
 	// get current user's request
 	router
 		.route('/user/:username')
@@ -288,7 +310,6 @@ module.exports = router => {
 									userInfo: user,
 									acceptedReq: item
 								};
-
 								result.push(obj);
 							})
 							.catch(err => {
@@ -304,6 +325,7 @@ module.exports = router => {
 								new Date(a.acceptedReq.arrivalTime).getTime() -
 								new Date(b.acceptedReq.arrivalTime).getTime()
 						);
+						console.log(result);
 						res.json({
 							msg: 'Get Accepted List Successfully',
 							acceptedList: result

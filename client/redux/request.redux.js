@@ -196,9 +196,30 @@ export const loadAcceptedReq = volunteer => {
 	return dispatch => {
 		return axios.get(`/api/requests/volunteer/${volunteer}`).then(res => {
 			if (res.status === 200) {
-				console.log(res.data);
+				console.log('load accept');
 				dispatch(loadAcceptReqSuc(res.data.msg, res.data.acceptedList));
 			}
 		});
+	};
+};
+
+// volunteer cancel request
+export const cancelRequest = (reqId, volunteerId) => {
+	console.log('canceling request ', reqId);
+	return dispatch => {
+		return axios
+			.put(`/api/requests/cancel/${reqId}`)
+			.then(res => {
+				if (res.data.code === 1) {
+					dispatch(errorMsg(res.data.msg));
+					return;
+				}
+				console.log(res.data.msg);
+				console.log(volunteerId);
+				return res;
+			})
+			.then(res => {
+				return dispatch(loadAcceptedReq(volunteerId));
+			});
 	};
 };

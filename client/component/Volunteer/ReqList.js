@@ -27,7 +27,7 @@ class ReqList extends React.Component {
 		const reqId = request._id;
 		const volunteer = this.props.user.username;
 		this.props.acceptReq(reqId, volunteer, this.props.request.list).then(() => {
-			message.success(this.props.request.msg);
+			message.success(this.props.request.msg, 1);
 		});
 	};
 

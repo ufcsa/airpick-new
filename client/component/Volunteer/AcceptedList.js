@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Table, Button, Modal, Row, Col } from 'antd';
-import { loadAcceptedReq } from '../../redux/request.redux';
+import { loadAcceptedReq, cancelRequest } from '../../redux/request.redux';
+import { CancelModal } from './CancelModal';
 import moment from 'moment';
 
 const { Column } = Table;
@@ -12,6 +13,9 @@ export const AcceptedList = () => {
 
 	// hooks
 	const [modalState, setModalState] = useState({
+		visible: false
+	});
+	const [cancelModal, setCancelModal] = useState({
 		visible: false
 	});
 	const userState = useSelector(state => state.user);
@@ -32,6 +36,14 @@ export const AcceptedList = () => {
 		setModalState({ ...modalState, visible: false });
 	};
 
+	const cancelReq = e => {
+		console.log(e);
+		setCancelModal({
+			reqId: e.key,
+			visible: true,
+			volunteerId: userState.username
+		});
+	};
 	// wait for loading
 	if (reqState.acceptedList === undefined) {
 		return null;
@@ -50,6 +62,23 @@ export const AcceptedList = () => {
 				pagination={false}
 				tableLayout='fixed'
 			>
+				<Column
+					title='Cancel'
+					key='cancel'
+					render={(text, record) => {
+						return (
+							<div>
+								<Button
+									type='danger'
+									size='small'
+									onClick={() => cancelReq(record)}
+								>
+									cancel
+								</Button>
+							</div>
+						);
+					}}
+				></Column>
 				<Column title='Name' dataIndex={['userInfo', 'firstName']}></Column>
 				<Column
 					title='Contact'
@@ -103,6 +132,12 @@ export const AcceptedList = () => {
 					key='notes'
 				></Column>
 			</Table>
+			<CancelModal
+				visible={cancelModal.visible}
+				reqId={cancelModal.reqId}
+				volunteerId={cancelModal.volunteerId}
+				changeVsb={vsb => setCancelModal({ ...cancelModal, visible: vsb })}
+			></CancelModal>
 			{modalState.userInfo ? (
 				<Modal
 					width={550}
