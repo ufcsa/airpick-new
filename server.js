@@ -12,12 +12,20 @@ const cookieParser = require('cookie-parser');
 
 const server = require('http').Server(app);
 
-mongoose.connect(config.db, {
+const dbConfig = {
 	useNewUrlParser: true,
 	useFindAndModify: false,
 	useUnifiedTopology: true,
-	useCreateIndex: true
+	useCreateIndex: true,
+	poolSize: 5
+};
+
+const db = mongoose.connection;
+db.on('disconnected', () => {
+	console.log('db disconnected, tryng to reconnect...');
+	mongoose.connect(config.db, dbConfig);
 });
+mongoose.connect(config.db, dbConfig);
 
 var port = process.env.PORT || 5000;
 
