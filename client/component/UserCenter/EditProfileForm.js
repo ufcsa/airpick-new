@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { UserOutlined } from '@ant-design/icons';
-import { Form, Input, Button, Typography } from 'antd';
+import { Form, Input, Button } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { editProfile } from '../../redux/user.redux';
 
