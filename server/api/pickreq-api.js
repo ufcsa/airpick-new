@@ -9,7 +9,7 @@ const PATH = require('path');
 */
 new CronJob(
 	'0 */15 * * * *',
-	function() {
+	function () {
 		console.log('fucking myself');
 		const now = new Date();
 		console.log(now);
