@@ -25,6 +25,10 @@ db.on('disconnected', () => {
 	console.log('db disconnected, tryng to reconnect...');
 	mongoose.connect(config.db, dbConfig);
 });
+db.on('error', () => {
+	console.log('db connection error, tryng to reconnect...');
+	mongoose.connect(config.db, dbConfig);
+});
 mongoose.connect(config.db, dbConfig);
 
 var port = process.env.PORT || 5000;

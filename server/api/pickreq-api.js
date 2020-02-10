@@ -3,16 +3,25 @@ const Pickreq = require('../model/pickreq.model');
 const CronJob = require('cron').CronJob;
 const mailer = require('../mail/sendMail');
 const PATH = require('path');
+const moment = require('moment-timezone');
 
 /*
   A Cron job to clean outdated request every 15 minute. 
 */
 new CronJob(
 	'0 */15 * * * *',
-	function () {
+	function() {
 		console.log('fucking myself');
 		const now = new Date();
 		console.log(now);
+		Pickreq.find({ arrivalTime: { $lt: now } }).exec((err, docs) => {
+			if (err) {
+				console.log(err.stack);
+			}
+			const count = docs.length;
+			console.log(`There are ${count} requests completed`);
+			// TODO: move outdated request to complete list
+		});
 	},
 	null,
 	true,
