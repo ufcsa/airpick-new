@@ -10,6 +10,7 @@ import Register from '../../container/auth/Register';
 import MyRequest from '../../container/myRequest/MyRequest';
 import AllPickReq from '../../container/volunteer/AllPickReq';
 import MyAccept from '../../container/volunteer/MyAccept';
+import PrivateRoute from './PrivateRoute';
 import { EditProfile } from '../../container/UserCenter/EditProfile';
 
 function Home() {
@@ -20,7 +21,7 @@ function NoMatch() {
 	return <h2>404 Not Found</h2>;
 }
 
-const navListRouting = navList => {
+const navListRouting = (navList, isAuth) => {
 	const routers = [];
 	navList.forEach(op => {
 		if (op.text === 'UF CSA Airpick') {
@@ -36,31 +37,46 @@ const navListRouting = navList => {
 			const sublist = op.subItem;
 			sublist.forEach(it => {
 				routers.push(
-					<Route key={it.text} path={it.path} component={it.component}></Route>
+					<PrivateRoute
+						key={it.text}
+						path={it.path}
+						component={it.component}
+						isAuth={isAuth}
+					></PrivateRoute>
 				);
 			});
 		} else if (op.text === 'usercenter') {
 			op.subItem.forEach(it => {
 				if (it.text !== 'Sign out') {
-					console.log(it.path);
 					routers.push(
-						<Route
+						<PrivateRoute
 							key={it.text}
 							path={it.path}
 							component={it.component}
-						></Route>
+							isAuth={isAuth}
+						></PrivateRoute>
 					);
 				}
 			});
 		} else {
-			routers.push(
-				<Route key={op.text} path={op.path} component={op.component}></Route>
-			);
+			if (op.auth) {
+				routers.push(
+					<PrivateRoute
+						key={op.text}
+						path={op.path}
+						component={op.component}
+						isAuth={isAuth}
+					></PrivateRoute>
+				);
+			} else {
+				routers.push(
+					<Route key={op.text} path={op.path} component={op.component}></Route>
+				);
+			}
 		}
 	});
 
 	routers.push(<Route key='nomatch' component={NoMatch}></Route>);
-	console.log(routers);
 	return routers;
 };
 
@@ -96,6 +112,7 @@ class AuthRoute extends React.Component {
 				text: 'UF CSA Airpick',
 				component: Home,
 				className: 'navbar-title',
+				auth: false,
 				hide: false
 			},
 			{
@@ -103,7 +120,8 @@ class AuthRoute extends React.Component {
 				text: 'My Requests',
 				className: '',
 				hide: !isAuth,
-				component: MyRequest
+				component: MyRequest,
+				auth: true
 			},
 			{
 				text: 'Volunteer',
@@ -112,12 +130,14 @@ class AuthRoute extends React.Component {
 					{
 						path: '/list',
 						text: 'All Requests',
-						component: AllPickReq
+						component: AllPickReq,
+						auth: true
 					},
 					{
 						path: '/accepted',
 						text: 'My Acception',
-						component: MyAccept
+						component: MyAccept,
+						auth: true
 					}
 				]
 			},
@@ -126,14 +146,16 @@ class AuthRoute extends React.Component {
 				text: 'Register',
 				component: Register,
 				className: rightNavbarClass,
-				hide: isAuth
+				hide: isAuth,
+				auth: false
 			},
 			{
 				path: '/login',
 				text: 'Login',
 				component: Login,
 				className: rightNavbarClass,
-				hide: isAuth
+				hide: isAuth,
+				auth: false
 			},
 			{
 				text: 'usercenter',
@@ -143,14 +165,17 @@ class AuthRoute extends React.Component {
 					{
 						path: '/edit-profile',
 						text: 'Edit Profile',
-						component: EditProfile
+						component: EditProfile,
+						auth: true
 					},
 					{
 						path: '/change-password',
-						text: 'Change Password'
+						text: 'Change Password',
+						auth: true
 					},
 					{
-						text: 'Sign out'
+						text: 'Sign out',
+						auth: true
 					}
 				]
 			}
@@ -160,7 +185,7 @@ class AuthRoute extends React.Component {
 		return (
 			<div>
 				<NavBar data={navList}></NavBar>
-				<Switch>{navListRouting(navList)}</Switch>
+				<Switch>{navListRouting(navList, isAuth)}</Switch>
 			</div>
 		);
 	}
