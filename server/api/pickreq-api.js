@@ -1,27 +1,52 @@
 const User = require('../model/user.model');
 const Pickreq = require('../model/pickreq.model');
+const Completed = require('../model/complete.model');
 const CronJob = require('cron').CronJob;
 const mailer = require('../mail/sendMail');
 const PATH = require('path');
-const moment = require('moment-timezone');
 
 /*
   A Cron job to clean outdated request every 15 minute. 
 */
 new CronJob(
-	'0 */15 * * * *',
+	'*/10 * * * * *',
 	function() {
 		console.log('fucking myself');
 		const now = new Date();
 		console.log(now);
-		Pickreq.find({ arrivalTime: { $lt: now } }).exec((err, docs) => {
-			if (err) {
-				console.log(err.stack);
+		Pickreq.find({ arrivalTime: { $lt: now }, published: true }).exec(
+			(err, docs) => {
+				if (err) {
+					console.log(err.stack);
+				}
+				const count = docs.length;
+				console.log(`There are ${count} requests completed`);
+				// TODO: move outdated request to complete list
+				docs.forEach(r => {
+					let cmp = new Completed();
+					cmp.requestID = r._id;
+					cmp.username = r.username;
+					cmp.volunteer = r.volunteer;
+					cmp.arrivalTime = r.arrivalTime;
+					cmp.airport = r.airport;
+					cmp.notes = r.notes;
+					cmp.save(err => {
+						if (err) console.error(err.stack);
+					});
+					// change published to false;
+					Pickreq.updateOne(
+						{ _id: r._id },
+						{ volunteer: '', published: false },
+						(err, ret) => {
+							if (err) {
+								console.error(err.stack);
+							}
+							console.log(`cleared ${ret.n} records`);
+						}
+					);
+				});
 			}
-			const count = docs.length;
-			console.log(`There are ${count} requests completed`);
-			// TODO: move outdated request to complete list
-		});
+		);
 	},
 	null,
 	true,
