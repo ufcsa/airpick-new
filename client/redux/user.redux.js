@@ -10,7 +10,7 @@ const initState = {
 	redirectTo: '',
 	msg: '',
 	username: '',
-	isAuth: false
+	isAuth: undefined
 };
 
 //reducer
@@ -78,7 +78,6 @@ export function editProfile(userProfile) {
 	if (!userProfile.firstName || !userProfile.lastName || !userProfile.email) {
 		return errorMsg('missing Fields');
 	}
-
 
 	const displayName = [userProfile.firstName, userProfile.lastName].join(' ');
 	userProfile = { ...userProfile, displayName: displayName };

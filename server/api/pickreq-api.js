@@ -9,7 +9,7 @@ const PATH = require('path');
   A Cron job to clean outdated request every 15 minute. 
 */
 new CronJob(
-	'*/10 * * * * *',
+	'0 */15 * * * *',
 	function() {
 		console.log('fucking myself');
 		const now = new Date();
@@ -256,7 +256,7 @@ module.exports = router => {
 
 	// list all requests in the db
 	router.route('/list').get((req, res) => {
-		Pickreq.find({}).exec((err, doc) => {
+		Pickreq.find({ published: true }).exec((err, doc) => {
 			if (err) {
 				console.error(err);
 				return res.status(422).json({
