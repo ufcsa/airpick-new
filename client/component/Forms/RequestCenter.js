@@ -10,25 +10,14 @@ import { connect } from 'react-redux';
 import PickreqForm from './PickModal';
 import MyReqList from './MyReqList';
 
-// decorator
-// const a = () => {
-//   return function (cls) {
-//     return cls.b;
-//   }
-// }
-
-// a()(A);
-
-// class A {
-
-// }
 @connect(state => state, { updatePickreq, loadPickreq })
 class RequestCenter extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			visible: false,
-			confirmLoading: false
+			confirmLoading: false,
+			myReq: undefined
 		};
 	}
 
@@ -64,19 +53,13 @@ class RequestCenter extends React.Component {
 		this.formRef = formRef;
 	};
 
+	componentDidMount() {
+		this.props.loadPickreq(this.props.user.username);
+	}
+
 	render() {
-		console.log(this.props);
 		// TODO: change this.props.request to an array. One user can have multiple requests
-		let previousReq = undefined;
-		if (!this.props.request.request) {
-			if (this.props.user.username)
-				this.props.loadPickreq(this.props.user.username);
-		} else {
-			if (this.props.request.request.request) {
-				previousReq = [];
-				previousReq.push(this.props.request.request.request);
-			}
-		}
+		let previousReq = this.props.request.request;
 
 		if (previousReq === undefined) {
 			console.log('loading previous requests');

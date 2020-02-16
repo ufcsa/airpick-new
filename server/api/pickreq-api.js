@@ -309,7 +309,10 @@ module.exports = router => {
 
 					// return all promises at once
 					Promise.all(promiseList)
-						.then(() => res.json({ ...result, code: 0 }))
+						.then(() => {
+							console.log({ ...result, code: 0 });
+							res.json({ ...result, code: 0 });
+						})
 						.catch(err => {
 							console.error(err);
 							return res.status(422).send({ err: err.message });

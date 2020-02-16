@@ -14,7 +14,7 @@ const initState = {
 	msg: '',
 	redirectTo: '',
 	username: '',
-	request: null, // current user's requust
+	request: undefined, // current user's requust
 	list: [] // all request [{key: int, request: reqObj, user: userObj}]
 };
 // store
@@ -25,14 +25,14 @@ export function requestRedux(state = initState, action) {
 		case LOAD_ALL:
 			return { ...state, list: action.payload, msg: action.msg };
 		case LOAD_REQ:
-			return { ...state, request: action.payload.data };
+			return { ...state, request: action.payload.data.request };
 		case ERROR_SUBMIT:
 			return { ...state, msg: action.msg };
 		case UPDATE_SUC:
 			return {
 				...state,
 				msg: action.msg,
-				request: action.payload.data,
+				request: action.payload,
 				redirectTo: '/myrequest'
 			};
 		case DELETE_SUC:
@@ -58,7 +58,8 @@ function loadReq(request) {
 }
 
 function updateSuccess(request) {
-	if (!request.data.request.published) {
+	console.log(request);
+	if (!request.published) {
 		message.warning('Update Successfully, but your request is not published!');
 	} else {
 		message.success('Update Successfully! Your request has been published!', 1);
@@ -87,7 +88,7 @@ export function loadPickreq(username) {
 	// load pickreq from db once and save it inside the redux store
 	console.log('loading existing req in redux %s', username);
 	return dispatch => {
-		axios
+		return axios
 			.get(`/api/requests/user/${username}`)
 			.then(res => dispatch(loadReq(res.data)));
 	};
@@ -123,7 +124,8 @@ export function updatePickreq(userInput) {
 			.then(
 				res => {
 					if (res.status === 200 && res.data.code === 0) {
-						dispatch(updateSuccess(res.data));
+						console.log(res.data);
+						dispatch(updateSuccess(res.data.data.request));
 					} else {
 						dispatch(errorMsg('Error happened when update!'));
 					}
@@ -165,6 +167,7 @@ export function loadAllReq() {
 				);
 				dispatch(getListSuc(res.data.reqList));
 			} else {
+				console.log(res);
 				dispatch(errorMsg('Error happened when getting the request list'));
 			}
 		});

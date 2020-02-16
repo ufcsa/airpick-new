@@ -91,22 +91,29 @@ class MyReqList extends React.Component {
 	};
 
 	render() {
-		const list = this.props.data.map(item => ({
-			key: item._id,
-			date: moment(item.arrivalTime)
-				.tz('America/New_York')
-				.format('YYYY-MM-DD'),
-			time: moment(item.arrivalTime)
-				.tz('America/New_York')
-				.format('HH:mm'),
-			arrivalTime: item.arrivalTime,
-			airport: item.airport,
-			volunteer: item.volunteer,
-			published: item.published,
-			carryon: item.carryon,
-			luggage: item.luggage,
-			notes: item.notes
-		}));
+		const tmp = [this.props.data];
+		console.log(tmp);
+		const list = tmp.map(item => {
+			console.log(item);
+			return {
+				key: item._id,
+				date: moment(item.arrivalTime)
+					.tz('America/New_York')
+					.format('YYYY-MM-DD'),
+				time: moment(item.arrivalTime)
+					.tz('America/New_York')
+					.format('HH:mm'),
+				arrivalTime: item.arrivalTime,
+				airport: item.airport,
+				volunteer: item.volunteer,
+				published: item.published,
+				carryon: item.carryon,
+				luggage: item.luggage,
+				notes: item.notes
+			};
+		});
+
+		console.log(list);
 
 		return (
 			<div>
@@ -165,8 +172,8 @@ class MyReqList extends React.Component {
 									if (status === 0) {
 										return (
 											<Step
-												status='wait'
-												title='Waiting to publish..'
+												status='finish'
+												title='trip finished!'
 												icon={<ExclamationCircleOutlined />}
 											></Step>
 										);
