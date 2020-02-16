@@ -28,6 +28,9 @@ class EditForm extends React.Component {
 		};
 		const dateFormat = 'YYYY-MM-DD';
 		const timeFormat = 'HH:mm';
+		const disabledDate = current => {
+			return current && current < moment().endOf('day');
+		};
 		const requirement = {
 			rules: [
 				{
@@ -81,7 +84,7 @@ class EditForm extends React.Component {
                 )(<DatePicker format={dateFormat} />)}
               </Form.Item> */}
 							<Form.Item label='Date' name='date' rules={requirement.rules}>
-								<DatePicker format={dateFormat} />
+								<DatePicker disabledDate={disabledDate} format={dateFormat} />
 							</Form.Item>
 							{/* <Form.Item label='Time'>
                 {getFieldDecorator('time',

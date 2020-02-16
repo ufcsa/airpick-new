@@ -268,7 +268,7 @@ module.exports = router => {
 				};
 
 				if (!doc || doc.length === 0) {
-					return res.status(200).json(result);
+					return res.status(200).json({ ...result, code: 0 });
 				} else {
 					// search user information based on username
 					// TODO: use Redis to save the user information (username -> UserInfo)

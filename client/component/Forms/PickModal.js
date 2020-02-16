@@ -5,6 +5,7 @@
 import React from 'react';
 import '@ant-design/compatible/assets/index.css';
 import { Form, Modal, Input, DatePicker, TimePicker, InputNumber } from 'antd';
+import moment from 'moment';
 
 const { TextArea } = Input;
 
@@ -24,6 +25,10 @@ class PickreqForm extends React.Component {
 		};
 		const dateFormat = 'YYYY-MM-DD';
 		const timeFormat = 'HH:mm';
+		const disabledDate = current => {
+			return current && current < moment().endOf('day');
+		};
+
 		const requirement = {
 			rules: [
 				{
@@ -66,7 +71,7 @@ class PickreqForm extends React.Component {
               )(<DatePicker format={dateFormat} />)}
             </Form.Item> */}
 						<Form.Item label='Date' name='date' rules={requirement.rules}>
-							<DatePicker format={dateFormat} />
+							<DatePicker disabledDate={disabledDate} format={dateFormat} />
 						</Form.Item>
 						{/* <Form.Item label='Time'>
               {getFieldDecorator('time',
@@ -74,7 +79,7 @@ class PickreqForm extends React.Component {
               )(<TimePicker format={timeFormat} />)}
             </Form.Item> */}
 						<Form.Item label='Time' name='time' rules={requirement.rules}>
-							<TimePicker format={timeFormat} />
+							<TimePicker autoFocus format={timeFormat} />
 						</Form.Item>
 						{/* <Form.Item label='Airport/Location'>
               {getFieldDecorator('airport', { ...requirement })(<Input placeholder='MCO' />)}

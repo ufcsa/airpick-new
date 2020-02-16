@@ -2,9 +2,9 @@
 	"compilerOptions": {
 		"experimentalDecorators": true,
 		"target": "es5",
-		"baseUrl": "./",
+		"baseUrl": "./client",
 		"paths": {
-			"@/*": ["client/*"]
+			"@/*": ["*"]
 		}
 	}
 }
