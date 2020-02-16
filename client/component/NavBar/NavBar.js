@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Menu, Modal, Avatar } from 'antd';
 import browserCookie from 'browser-cookies';
-import { logoutRedux } from '../../redux/user.redux';
+import { logoutRedux } from '@/redux/user.redux';
 
 const { Item, SubMenu } = Menu;
 

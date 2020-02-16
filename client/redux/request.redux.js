@@ -58,7 +58,6 @@ function loadReq(request) {
 }
 
 function updateSuccess(request) {
-	console.log(request);
 	if (!request.published) {
 		message.warning('Update Successfully, but your request is not published!');
 	} else {
