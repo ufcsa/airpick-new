@@ -8,7 +8,7 @@ import RenderEmpty from '@/component/Empty/CustomEmpty';
 const { Column } = Table;
 
 @connect(state => state, { loadAllReq, acceptReq })
-class ReqList extends React.Component {
+class AirReqList extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -33,13 +33,15 @@ class ReqList extends React.Component {
 	};
 
 	render() {
+		console.log(this.props.request.list)
 		return (
 			<div>
 				<ConfigProvider renderEmpty={RenderEmpty}>
 					<Table
 						dataSource={this.props.request.list}
+					
 						loading={this.state.loading}
-						pagination={false}
+						pagination={{ hideOnSinglePage:true,showQuickJumper:true }}
 						tableLayout='fixed'
 					>
 						<Column
@@ -100,10 +102,21 @@ class ReqList extends React.Component {
 							key='notes'
 						></Column>
 					</Table>
+{/* ---------------------------------------- */}
+					{/* <Table
+						dataSource={[{age:1},{age:1},{age:1},{age:1},{age:1},{age:1},{age:1},{age:1},{age:1},{age:1},{age:1},{age:1},{age:1},{age:1},{age:1},{age:1}]}
+					
+						loading={this.state.loading}
+						pagination={{ pageSize:5,hideOnSinglePage:true,showQuickJumper:true,responsive:true }}
+						tableLayout='fixed'
+					>
+						 <Column title="Age" dataIndex="age" key="age" />
+					</Table> */}
 				</ConfigProvider>
+
 			</div>
 		);
 	}
 }
 
-export default ReqList;
+export default AirReqList;

@@ -5,28 +5,27 @@ import LodgeReqList from "../../component/Volunteer/LodgeReqList"
 
 const { Title, Paragraph } = Typography;
 
-class AllPickReq extends React.Component {
+class AllLodgeReq extends React.Component {
 	render() {
 		return (
 			<div>
+
 			<Typography style={{ padding: '15px' }}>
 				<Title level={3} style={{ textAlign: 'center' }}>
-					Airport Pickup Requests
+					Lodge Requests
 				</Title>
 
 				<Paragraph style={{ textAlign: 'center' }}>
 					<Tag color='red'>Note:</Tag>
-					This page lists all the airport pick-up requests. To accept one,
+					This page lists all the Lodge requests. To accept one,
 					simply click the 'Accept' button on the left of that request.
 				</Paragraph>
 				<Divider />
-				<AirReqList></AirReqList>
+				<LodgeReqList></LodgeReqList>
 			</Typography>
-
-		
 			</div>
 		);
 	}
 }
 
-export default AllPickReq;
+export default AllLodgeReq;

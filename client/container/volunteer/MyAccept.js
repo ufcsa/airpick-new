@@ -1,7 +1,8 @@
 import React from 'react';
 import { Typography, Divider, Tag } from 'antd';
 import { useSelector } from 'react-redux';
-import { AcceptedList } from '../../component/Volunteer/AcceptedList';
+import { AirAcceptedList } from '../../component/Volunteer/AirAcceptedList';
+import {LodgeAcceptedList} from '../../component/Volunteer/LodgeAcceptedList';
 
 const { Title, Paragraph } = Typography;
 
@@ -23,7 +24,10 @@ const MyAccept = props => {
 					changes.
 				</Paragraph>
 				<Divider></Divider>
-				<AcceptedList></AcceptedList>
+				<AirAcceptedList></AirAcceptedList>
+				<br></br>
+				<br></br>
+				<LodgeAcceptedList></LodgeAcceptedList>
 			</Typography>
 		);
 	} else {

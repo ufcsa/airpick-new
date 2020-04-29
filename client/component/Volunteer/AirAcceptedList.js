@@ -8,7 +8,7 @@ import moment from 'moment';
 
 const { Column } = Table;
 
-export const AcceptedList = () => {
+export const AirAcceptedList = () => {
 	const fontStyle = { fontSize: 16 };
 	const gutter = [0, 5];
 
@@ -61,7 +61,7 @@ export const AcceptedList = () => {
 				<Table
 					dataSource={acceptedList}
 					loading={acceptedList ? false : true}
-					pagination={false}
+					pagination={{ pageSize:5,hideOnSinglePage:true,showQuickJumper:true }}
 					tableLayout='fixed'
 				>
 					<Column
@@ -187,3 +187,5 @@ export const AcceptedList = () => {
 		</div>
 	);
 };
+
+

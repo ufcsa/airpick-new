@@ -9,6 +9,7 @@ import Login from '../../container/auth/Login';
 import Register from '../../container/auth/Register';
 import MyRequest from '../../container/myRequest/MyRequest';
 import AllPickReq from '../../container/volunteer/AllPickReq';
+import AllLodgeReq from '../../container/volunteer/AllLodgeReq';
 import MyAccept from '../../container/volunteer/MyAccept';
 import PrivateRoute from './PrivateRoute';
 import { EditProfile } from '../../container/UserCenter/EditProfile';
@@ -128,9 +129,15 @@ class AuthRoute extends React.Component {
 				hide: !isAuth,
 				subItem: [
 					{
-						path: '/list',
-						text: 'All Requests',
+						path: '/airpicklist',
+						text: 'Airpick Requests',
 						component: AllPickReq,
+						auth: true
+					},
+					{
+						path: '/lodgelist',
+						text: 'Lodge Requests',
+						component: AllLodgeReq,
 						auth: true
 					},
 					{
