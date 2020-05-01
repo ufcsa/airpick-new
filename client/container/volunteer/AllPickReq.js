@@ -15,7 +15,7 @@ class AllPickReq extends React.Component {
 				<Paragraph style={{ textAlign: 'center' }}>
 					<Tag color='red'>Note:</Tag>
 					This page lists all the airport pick-up requests. To accept one,
-					simply click the 'Accept' button on the left of that request.
+					simply click the &apos;Accept&apos; button on the left of that request.
 				</Paragraph>
 				<Divider />
 				<ReqList></ReqList>

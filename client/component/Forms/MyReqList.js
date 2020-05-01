@@ -167,8 +167,8 @@ class MyReqList extends React.Component {
 									const status = record.volunteer
 										? 2
 										: record.published
-										? 1
-										: 0;
+											? 1
+											: 0;
 									if (status === 0) {
 										return (
 											<Step

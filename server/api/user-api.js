@@ -75,13 +75,13 @@ module.exports = function (router) {
 		user.wechatId = wechatId;
 		user.gender = gender;
 
-		bcrypt.hash(pwd, null, null, (err, hash) => {
+		bcrypt.hash(pwd, null, null, (_, hash) => {
 			user.pwd = hash;
-			user.save(async (err, doc) => {
-				if (err) {
-					console.log(err);
-					let errorMsg = err.errmsg;
-					if (err.code === 11000) {
+			user.save(async (err1, doc) => {
+				if (err1) {
+					console.log(err1);
+					let errorMsg = err1.errmsg;
+					if (err1.code === 11000) {
 						errorMsg = 'Username of email already exists!';
 					}
 					return res.json({
@@ -182,28 +182,28 @@ module.exports = function (router) {
 				//email to volunteer
 				if (updateContent.phone !== oldProfile.phone)
 					try {
-						const req = await Pickreq.find({ username: oldProfile.username });
+						const rqst = await Pickreq.find({ username: oldProfile.username });
 
-						req.forEach((val) => {
+						rqst.forEach((val) => {
 							const volunteer = val.volunteer;
-							User.findOne({ username: volunteer }, async (err, val) => {
-								if (err) {
-									console.log(err);
+							User.findOne({ username: volunteer }, async (err1, user) => {
+								if (err1) {
+									console.log(err1);
 								}
-								const volEmail = val.email;
+								const volEmail = user.email;
 
-								const reqContactChangeTplt = PATH.resolve(__dirname, '../mail/toVolunteerTemplate/requesterContactChange.html')
+								const reqContactChangeTplt = PATH.resolve(__dirname, '../mail/toVolunteerTemplate/requesterContactChange.html');
 								const infoInsert = {
-									volunteer: { firstName: val.firstName },
+									volunteer: { firstName: user.firstName },
 									requester: { phone: updateContent.phone }
-								}
+								};
 
 								try {
-									await res.render(reqContactChangeTplt, infoInsert, (err, content) => {
-										if (err) {
-											console.error(err.stack);
+									await res.render(reqContactChangeTplt, infoInsert, (err2, content) => {
+										if (err2) {
+											console.error(err2.stack);
 										}
-										console.log(content)
+										console.log(content);
 										const recipient = volEmail;
 										const subject = '[AirPick] The Requester\' phone numebr is changed!';
 										mailer.sendMail(recipient, subject, content);
@@ -211,12 +211,12 @@ module.exports = function (router) {
 								} catch (e) {
 									console.log(e.stack);
 								}
-							})
-						})
+							});
+						});
 
 					}
 					catch (e) {
-						console.log(e)
+						console.log(e);
 					}
 
 

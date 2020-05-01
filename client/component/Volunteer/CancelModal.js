@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 export const CancelModal = ({ visible, reqId, changeVsb, volunteerId }) => {
 	const dispatch = useDispatch();
 	const onOk = () => {
-		dispatch(cancelRequest(reqId, volunteerId)).then(res => {
+		dispatch(cancelRequest(reqId, volunteerId)).then(() => {
 			message.success('Cancel successfully', 1);
 			console.log('ok');
 		});

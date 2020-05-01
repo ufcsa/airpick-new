@@ -1,5 +1,5 @@
-import React from 'react';
-import { Typography } from 'antd';
+import React from '@/container/userCenter/node_modules/react';
+import { Typography } from '@/container/userCenter/node_modules/antd';
 import { EditProfileForm } from '../../component/UserCenter/EditProfileForm';
 const Paragraph = Typography;
 

@@ -16,22 +16,22 @@ const initState = {
 //reducer
 export function userRedux(state = initState, action) {
 	switch (action.type) {
-		case LOAD_DATA:
-			return { ...state, ...action.payload, isAuth: true };
-		case AUTH_SUCC:
-			return {
-				...state,
-				msg: '',
-				...action.payload,
-				isAuth: true,
-				redirectTo: '/'
-			};
-		case ERROR_MSG:
-			return { ...state, isAuth: false, msg: action.msg };
-		case LOGOUT:
-			return { ...initState };
-		default:
-			return state;
+	case LOAD_DATA:
+		return { ...state, ...action.payload, isAuth: true };
+	case AUTH_SUCC:
+		return {
+			...state,
+			msg: '',
+			...action.payload,
+			isAuth: true,
+			redirectTo: '/'
+		};
+	case ERROR_MSG:
+		return { ...state, isAuth: false, msg: action.msg };
+	case LOGOUT:
+		return { ...initState };
+	default:
+		return state;
 	}
 }
 
@@ -83,7 +83,7 @@ export function editProfile(userProfile) {
 	userProfile = { ...userProfile, displayName: displayName };
 
 	return dispatch => {
-		axios.put(`/api/user/editProfile`, { userProfile }).then(res => {
+		axios.put('/api/user/editProfile', { userProfile }).then(res => {
 			if (res.status === 200 && res.data.code === 0) {
 				const resdata = res.data.data;
 
