@@ -5,7 +5,7 @@ import {
 	CheckCircleTwoTone,
 	LoadingOutlined
 } from '@ant-design/icons';
-import { Table, Button, Spin, Tooltip, Steps } from 'antd';
+import { Table, Button, Tooltip, Steps } from 'antd';
 import moment from 'moment-timezone';
 import EditModal from './EditModal';
 import VolunteerModel from './VolunteerInfoModal';
