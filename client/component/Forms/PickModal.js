@@ -61,29 +61,12 @@ class PickreqForm extends React.Component {
 					onCancel={onCancel}
 				>
 					<Form {...formItemLayout} ref={this.formRef}>
-						{/* <Form.Item label='Publish'>
-              {getFieldDecorator('publish')(<Switch autoFocus></Switch>)}
-            </Form.Item> */}
-
-						{/* <Form.Item label='Date'>
-              {getFieldDecorator('date',
-                { ...requirement }
-              )(<DatePicker format={dateFormat} />)}
-            </Form.Item> */}
 						<Form.Item label='Date' name='date' rules={requirement.rules}>
 							<DatePicker disabledDate={disabledDate} format={dateFormat} />
 						</Form.Item>
-						{/* <Form.Item label='Time'>
-              {getFieldDecorator('time',
-                { ...requirement }
-              )(<TimePicker format={timeFormat} />)}
-            </Form.Item> */}
 						<Form.Item label='Time' name='time' rules={requirement.rules}>
 							<TimePicker autoFocus format={timeFormat} />
 						</Form.Item>
-						{/* <Form.Item label='Airport/Location'>
-              {getFieldDecorator('airport', { ...requirement })(<Input placeholder='MCO' />)}
-            </Form.Item> */}
 						<Form.Item
 							label='Airport/Location'
 							name='airport'
@@ -91,11 +74,6 @@ class PickreqForm extends React.Component {
 						>
 							<Input placeholder='MCO' />
 						</Form.Item>
-						{/* <Form.Item label='Number of Carry-ons'>
-              {getFieldDecorator('carryon',
-                { ...requirement }
-              )(<InputNumber min={0} max={10} placeholder={2}></InputNumber>)}
-            </Form.Item> */}
 						<Form.Item
 							label='Number of Carry-ons'
 							name='carryon'
@@ -103,11 +81,6 @@ class PickreqForm extends React.Component {
 						>
 							<InputNumber min={0} max={10} placeholder={2}></InputNumber>
 						</Form.Item>
-						{/* <Form.Item label='Number of large luggages'>
-              {getFieldDecorator('luggage',
-                { ...requirement }
-              )(<InputNumber min={0} max={10} placeholder={2}></InputNumber>)}
-            </Form.Item> */}
 						<Form.Item
 							label='Number of large luggages'
 							name='luggage'
@@ -115,9 +88,6 @@ class PickreqForm extends React.Component {
 						>
 							<InputNumber min={0} max={10} placeholder={2}></InputNumber>
 						</Form.Item>
-						{/* <Form.Item label='Notes'>
-              {getFieldDecorator('notes')(<TextArea placeholder='How many people coming with you?'></TextArea>)}
-            </Form.Item> */}
 						<Form.Item label='Notes' name='notes'>
 							<TextArea placeholder='How many people coming with you?'></TextArea>
 						</Form.Item>

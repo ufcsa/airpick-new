@@ -2,9 +2,9 @@
 
 import { combineReducers } from 'redux';
 import { userRedux } from './redux/user.redux';
-import { requestRedux } from './redux/request.redux';
+import { airpickRedux } from './redux/airpick.redux';
 
 export default combineReducers({
 	user: userRedux,
-	request: requestRedux
+	airpick: airpickRedux
 });

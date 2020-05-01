@@ -2,7 +2,7 @@ import React from 'react';
 import {
 	DeleteOutlined,
 	EditOutlined,
-	ExclamationCircleOutlined,
+	CheckCircleTwoTone,
 	LoadingOutlined
 } from '@ant-design/icons';
 import { Table, Button, Spin, Tooltip, Steps } from 'antd';
@@ -10,25 +10,20 @@ import moment from 'moment-timezone';
 import EditModal from './EditModal';
 import VolunteerModel from './VolunteerInfoModal';
 import { connect } from 'react-redux';
-import { updatePickreq, deletePickreq } from '../../redux/request.redux';
+import { updatePickreq, deletePickreq, loadPickreq } from '../../redux/airpick.redux';
 
 const { Column } = Table;
 const { Step } = Steps;
 
-@connect(state => state, { updatePickreq, deletePickreq })
+@connect(state => state, { updatePickreq, deletePickreq, loadPickreq })
 class MyReqList extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			loading: true,
+			loading: false,
 			visible: false,
 			volunteerInfoVisible: false
 		};
-	}
-
-	componentDidMount() {
-		console.log(this.props);
-		if (this.props.data !== undefined) this.setState({ loading: false });
 	}
 
 	// open the modal
@@ -39,19 +34,14 @@ class MyReqList extends React.Component {
 	// delete the record
 	handleDelete = request => {
 		// call the function from redux
-		this.props.deletePickreq(request);
+		this.props.deletePickreq(request)
+			.then(() => this.props.loadPickreq(this.props.user.username));
 	};
 
 	// handle update the current reqeust
-	handleSubmit = values => {
+	handleSubmit = (values, reqId) => {
 		console.log('submitting update');
-
-		// const { form } = this.formRef.props;
-		// form.validateFields((err, fieldsValue) => {
-		//   if (err) {
-		//     console.err(err.stack)
-		//     return;
-		//   }
+		this.setState({ visible: false, data: null, loading: true });
 		// Should format date value before submit.
 		const updatePickReqVal = {
 			...values,
@@ -60,17 +50,13 @@ class MyReqList extends React.Component {
 			date: values.date.format('YYYY-MM-DD'),
 			time: values.time.format('HH:mm'),
 			username: this.props.user.username,
-			volunteer: this.props.user.volunteer
 		};
-		this.props.updatePickreq(updatePickReqVal).then(() => {
-			this.setState({ visible: false });
-		});
-
-		// });
+		this.props.updatePickreq(updatePickReqVal, reqId)
+			.then(() => this.setState({ ...this.state, loading: false}));
 	};
 
 	handleCancel = () => {
-		this.setState({ visible: false });
+		this.setState({ visible: false, data: null });
 	};
 
 	updateForm = formRef => {
@@ -91,10 +77,8 @@ class MyReqList extends React.Component {
 	};
 
 	render() {
-		const tmp = [this.props.data];
-		console.log(tmp);
+		const tmp = this.props.data;  // parsed in from MyRequestCenter.js
 		const list = tmp.map(item => {
-			console.log(item);
 			return {
 				key: item._id,
 				date: moment(item.arrivalTime)
@@ -113,110 +97,101 @@ class MyReqList extends React.Component {
 			};
 		});
 
-		console.log(list);
-
 		return (
 			<div>
-				{this.state.loading ? (
-					<Spin
-						size='large'
-						style={{ display: 'flex', justifyContent: 'center' }}
-					/>
-				) : (
-					<div>
-						<Table
-							dataSource={list}
-							loading={this.state.loading}
-							pagination={false}
-						>
-							<Column title='Date' dataIndex='date' key='date' />
-							<Column title='Time' dataIndex='time' key='time' />
-							<Column title='Airport' dataIndex='airport' key='airport' />
-							<Column
-								title='Action'
-								key='action'
-								render={(text, record) => {
-									return (
-										<div>
-											<Tooltip title='Edit'>
-												<Button
-													type='default'
-													icon={<EditOutlined />}
-													shape='circle'
-													style={{ marginRight: 10 }}
-													onClick={() => this.handleEdit(record)}
-												></Button>
-											</Tooltip>
-
-											<Tooltip title='Delete'>
-												<Button
-													type='danger'
-													icon={<DeleteOutlined />}
-													shape='circle'
-													onClick={() => this.handleDelete(record)}
-												></Button>
-											</Tooltip>
-										</div>
-									);
-								}}
-							></Column>
-							<Column
-								title='Status'
-								key='status'
-								render={(text, record) => {
-									const status = record.volunteer
-										? 2
-										: record.published
-											? 1
-											: 0;
-									if (status === 0) {
-										return (
-											<Step
-												status='finish'
-												title='trip finished!'
-												icon={<ExclamationCircleOutlined />}
-											></Step>
-										);
-									} else if (status === 1) {
-										return (
-											<Step
-												status='process'
-												title='Looking for volunteers..'
-												icon={<LoadingOutlined />}
-											></Step>
-										);
-									} else {
-										return (
+				<div>
+					<Table
+						dataSource={list}
+						loading={this.state.loading}
+						pagination={false}
+					>
+						<Column title='Date' dataIndex='date' key='date' />
+						<Column title='Time' dataIndex='time' key='time' />
+						<Column title='Airport' dataIndex='airport' key='airport' />
+						<Column
+							title='Action'
+							key='action'
+							render={(text, record) => {
+								return (
+									<div>
+										<Tooltip title='Edit'>
 											<Button
-												type='primary'
-												onClick={() =>
-													this.showVolunteerInfo(
-														this.props.request.request.volunteer
-													)
-												}
-											>
+												type='default'
+												icon={<EditOutlined />}
+												shape='circle'
+												style={{ marginRight: 10 }}
+												onClick={() => this.handleEdit(record)}
+											></Button>
+										</Tooltip>
+
+										<Tooltip title='Delete'>
+											<Button
+												type='danger'
+												icon={<DeleteOutlined />}
+												shape='circle'
+												onClick={() => this.handleDelete(record)}
+											></Button>
+										</Tooltip>
+									</div>
+								);
+							}}
+						></Column>
+						<Column
+							title='Status'
+							key='status'
+							render={(text, record) => {
+								const status = record.volunteer
+									? 2
+									: record.published
+										? 1
+										: 0;
+								if (status === 0) {
+									return (
+										<Step
+											status='finish'
+											title='trip finished!'
+											icon={<CheckCircleTwoTone twoToneColor="#52c41a" />}
+										></Step>
+									);
+								} else if (status === 1) {
+									return (
+										<Step
+											status='process'
+											title='Looking for volunteers..'
+											icon={<LoadingOutlined />}
+										></Step>
+									);
+								} else {
+									return (
+										<Button
+											type='primary'
+											onClick={() =>
+												this.showVolunteerInfo(
+													this.props.request.request.volunteer
+												)
+											}
+										>
 												Show Volunteer Info
-											</Button>
-										);
-									}
-								}}
-							></Column>
-						</Table>
-						<EditModal
-							wrappedComponentRef={this.updateForm}
-							visible={this.state.visible}
-							onCreate={this.handleSubmit}
-							onCancel={this.handleCancel}
-							data={this.state.data}
-						></EditModal>
-						<VolunteerModel
-							visible={this.state.volunteerInfoVisible}
-							volunteerInfo={this.state.volunteerInfo}
-							onCancel={this.closeVolunteerModal}
-							onOk={this.closeVolunteerModal}
-						></VolunteerModel>
-					</div>
-				)}
+										</Button>
+									);
+								}
+							}}
+						></Column>
+					</Table>
+					<EditModal
+						wrappedComponentRef={this.updateForm}
+						visible={this.state.visible}
+						onCreate={this.handleSubmit}
+						onCancel={this.handleCancel}
+						data={this.state.data}
+					></EditModal>
+					<VolunteerModel
+						visible={this.state.volunteerInfoVisible}
+						volunteerInfo={this.state.volunteerInfo}
+						onCancel={this.closeVolunteerModal}
+						onOk={this.closeVolunteerModal}
+					></VolunteerModel>
+				</div>
 			</div>
 		);
 	}

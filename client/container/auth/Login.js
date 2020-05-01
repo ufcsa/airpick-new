@@ -2,7 +2,7 @@ import React from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Form, Input, Typography, Button } from 'antd';
 import { connect } from 'react-redux';
-import { loadPickreq } from '../../redux/request.redux';
+import { loadPickreq } from '../../redux/airpick.redux';
 import { login } from '../../redux/user.redux';
 import { Redirect } from 'react-router-dom';
 const { Paragraph } = Typography;

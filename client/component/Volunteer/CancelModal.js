@@ -1,7 +1,7 @@
 // let volunteer confirm to cancel a request
 import React from 'react';
 import { Modal, message } from 'antd';
-import { cancelRequest } from '../../redux/request.redux';
+import { cancelRequest } from '../../redux/airpick.redux';
 import { useDispatch } from 'react-redux';
 
 export const CancelModal = ({ visible, reqId, changeVsb, volunteerId }) => {

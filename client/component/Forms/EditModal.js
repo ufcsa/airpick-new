@@ -15,7 +15,6 @@ class EditForm extends React.Component {
 	render() {
 		const { visible, onCancel, onCreate, data } = this.props; // all these values are passed from its parent component 'MyReqList'
 		// const { getFieldDecorator } = this.props.form;
-
 		const formItemLayout = {
 			labelCol: {
 				xs: { span: 20 },
@@ -54,7 +53,7 @@ class EditForm extends React.Component {
 								.validateFields()
 								.then(values => {
 									current.resetFields();
-									onCreate(values);
+									onCreate(values, data.key);
 								})
 								.catch(info => {
 									console.log('Update failed:', info);

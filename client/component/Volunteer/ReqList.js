@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Table, Button, message, ConfigProvider } from 'antd';
 import moment from 'moment-timezone';
-import { loadAllReq, acceptReq } from '../../redux/request.redux';
+import { loadAllReq, acceptReq } from '../../redux/airpick.redux';
 import RenderEmpty from '@/component/Empty/CustomEmpty';
 
 const { Column } = Table;
@@ -27,8 +27,8 @@ class ReqList extends React.Component {
 		console.log(this.props.user.username);
 		const reqId = request._id;
 		const volunteer = this.props.user.username;
-		this.props.acceptReq(reqId, volunteer, this.props.request.list).then(() => {
-			message.success(this.props.request.msg, 1);
+		this.props.acceptReq(reqId, volunteer, this.props.airpick.list).then(() => {
+			message.success(this.props.airpick.msg, 1);
 		});
 	};
 
@@ -37,7 +37,7 @@ class ReqList extends React.Component {
 			<div>
 				<ConfigProvider renderEmpty={RenderEmpty}>
 					<Table
-						dataSource={this.props.request.list}
+						dataSource={this.props.airpick.list}
 						loading={this.state.loading}
 						pagination={false}
 						tableLayout='fixed'

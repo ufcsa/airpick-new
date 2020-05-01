@@ -5,12 +5,12 @@
 import React from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
-import { updatePickreq, loadPickreq } from '../../redux/request.redux';
+import { addPickreq, loadPickreq } from '../../redux/airpick.redux';
 import { connect } from 'react-redux';
 import PickreqForm from './PickModal';
 import MyReqList from './MyReqList';
 
-@connect(state => state, { updatePickreq, loadPickreq })
+@connect(state => state, { addPickreq ,loadPickreq })
 class RequestCenter extends React.Component {
 	constructor(props) {
 		super(props);
@@ -34,19 +34,18 @@ class RequestCenter extends React.Component {
 	// handle adding a new request
 	handleSubmit = values => {
 		console.log('ok clicked');
+		this.setState({ visible: false });
 		// Should format date value before submit.
-		const updatePickreqValues = {
+		const newPickreqValues = {
 			...values,
 			publish: true,
 			notes: values.notes ? values.notes : '',
 			date: values.date.format('YYYY-MM-DD'),
 			time: values.time.format('HH:mm'),
 			username: this.props.user.username,
-			volunteer: this.props.user.volunteer
 		};
-		this.props.updatePickreq(updatePickreqValues).then(() => {
-			this.setState({ visible: false });
-		});
+		// call API
+		this.props.addPickreq(newPickreqValues);
 	};
 
 	saveForm = formRef => {
@@ -58,41 +57,35 @@ class RequestCenter extends React.Component {
 	}
 
 	render() {
-		// TODO: change this.props.request to an array. One user can have multiple requests
-		let previousReq = this.props.request.request;
-
-		if (previousReq === undefined) {
-			console.log('loading previous requests');
-			return null;
-		}
+		let previousReq = this.props.airpick.myRequests;
 
 		return (
 			<div style={{ textAlign: 'center' }}>
 				{previousReq ? (
 					<MyReqList data={previousReq}></MyReqList>
-				) : (
-					<div>
-						<br></br>
-						<br></br>
-						<Button type='primary' onClick={this.showModal}>
-							<PlusOutlined />
+				) : (null)}
+
+				<div>
+					<br></br>
+					<br></br>
+					<Button type='primary' onClick={this.showModal}>
+						<PlusOutlined />
 							Add Airpick Request
-						</Button>
-						{/* <br></br>
+					</Button>
+					{/* <br></br>
 						<br></br>
 						<br></br>
 						<Button type='primary' onClick={this.showModal}>
 							<PlusOutlined />
 							Add Lodging Request
 						</Button> */}
-						<PickreqForm
-							wrappedComponentRef={this.saveForm}
-							visible={this.state.visible}
-							onCreate={this.handleSubmit}
-							onCancel={this.handleCancel}
-						></PickreqForm>
-					</div>
-				)}
+					<PickreqForm
+						wrappedComponentRef={this.saveForm}
+						visible={this.state.visible}
+						onCreate={this.handleSubmit}
+						onCancel={this.handleCancel}
+					></PickreqForm>
+				</div>
 			</div>
 		);
 	}

@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const User = require('../model/user.model');
 const Pickreq = require('../model/pickreq.model');
 const Completed = require('../model/complete.model');
@@ -58,39 +59,7 @@ module.exports = router => {
 	router.param('username', (req, res, next, username) => {
 		req.username = username;
 		console.log('middleware get username:', req.username);
-		/**
-		 * todo: if the user is updating,
-		 * then directly return next();
-		 */
-
-		Pickreq.findOne({ username: username }).exec((err, doc) => {
-			if (err) {
-				return next(err);
-			} else if (!doc) {
-				req.currRequest = null;
-				return next();
-			} else {
-				req.currRequest = doc;
-				let volunteer = req.currRequest.volunteer;
-				if (volunteer && volunteer.length) {
-					// using lean() to return a simple POJO rather than Mongoose document obj
-					User.findOne({ username: volunteer })
-						.lean()
-						.exec((err1, volunteerInfo) => {
-							if (err1) {
-								req.currRequest = null;
-								return next(err);
-							} else if (volunteerInfo) {
-								const { pwd, _id, ...data } = volunteerInfo;
-								req.volunteer = data;
-								return next();
-							}
-						});
-				} else {
-					return next();
-				}
-			}
-		});
+		next();
 	});
 
 	// middleware to get the requestId param
@@ -132,42 +101,85 @@ module.exports = router => {
 		.route('/user/:username')
 		.get((req, res) => {
 			console.log('getting current user\'s request info', req.currRequest);
-			return res.json({
-				code: 0,
-				data: {
-					request: req.currRequest,
-					volunteer: req.volunteer
+			Pickreq.find({username: req.username}).exec((err, doc) => {
+				if(err) {
+					console.log(err.stack);
+					return res.json({
+						code: 1,
+						msg: err.errmsg,
+					});
 				}
+				console.log('current requests,', doc);
+				return res.json({
+					code: 0,
+					msg: 'Get current requests successfully',
+					data: doc,
+				});
 			});
 		})
+		// Add new request
+		.post((req, res) => {
+			console.log(req.body);
+			const airpickRequest = new Pickreq({...req.body, username: req.username});
+			airpickRequest.save(async (err) => {
+				if(err) {
+					console.log(err.stack);
+					return res.json({
+						code: 1,
+						msg: err.errmsg,
+					});
+				}
+				Pickreq.find({username: req.username}).exec((err1, docs) => {
+					if(err1) {
+						console.log(err1.stack);
+						return res.json({
+							code: 1,
+							msg: err1.errmsg,
+						});
+					} else {
+						return res.json({
+							code: 0,
+							msg: 'Add new request successfully!',
+							data: docs,
+						});
+					}
+				});
+			});
+		})
+		// Update existing request
 		.put((req, res) => {
 			if (req.body) {
 				console.log(req.body);
-				//if the user unpublished the request, then remove the volunteer
-				if (!req.body.published) {
-					req.body.volunteer = '';
-				}
+				const reqId = req.body.reqId;
+				const updatedRequestContent = req.body.request;
 				Pickreq.findOneAndUpdate(
-					{ username: req.username },
-					req.body,
-					{ upsert: true, setDefaultsOnInsert: true, new: true },
+					{ _id: mongoose.Types.ObjectId(reqId) },
+					{ $set: updatedRequestContent },
+					{ new: false },
 					(err, doc) => {
-						if (err) {
+						if(err) {
 							console.log(err.stack);
-							return res.status(422).json({
+							return res.json({
 								code: 1,
-								msg: 'Failed to update/create request info'
-							});
-						} else {
-							console.log('successfully update');
-							return res.status(200).json({
-								code: 0,
-								msg: 'Successfully update!',
-								data: {
-									request: doc
-								}
+								msg: err.errmsg,
 							});
 						}
+						console.log(doc);
+						Pickreq.find({ username: req.username })
+							.exec((err1, docs) => {
+								if(err1) {
+									console.log(err1.stack);
+									return res.json({
+										code: 1,
+										msg: err1.errmsg,
+									});
+								}
+								return res.json({
+									code: 0,
+									msg: 'Update successfully',
+									data: docs,
+								});
+							});
 					}
 				);
 			}

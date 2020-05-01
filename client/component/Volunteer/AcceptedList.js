@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Table, Button, Modal, Row, Col, ConfigProvider } from 'antd';
-import { loadAcceptedReq } from '@/redux/request.redux';
+import { loadAcceptedReq } from '@/redux/airpick.redux';
 import { CancelModal } from './CancelModal';
 import RenderEmpty from '@/component/Empty/CustomEmpty';
 import moment from 'moment';
@@ -20,7 +20,7 @@ export const AcceptedList = () => {
 		visible: false
 	});
 	const userState = useSelector(state => state.user);
-	const reqState = useSelector(state => state.request);
+	const reqState = useSelector(state => state.airpick);
 	const dispatch = useDispatch();
 	useEffect(() => {
 		if (userState.username) {

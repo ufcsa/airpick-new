@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Typography, Divider } from 'antd';
-import RequestCenter from '../../component/Forms/RequestCenter';
+import RequestCenter from '../../component/Forms/MyRequestCenter';
 const { Title } = Typography;
 
 @connect(state => state)
