@@ -8,9 +8,9 @@ import { Route, Switch } from 'react-router-dom';
 import Login from '../../container/auth/Login';
 import Register from '../../container/auth/Register';
 import MyRequest from '../../container/myRequest/MyRequest';
-import AllPickReq from '../../container/volunteer/AllPickReq';
-import AllLodgeReq from '../../container/volunteer/AllLodgeReq';
-import MyAccept from '../../container/volunteer/MyAccept';
+import AllPickReq from '../../container/Volunteer/AllPickReq';
+import AllLodgeReq from '@/container/Volunteer/AllLodgeReq';
+import MyAccept from '../../container/Volunteer/MyAccept';
 import PrivateRoute from './PrivateRoute';
 import { EditProfile } from '../../container/UserCenter/EditProfile';
 
@@ -20,6 +20,10 @@ function Home() {
 
 function NoMatch() {
 	return <h2>404 Not Found</h2>;
+}
+
+function ChangePassword() {
+	return <h2>Change password</h2>;
 }
 
 const navListRouting = (navList, isAuth) => {
@@ -178,6 +182,7 @@ class AuthRoute extends React.Component {
 					{
 						path: '/change-password',
 						text: 'Change Password',
+						component: ChangePassword,
 						auth: true
 					},
 					{

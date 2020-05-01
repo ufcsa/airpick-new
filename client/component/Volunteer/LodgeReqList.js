@@ -33,7 +33,7 @@ class LodgeReqList extends React.Component {
 	};
 
 	render() {
-		console.log(this.props.request.list)
+		console.log(this.props.request.list);
 		return (
 			<div>
 				<ConfigProvider renderEmpty={RenderEmpty}>

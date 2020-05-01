@@ -6,7 +6,7 @@ import {LodgeAcceptedList} from '../../component/Volunteer/LodgeAcceptedList';
 
 const { Title, Paragraph } = Typography;
 
-const MyAccept = props => {
+const MyAccept = () => {
 	// using useSelector hook to get user store from redux
 	const userState = useSelector(state => state.user);
 

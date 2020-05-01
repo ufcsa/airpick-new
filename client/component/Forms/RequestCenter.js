@@ -76,8 +76,15 @@ class RequestCenter extends React.Component {
 						<br></br>
 						<Button type='primary' onClick={this.showModal}>
 							<PlusOutlined />
-							Add Request
+							Add Airpick Request
 						</Button>
+						{/* <br></br>
+						<br></br>
+						<br></br>
+						<Button type='primary' onClick={this.showModal}>
+							<PlusOutlined />
+							Add Lodging Request
+						</Button> */}
 						<PickreqForm
 							wrappedComponentRef={this.saveForm}
 							visible={this.state.visible}

@@ -29,11 +29,11 @@ export const AirAcceptedList = () => {
 	}, [dispatch, userState.username]);
 
 	//functions to handle modal
-	const handleOk = e => {
+	const handleOk = () => {
 		setModalState({ ...modalState, visible: false });
 	};
 
-	const handleCancel = e => {
+	const handleCancel = () => {
 		setModalState({ ...modalState, visible: false });
 	};
 
@@ -145,7 +145,7 @@ export const AirAcceptedList = () => {
 			{modalState.userInfo ? (
 				<Modal
 					width={550}
-					title={modalState.userInfo.firstName + "'s Contact Information"}
+					title={modalState.userInfo.firstName + '\'s Contact Information'}
 					visible={modalState.visible}
 					onOk={handleOk}
 					onCancel={handleCancel}

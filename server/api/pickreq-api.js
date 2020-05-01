@@ -30,16 +30,16 @@ new CronJob(
 					cmp.arrivalTime = r.arrivalTime;
 					cmp.airport = r.airport;
 					cmp.notes = r.notes;
-					cmp.save(err => {
-						if (err) console.error(err.stack);
+					cmp.save(err2 => {
+						if (err2) console.error(err2.stack);
 					});
 					// change published to false;
 					Pickreq.updateOne(
 						{ _id: r._id },
 						{ volunteer: '', published: false },
-						(err, ret) => {
+						(err3, ret) => {
 							if (err) {
-								console.error(err.stack);
+								console.error(err3.stack);
 							}
 							console.log(`cleared ${ret.n} records`);
 						}
@@ -76,8 +76,8 @@ module.exports = router => {
 					// using lean() to return a simple POJO rather than Mongoose document obj
 					User.findOne({ username: volunteer })
 						.lean()
-						.exec((err, volunteerInfo) => {
-							if (err) {
+						.exec((err1, volunteerInfo) => {
+							if (err1) {
 								req.currRequest = null;
 								return next(err);
 							} else if (volunteerInfo) {
@@ -114,7 +114,7 @@ module.exports = router => {
 	// cancel volunteer
 	router.route('/cancel/:cancelId').put((req, res) => {
 		console.log('gonna cancel the volunteer in req ', req.cancelId);
-		Pickreq.updateOne({ _id: req.cancelId }, { volunteer: '' }, (err, doc) => {
+		Pickreq.updateOne({ _id: req.cancelId }, { volunteer: '' }, (err) => {
 			if (err) {
 				return res.json({
 					code: 1,
@@ -131,7 +131,7 @@ module.exports = router => {
 	router
 		.route('/user/:username')
 		.get((req, res) => {
-			console.log("getting current user's request info", req.currRequest);
+			console.log('getting current user\'s request info', req.currRequest);
 			return res.json({
 				code: 0,
 				data: {
@@ -217,9 +217,9 @@ module.exports = router => {
 							'../mail/pickreqTemplate/request-accepted.html'
 						);
 						try {
-							await res.render(acpReqTplt, infoInsert, (err, content) => {
-								if (err) {
-									console.error(err.stack);
+							await res.render(acpReqTplt, infoInsert, (err1, content) => {
+								if (err1) {
+									console.error(err1.stack);
 								}
 								const recipient = requester.email;
 								const subject = '[AirPick] Your Request get Accepted!';
@@ -301,8 +301,8 @@ module.exports = router => {
 									idx++;
 									result.reqList.push(data);
 								})
-								.catch(err => {
-									throw new Error(err);
+								.catch(err1 => {
+									throw new Error(err1);
 								})
 						);
 					});
@@ -313,9 +313,9 @@ module.exports = router => {
 							console.log({ ...result, code: 0 });
 							res.json({ ...result, code: 0 });
 						})
-						.catch(err => {
-							console.error(err);
-							return res.status(422).send({ err: err.message });
+						.catch(err1 => {
+							console.error(err1);
+							return res.status(422).send({ err: err1.message });
 						});
 				}
 			}
@@ -349,8 +349,8 @@ module.exports = router => {
 								};
 								result.push(obj);
 							})
-							.catch(err => {
-								throw new Error(err);
+							.catch(err1 => {
+								throw new Error(err1);
 							})
 					);
 				});
@@ -367,10 +367,10 @@ module.exports = router => {
 							msg: 'Get Accepted List Successfully',
 							acceptedList: result
 						});
-					})
-					.catch(err => {
-						console.error(err);
-						return res.status(422).send({ err: err.message });
+					}) 
+					.catch(err1 => {
+						console.error(err1);
+						return res.status(422).send({ err: err1.message });
 					});
 			});
 	});

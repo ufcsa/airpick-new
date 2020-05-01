@@ -145,7 +145,7 @@ export const LodgeAcceptedList = () => {
 			{modalState.userInfo ? (
 				<Modal
 					width={550}
-					title={modalState.userInfo.firstName + "'s Contact Information"}
+					title={modalState.userInfo.firstName + '\'s Contact Information'}
 					visible={modalState.visible}
 					onOk={handleOk}
 					onCancel={handleCancel}

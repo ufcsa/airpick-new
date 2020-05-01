@@ -52,11 +52,11 @@ export const EditProfileForm = () => {
 			phone: user.phone,
 			username: user.username
 		});
-	});
+	}, [dispatch, form, user.email, user.firstName, user.lastName, user.phone, user.username]);
 
 	const onFinish = values => {
 		let userProfile = { _id: user._id, ...values };
-		console.log(editProfile(userProfile))
+		console.log(editProfile(userProfile));
 		dispatch(editProfile(userProfile));
 	};
 

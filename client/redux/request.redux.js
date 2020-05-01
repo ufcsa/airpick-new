@@ -22,27 +22,27 @@ const initState = {
 //reducer
 export function requestRedux(state = initState, action) {
 	switch (action.type) {
-		case LOAD_ALL:
-			return { ...state, list: action.payload, msg: action.msg };
-		case LOAD_REQ:
-			return { ...state, request: action.payload.data.request };
-		case ERROR_SUBMIT:
-			return { ...state, msg: action.msg };
-		case UPDATE_SUC:
-			return {
-				...state,
-				msg: action.msg,
-				request: action.payload,
-				redirectTo: '/myrequest'
-			};
-		case DELETE_SUC:
-			return { ...state, msg: action.msg, request: null };
-		case ACCEPT_REQ_SUC:
-			return { ...state, msg: action.msg, list: action.payload };
-		case LOAD_ACCEPTED_SUC:
-			return { ...state, msg: action.msg, acceptedList: action.acceptedList };
-		default:
-			return state;
+	case LOAD_ALL:
+		return { ...state, list: action.payload, msg: action.msg };
+	case LOAD_REQ:
+		return { ...state, request: action.payload.data.request };
+	case ERROR_SUBMIT:
+		return { ...state, msg: action.msg };
+	case UPDATE_SUC:
+		return {
+			...state,
+			msg: action.msg,
+			request: action.payload,
+			redirectTo: '/myrequest'
+		};
+	case DELETE_SUC:
+		return { ...state, msg: action.msg, request: null };
+	case ACCEPT_REQ_SUC:
+		return { ...state, msg: action.msg, list: action.payload };
+	case LOAD_ACCEPTED_SUC:
+		return { ...state, msg: action.msg, acceptedList: action.acceptedList };
+	default:
+		return state;
 	}
 }
 
@@ -220,7 +220,7 @@ export const cancelRequest = (reqId, volunteerId) => {
 				console.log(volunteerId);
 				return res;
 			})
-			.then(res => {
+			.then(() => {
 				return dispatch(loadAcceptedReq(volunteerId));
 			});
 	};
