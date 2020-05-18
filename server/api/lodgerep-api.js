@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const User = require('../model/user.model');
-const Pickreq = require('../model/pickreq.model');
+const Pickreq = require('../model/lodgereq.model');
 const Completed = require('../model/complete.model');
 const CronJob = require('cron').CronJob;
 const mailer = require('../mail/sendMail');

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const PickreqSchema = new Schema({
+const LodgereqSchema = new Schema({
 	createdAt: {
 		type: Date,
 		default: Date.now
@@ -18,7 +18,7 @@ const PickreqSchema = new Schema({
 	carryon: {
 		type: Number,
 		default: 0,
-		required: 'Number of carry-ons cannot be blank'
+		required: 'Number of carry-ons cannto be blank'
 	},
 	luggage: {
 		type: Number,
@@ -45,4 +45,4 @@ const PickreqSchema = new Schema({
 	}
 });
 
-module.exports = mongoose.model('Pickreq', PickreqSchema);
+module.exports = mongoose.model('Lodgereq', LodgereqSchema);

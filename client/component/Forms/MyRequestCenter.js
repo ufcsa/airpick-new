@@ -6,11 +6,13 @@ import React from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import { addPickreq, loadPickreq } from '../../redux/airpick.redux';
+import { loadLodgereq } from '../../redux/lodge.redux';
 import { connect } from 'react-redux';
 import PickreqForm from './PickModal';
 import MyReqList from './MyReqList';
+import MyLodgeList from './MyLodgeList';
 
-@connect(state => state, { addPickreq ,loadPickreq })
+@connect(state => state, { addPickreq ,loadPickreq, loadLodgereq })
 class RequestCenter extends React.Component {
 	constructor(props) {
 		super(props);
@@ -54,10 +56,12 @@ class RequestCenter extends React.Component {
 
 	componentDidMount() {
 		this.props.loadPickreq(this.props.user.username);
+		this.props.loadLodgereq(this.props.user.username);
 	}
 
 	render() {
 		let previousReq = this.props.airpick.myRequests;
+		let previousLodgeReq= this.props.lodge.myRequests;
 
 		return (
 			<div style={{ textAlign: 'center' }}>
@@ -72,19 +76,36 @@ class RequestCenter extends React.Component {
 						<PlusOutlined />
 							Add Airpick Request
 					</Button>
-					{/* <br></br>
-						<br></br>
-						<br></br>
-						<Button type='primary' onClick={this.showModal}>
-							<PlusOutlined />
-							Add Lodging Request
-						</Button> */}
 					<PickreqForm
 						wrappedComponentRef={this.saveForm}
 						visible={this.state.visible}
 						onCreate={this.handleSubmit}
 						onCancel={this.handleCancel}
 					></PickreqForm>
+					<br></br>
+					<br></br>
+				</div>
+
+
+				{previousLodgeReq ? (
+					<MyLodgeList data={previousReq}></MyLodgeList>
+				) : (null)}
+
+				<div>
+					<br></br>
+					<br></br>
+					<Button type='primary' onClick={this.showModal}>
+						<PlusOutlined />
+							Add Lodging Request
+					</Button>
+					<PickreqForm
+						wrappedComponentRef={this.saveForm}
+						visible={this.state.visible}
+						onCreate={this.handleSubmit}
+						onCancel={this.handleCancel}
+					></PickreqForm>
+					<br></br>
+					<br></br>
 				</div>
 			</div>
 		);

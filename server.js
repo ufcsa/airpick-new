@@ -6,6 +6,7 @@ const Router = express.Router();
 const hbs = require('hbs');
 const userRouter = require('./server/api/user-api')(Router);
 const requestRouter = require('./server/api/pickreq-api')(Router);
+const lodgeRequestRouter = require('./server/api/lodgerep-api')(Router);
 const mailRouter = require('./server/api/mail-api')(Router);
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -48,6 +49,7 @@ app.use(function(req, res, next) {
 
 app.use('/api/user', userRouter);
 app.use('/api/requests', requestRouter);
+app.use('/api/lodgeRequests', lodgeRequestRouter);
 
 // for test purpose, won't use these router in production
 app.use('/api/email', mailRouter);

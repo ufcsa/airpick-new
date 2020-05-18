@@ -21,7 +21,7 @@ const initState = {
 // store
 
 //reducer
-export function airpickRedux(state = initState, action) {
+export function lodgeRedux(state = initState, action) {
 	switch (action.type) {
 	case LOAD_ALL:
 		return { ...state, list: action.payload, msg: action.msg };
@@ -98,17 +98,6 @@ const parsePickreqInput = userInput => {
 
 	return request;
 };
-// action creator
-export function loadPickreq(username) {
-	// load pickreq from db once and save it inside the redux store
-	console.log('loading existing pick req in redux %s', username);
-	return dispatch => {
-		return axios
-			.get(`/api/requests/user/${username}`)
-			.then(res => dispatch(loadReq(res.data.data)));
-	};
-}
-
 // action creator
 export function loadLodgereq(username) {
 	// load pickreq from db once and save it inside the redux store
