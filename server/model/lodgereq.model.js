@@ -6,42 +6,34 @@ const LodgereqSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
-	airport: {
-		type: String,
-		trim: true,
-		required: 'Airport cannot be blank'
-	},
-	arrivalTime: {
+	startDate: {
 		type: Date,
-		required: 'Arrival time cannot be blank'
+		required: 'Start date cannot be empty',
 	},
-	carryon: {
-		type: Number,
-		default: 0,
-		required: 'Number of carry-ons cannto be blank'
-	},
-	luggage: {
-		type: Number,
-		default: 2,
-		required: 'Number of baggages cannot be blank'
+	leaveDate: {
+		type: Date,
+		required: 'Leave date cannot be empty',
 	},
 	username: {
 		type: String,
 		index: true,
-		required: 'username of requester cannot be blank'
+		required: 'Username cannot be empty',
 	},
 	volunteer: {
 		type: String,
 		default: '',
-		index: true
+	},
+	pickupLocation: {
+		type: String,
+		required: 'Pickup locaiton cannot be empty',
 	},
 	published: {
 		type: Boolean,
-		default: true
+		default: true,
 	},
 	notes: {
 		type: String,
-		default: ''
+		default: '',
 	}
 });
 
