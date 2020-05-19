@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const User = require('../model/user.model');
 const Pickreq = require('../model/pickreq.model');
+const Lodgereq = require('../model/lodgereq.model');
 const Completed = require('../model/complete.model');
 const CronJob = require('cron').CronJob;
 const mailer = require('../mail/sendMail');
@@ -15,17 +16,18 @@ new CronJob(
 		console.log('fucking myself');
 		const now = new Date();
 		console.log(now);
+		// clean airpick request
 		Pickreq.find({ arrivalTime: { $lt: now }, published: true }).exec(
 			(err, docs) => {
 				if (err) {
 					console.log(err.stack);
 				}
 				const count = docs.length;
-				console.log(`There are ${count} requests completed`);
-				// TODO: move outdated request to complete list
+				console.log(`There are ${count} airpick requests completed`);
 				docs.forEach(r => {
 					let cmp = new Completed();
 					cmp.requestID = r._id;
+					cmp.type = 'airpick';
 					cmp.username = r.username;
 					cmp.volunteer = r.volunteer;
 					cmp.arrivalTime = r.arrivalTime;
@@ -39,10 +41,44 @@ new CronJob(
 						{ _id: r._id },
 						{ volunteer: '', published: false },
 						(err3, ret) => {
-							if (err) {
+							if (err3) {
 								console.error(err3.stack);
 							}
-							console.log(`cleared ${ret.n} records`);
+							console.log(`cleared ${ret.n} airpick records`);
+						}
+					);
+				});
+			}
+		);
+
+		// clean lodging request
+		Lodgereq.find({ leaveDate: { $lt: now }, published: true }).exec(
+			(err, docs) => {
+				if(err) {
+					console.log(err.stack);
+				}
+				const count = docs.length;
+				console.log(`There are ${count} lodging requests completed`);
+				docs.forEach(r => {
+					let complete = new Completed();
+					complete.requestID = r._id;
+					complete.type = 'lodge';
+					complete.username = r.username;
+					complete.volunteer = r.volunteer;
+					complete.arrivalTime = r.startDate;
+					complete.notes = r.notes;
+					complete.save(err2 => {
+						if(err2) console.error(err2.stack);
+					});
+					// change published to false
+					Lodgereq.updateOne(
+						{ _id: r._id }, 
+						{ volunteer: '', published: false }, 
+						(err3, ret) => {
+							if(err3) {
+								console.error(err3.stack);
+							}
+							console.log(`cleared ${ret.n} lodging records`);
 						}
 					);
 				});

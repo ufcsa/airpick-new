@@ -6,6 +6,11 @@ const CompletedSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
+	type: {
+		type: String,
+		enum: ['airpick', 'lodge'],
+		required: true,
+	},
 	requestID: {
 		type: String,
 		required: 'request Id cannot be blank'
@@ -25,7 +30,8 @@ const CompletedSchema = new Schema({
 	},
 	airport: {
 		type: String,
-		trim: true
+		trim: true,
+		default: ''
 	},
 	notes: {
 		type: String,
