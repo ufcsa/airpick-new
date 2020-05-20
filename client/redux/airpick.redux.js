@@ -109,18 +109,6 @@ export function loadPickreq(username) {
 	};
 }
 
-// action creator
-export function loadLodgereq(username) {
-	// load pickreq from db once and save it inside the redux store
-	console.log('loading existing lodge req in redux %s', username);
-	return dispatch => {
-		return axios
-			.get(`/api/lodgeRequests/user/${username}`)
-			.then(res => dispatch(loadReq(res.data.data)));
-	};
-}
-
-
 // add a new pickreq
 export const addPickreq = userInput => {
 	const username = userInput.username;

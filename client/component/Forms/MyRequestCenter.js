@@ -6,20 +6,22 @@ import React from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import { addPickreq, loadPickreq } from '../../redux/airpick.redux';
-import { loadLodgereq } from '../../redux/lodge.redux';
+import { addLodgereq, loadLodgereq } from '../../redux/lodge.redux';
 import { connect } from 'react-redux';
 import PickreqForm from './PickModal';
+import LodgereqForm from './LodgeModal';
 import MyReqList from './MyReqList';
 import MyLodgeList from './MyLodgeList';
 
-@connect(state => state, { addPickreq ,loadPickreq, loadLodgereq })
+@connect(state => state, { addPickreq ,loadPickreq, addLodgereq, loadLodgereq })
 class RequestCenter extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			visible: false,
 			confirmLoading: false,
-			myReq: undefined
+			myReq: undefined,
+			lodgeVisible: false
 		};
 	}
 
@@ -29,13 +31,23 @@ class RequestCenter extends React.Component {
 		});
 	};
 
+	showLodgeModal = () => {
+		this.setState({
+			lodgeVisible: true
+		});
+	};
+
 	handleCancel = () => {
 		this.setState({ visible: false });
 	};
 
+	lodgeHandleCancel = () => {
+		this.setState({ lodgeVisible: false });
+	};
+
 	// handle adding a new request
 	handleSubmit = values => {
-		console.log('ok clicked');
+		console.log('ok airpick clicked');
 		this.setState({ visible: false });
 		// Should format date value before submit.
 		const newPickreqValues = {
@@ -50,6 +62,23 @@ class RequestCenter extends React.Component {
 		this.props.addPickreq(newPickreqValues);
 	};
 
+	lodgeHandleSubmit = values => {
+		console.log('ok lodge clicked');
+		this.setState({ lodgeVisible: false });
+		// Should format date value before submit.
+		const newLodgereqValues = {
+			...values,
+			publish: true,
+			notes: values.notes ? values.notes : '',
+			startDate: values.startDate.format('YYYY-MM-DD'),
+			leaveDate: values.leaveDate.format('YYYY-MM-DD'),
+			username: this.props.user.username,
+		};
+		debugger;
+		// call API
+		// this.props.addLodgereq(newLodgereqValues);
+	};
+
 	saveForm = formRef => {
 		this.formRef = formRef;
 	};
@@ -61,7 +90,8 @@ class RequestCenter extends React.Component {
 
 	render() {
 		let previousReq = this.props.airpick.myRequests;
-		let previousLodgeReq= this.props.lodge.myRequests;
+		let previousLodgeReq = this.props.lodge.myRequests;
+		debugger;
 
 		return (
 			<div style={{ textAlign: 'center' }}>
@@ -88,22 +118,22 @@ class RequestCenter extends React.Component {
 
 
 				{previousLodgeReq ? (
-					<MyLodgeList data={previousReq}></MyLodgeList>
+					<MyLodgeList data={previousLodgeReq}></MyLodgeList>
 				) : (null)}
 
 				<div>
 					<br></br>
 					<br></br>
-					<Button type='primary' onClick={this.showModal}>
+					<Button type='primary' onClick={this.showLodgeModal}>
 						<PlusOutlined />
 							Add Lodging Request
 					</Button>
-					<PickreqForm
+					<LodgereqForm
 						wrappedComponentRef={this.saveForm}
-						visible={this.state.visible}
-						onCreate={this.handleSubmit}
-						onCancel={this.handleCancel}
-					></PickreqForm>
+						visible={this.state.lodgeVisible}
+						onCreate={this.lodgeHandleSubmit}
+						onCancel={this.lodgeHandleCancel}
+					></LodgereqForm>
 					<br></br>
 					<br></br>
 				</div>

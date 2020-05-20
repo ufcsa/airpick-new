@@ -85,14 +85,12 @@ function loadAcceptReqSuc(msg, acceptedList) {
 }
 
 const parsePickreqInput = userInput => {
-	const timeStr = userInput.date + ' ' + userInput.time;
-	const nyTime = moment.tz(timeStr, 'America/New_York');
+	// const timeStr = userInput.date + ' ' + userInput.time;
+	// const nyTime = moment.tz(timeStr, 'America/New_York');
 	const request = {
 		published: userInput.publish,
-		airport: userInput.airport,
-		arrivalTime: nyTime,
-		carryon: userInput.carryon,
-		luggage: userInput.luggage,
+		startDate: userInput.startDate,
+		leaveDate: userInput.leaveDate,
 		notes: userInput.notes
 	};
 
@@ -109,14 +107,13 @@ export function loadLodgereq(username) {
 	};
 }
 
-
-// add a new pickreq
-export const addPickreq = userInput => {
+// add a new lodgereq
+export const addLodgereq = userInput => {
 	const username = userInput.username;
 	const request = parsePickreqInput(userInput);
 	
 	return dispatch => {
-		return axios.post(`/api/requests/user/${username}`, request)
+		return axios.post(`/api/lodgeRequests/user/${username}`, request)
 			.then(res => {
 				if(res.data.code === 0) {
 					message.success(res.data.msg);
