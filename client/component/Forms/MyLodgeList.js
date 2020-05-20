@@ -10,12 +10,12 @@ import moment from 'moment-timezone';
 import EditModal from './EditModal';
 import VolunteerModel from './VolunteerInfoModal';
 import { connect } from 'react-redux';
-import { updatePickreq, deletePickreq, loadLodgereq } from '../../redux/lodge.redux';
+import { updateLodgereq, deleteLodgereq, loadLodgereq } from '../../redux/lodge.redux';
 
 const { Column } = Table;
 const { Step } = Steps;
 
-@connect(state => state, { updatePickreq, deletePickreq, loadLodgereq })
+@connect(state => state, { updateLodgereq, deleteLodgereq, loadLodgereq })
 class MyLodgeList extends React.Component {
 	constructor(props) {
 		super(props);
@@ -34,8 +34,8 @@ class MyLodgeList extends React.Component {
 	// delete the record
 	handleDelete = request => {
 		// call the function from redux
-		this.props.deletePickreq(request)
-			.then(() => this.props.loadPickreq(this.props.user.username));
+		this.props.deleteLodgereq(request)
+			.then(() => this.props.loadLodgereq(this.props.user.username));
 	};
 
 	// handle update the current reqeust
@@ -51,7 +51,7 @@ class MyLodgeList extends React.Component {
 			time: values.time.format('HH:mm'),
 			username: this.props.user.username,
 		};
-		this.props.updatePickreq(updatePickReqVal, reqId)
+		this.props.updateLodgereq(updatePickReqVal, reqId)
 			.then(() => this.setState({ ...this.state, loading: false}));
 	};
 

@@ -126,12 +126,12 @@ export const addLodgereq = userInput => {
 	};
 };
 
-// update a published pickreq
-export function updatePickreq(userInput, reqId) {
+// update a published lodgereq
+export function updateLodgereq(userInput, reqId) {
 	if (
-		!userInput.airport ||
-		!userInput.date ||
-		!userInput.time ||
+		!userInput.pickupLocation ||
+		!userInput.startDate ||
+		!userInput.leaveDate ||
 		userInput.publish == null
 	) {
 		console.log(userInput);
@@ -142,7 +142,7 @@ export function updatePickreq(userInput, reqId) {
 
 	return dispatch => {
 		return axios
-			.put(`/api/requests/user/${username}`, {request, reqId}) //promise   //RESTful api
+			.put(`/api/requests/lodge/${username}`, {request, reqId}) //promise   //RESTful api
 			.then(
 				res => {
 					if (res.status === 200 && res.data.code === 0) {
@@ -160,11 +160,11 @@ export function updatePickreq(userInput, reqId) {
 }
 
 // delete an published pickreq
-export function deletePickreq(data) {
+export function deleteLodgereq(data) {
 	const id = data.key;
 	return dispatch => {
 		// console.log('deleting request', id);
-		return axios.delete(`/api/requests/request/${id}`).then(res => {
+		return axios.delete(`/api/requests/request/lodge/${id}`).then(res => {
 			if (res.status === 200 && res.data.code === 0) {
 				dispatch(deleteSuccess());
 			} else {
