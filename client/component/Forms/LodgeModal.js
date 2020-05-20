@@ -69,7 +69,7 @@ class LodgereqForm extends React.Component {
 						</Form.Item>
 						<Form.Item
 							label='Pick-up location'
-							name='airport'
+							name='pickupLocation'
 							rules={requirement.rules}
 						>
 							<Input placeholder='GNV' />

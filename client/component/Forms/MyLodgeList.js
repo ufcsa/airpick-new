@@ -81,14 +81,13 @@ class MyLodgeList extends React.Component {
 		const list = tmp.map(item => {
 			return {
 				key: item._id,
-				date: moment(item.arrivalTime)
+				startDate: moment(item.startDate)
 					.tz('America/New_York')
 					.format('YYYY-MM-DD'),
-				time: moment(item.arrivalTime)
+				leaveDate: moment(item.leaveDate)
 					.tz('America/New_York')
-					.format('HH:mm'),
-				arrivalTime: item.arrivalTime,
-				airport: item.airport,
+					.format('YYYY-MM-DD'),
+				pickupLocation: item.pickupLocation,
 				volunteer: item.volunteer,
 				published: item.published,
 				carryon: item.carryon,
@@ -105,9 +104,9 @@ class MyLodgeList extends React.Component {
 						loading={this.state.loading}
 						pagination={false}
 					>
-						<Column title='Start Date' dataIndex='date' key='date' />
-						<Column title='Leave Date' dataIndex='date' key='date' />
-						<Column title='Pickup Location' dataIndex='airport' key='airport' />
+						<Column title='Start Date' dataIndex='startDate' key='startDate' />
+						<Column title='Leave Date' dataIndex='leaveDate' key='leaveDate' />
+						<Column title='Pickup Location' dataIndex='pickupLocation' key='pickupLocation' />
 						<Column
 							title='Action'
 							key='action'

@@ -2,7 +2,7 @@ import axios from 'axios';
 import moment from 'moment-timezone';
 import { message } from 'antd';
 // action
-const LOAD_REQ = 'LOAD_REQ';
+const LOAD_LODGE = 'LOAD_LODGE';
 const LOAD_ALL = 'LOAD_ALL';
 const UPDATE_SUC = 'UPDATE_SUC';
 const ERROR_SUBMIT = 'ERROR_SUBMIT';
@@ -15,7 +15,7 @@ const initState = {
 	msg: '',
 	redirectTo: '',
 	username: '',
-	myRequests: [], // current user's requust
+	lodgeRequests: [], // current user's requust
 	list: [] // all request [{key: int, request: reqObj, user: userObj}]
 };
 // store
@@ -25,8 +25,8 @@ export function lodgeRedux(state = initState, action) {
 	switch (action.type) {
 	case LOAD_ALL:
 		return { ...state, list: action.payload, msg: action.msg };
-	case LOAD_REQ:
-		return { ...state, myRequests: action.payload };
+	case LOAD_LODGE:
+		return { ...state, lodgeRequests: action.payload };
 	case ERROR_SUBMIT:
 		return { ...state, msg: action.msg };
 	case ADD_SUC:
@@ -35,7 +35,7 @@ export function lodgeRedux(state = initState, action) {
 		return {
 			...state,
 			msg: action.msg,
-			myRequests: action.payload,
+			lodgeRequests: action.payload,
 			redirectTo: '/myrequest'
 		};
 	case DELETE_SUC:
@@ -57,7 +57,7 @@ function errorMsg(msg) {
 
 function loadReq(request) {
 	console.log(request);
-	return { type: LOAD_REQ, payload: request };
+	return { type: LOAD_LODGE, payload: request };
 }
 
 function updateSuccess(request) {
@@ -89,8 +89,9 @@ const parsePickreqInput = userInput => {
 	// const nyTime = moment.tz(timeStr, 'America/New_York');
 	const request = {
 		published: userInput.publish,
-		startDate: userInput.startDate,
-		leaveDate: userInput.leaveDate,
+		pickupLocation: userInput.pickupLocation,
+		startDate: new Date(userInput.startDate),
+		leaveDate: new Date(userInput.leaveDate),
 		notes: userInput.notes
 	};
 
@@ -102,7 +103,7 @@ export function loadLodgereq(username) {
 	console.log('loading existing lodge req in redux %s', username);
 	return dispatch => {
 		return axios
-			.get(`/api/lodgeRequests/user/${username}`)
+			.get(`/api/lodgeRequests/lodge/${username}`)
 			.then(res => dispatch(loadReq(res.data.data)));
 	};
 }
@@ -113,7 +114,7 @@ export const addLodgereq = userInput => {
 	const request = parsePickreqInput(userInput);
 	
 	return dispatch => {
-		return axios.post(`/api/lodgeRequests/user/${username}`, request)
+		return axios.post(`/api/lodgeRequests/lodge/${username}`, request)
 			.then(res => {
 				if(res.data.code === 0) {
 					message.success(res.data.msg);

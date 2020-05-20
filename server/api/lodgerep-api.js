@@ -5,7 +5,7 @@ const mailer = require('../mail/sendMail');
 const PATH = require('path');
 
 module.exports = router => {
-	router.route('/user/:username')
+	router.route('/lodge/:username')
 		.get((req, res) => {
 			console.log('getting current user\'s lodge info', req.currRequest);
 			Lodgereq.find({username: req.username}).exec((err, doc) => {
@@ -16,7 +16,7 @@ module.exports = router => {
 						msg: err.errmsg,
 					});
 				}
-				console.log('current requests,', doc);
+				console.log('lodge requests,', doc);
 				return res.json({
 					code: 0,
 					msg: 'Get current requests successfully',
@@ -44,6 +44,7 @@ module.exports = router => {
 							msg: err1.errmsg,
 						});
 					} else {
+						console.log('one lodge entry added successfully');
 						return res.json({
 							code: 0,
 							msg: 'Add new lodge request successfully!',

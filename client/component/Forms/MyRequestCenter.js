@@ -74,9 +74,8 @@ class RequestCenter extends React.Component {
 			leaveDate: values.leaveDate.format('YYYY-MM-DD'),
 			username: this.props.user.username,
 		};
-		debugger;
 		// call API
-		// this.props.addLodgereq(newLodgereqValues);
+		this.props.addLodgereq(newLodgereqValues);
 	};
 
 	saveForm = formRef => {
@@ -90,8 +89,7 @@ class RequestCenter extends React.Component {
 
 	render() {
 		let previousReq = this.props.airpick.myRequests;
-		let previousLodgeReq = this.props.lodge.myRequests;
-		debugger;
+		let previousLodgeReq = this.props.lodge.lodgeRequests;
 
 		return (
 			<div style={{ textAlign: 'center' }}>

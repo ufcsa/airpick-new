@@ -144,7 +144,7 @@ module.exports = router => {
 						msg: err.errmsg,
 					});
 				}
-				console.log('current requests,', doc);
+				console.log('pick requests,', doc);
 				return res.json({
 					code: 0,
 					msg: 'Get current requests successfully',
