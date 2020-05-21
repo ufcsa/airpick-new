@@ -1,5 +1,5 @@
 /**
- * This model is a modal that used to add NEW requests.
+ * This model is a modal that used to add NEW Pick requests.
  */
 
 import React from 'react';

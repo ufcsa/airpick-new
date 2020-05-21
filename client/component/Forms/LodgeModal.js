@@ -1,10 +1,10 @@
 /**
- * This model is a modal that used to add NEW requests.
+ * This model is a modal that used to add NEW LODGE requests.
  */
 
 import React from 'react';
 import '@ant-design/compatible/assets/index.css';
-import { Form, Modal, Input, DatePicker, TimePicker, InputNumber } from 'antd';
+import { Form, Modal, Input, DatePicker} from 'antd';
 import moment from 'moment';
 
 const { TextArea } = Input;
@@ -24,7 +24,6 @@ class LodgereqForm extends React.Component {
 			}
 		};
 		const dateFormat = 'YYYY-MM-DD';
-		const timeFormat = 'HH:mm';
 		const disabledDate = current => {
 			return current && current < moment().endOf('day');
 		};

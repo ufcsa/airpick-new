@@ -1,5 +1,5 @@
 /**
- * This model is a modal that used to MODIFY selected request.
+ * This model is a modal that used to MODIFY selected PICK request.
  */
 
 import React from 'react';
@@ -46,7 +46,6 @@ class EditForm extends React.Component {
 						width={700}
 						visible={visible}
 						title='Update Pickup Request'
-						okText='Update'
 						onOk={() => {
 							const { current } = this.formRef;
 							current

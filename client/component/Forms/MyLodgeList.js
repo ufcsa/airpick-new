@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons';
 import { Table, Button, Tooltip, Steps } from 'antd';
 import moment from 'moment-timezone';
-import EditModal from './EditModal';
+import LodgeEditModal from './LodgeEditModal';
 import VolunteerModel from './VolunteerInfoModal';
 import { connect } from 'react-redux';
 import { updateLodgereq, deleteLodgereq, loadLodgereq } from '../../redux/lodge.redux';
@@ -21,14 +21,14 @@ class MyLodgeList extends React.Component {
 		super(props);
 		this.state = {
 			loading: false,
-			visible: false,
+			lodgeVisible: false,
 			volunteerInfoVisible: false
 		};
 	}
 
 	// open the modal
 	handleEdit = request => {
-		this.setState({ ...this.state, visible: true, data: request });
+		this.setState({ ...this.state, lodgeVisible: true, data: request });
 	};
 
 	// delete the record
@@ -38,25 +38,25 @@ class MyLodgeList extends React.Component {
 			.then(() => this.props.loadLodgereq(this.props.user.username));
 	};
 
-	// handle update the current reqeust
+	// handle update the current lodge request
 	handleSubmit = (values, reqId) => {
 		console.log('submitting update');
-		this.setState({ visible: false, data: null, loading: true });
+		this.setState({ lodgeVisible: false, data: null, loading: true });
 		// Should format date value before submit.
-		const updatePickReqVal = {
+		const updateLodgeReqVal = {
 			...values,
 			publish: true,
 			notes: values.notes ? values.notes : '',
-			date: values.date.format('YYYY-MM-DD'),
-			time: values.time.format('HH:mm'),
+			startDate: values.startDate.format('YYYY-MM-DD'),
+			leaveDate: values.leaveDate.format('YYYY-MM-DD'),
 			username: this.props.user.username,
 		};
-		this.props.updateLodgereq(updatePickReqVal, reqId)
+		this.props.updateLodgereq(updateLodgeReqVal, reqId)
 			.then(() => this.setState({ ...this.state, loading: false}));
 	};
 
 	handleCancel = () => {
-		this.setState({ visible: false, data: null });
+		this.setState({ lodgeVisible: false, data: null });
 	};
 
 	updateForm = formRef => {
@@ -90,8 +90,6 @@ class MyLodgeList extends React.Component {
 				pickupLocation: item.pickupLocation,
 				volunteer: item.volunteer,
 				published: item.published,
-				carryon: item.carryon,
-				luggage: item.luggage,
 				notes: item.notes
 			};
 		});
@@ -177,14 +175,14 @@ class MyLodgeList extends React.Component {
 							}}
 						></Column>
 					</Table>
-					{/* <EditModal
+					<LodgeEditModal
 						wrappedComponentRef={this.updateForm}
-						visible={this.state.visible}
+						lodgeVisible={this.state.lodgeVisible}
 						onCreate={this.handleSubmit}
 						onCancel={this.handleCancel}
 						data={this.state.data}
-					></EditModal>
-					<VolunteerModel
+					></LodgeEditModal>
+					{/* <VolunteerModel
 						visible={this.state.volunteerInfoVisible}
 						volunteerInfo={this.state.volunteerInfo}
 						onCancel={this.closeVolunteerModal}
