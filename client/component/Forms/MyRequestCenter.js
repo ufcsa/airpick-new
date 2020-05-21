@@ -116,7 +116,7 @@ class RequestCenter extends React.Component {
 
 
 				{previousLodgeReq ? (
-					<MyLodgeList data={previousLodgeReq}></MyLodgeList>
+					<MyLodgeList lodgeData={previousLodgeReq}></MyLodgeList>
 				) : (null)}
 
 				<div>

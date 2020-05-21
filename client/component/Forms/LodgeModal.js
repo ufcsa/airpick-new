@@ -10,7 +10,7 @@ import moment from 'moment';
 const { TextArea } = Input;
 
 class LodgereqForm extends React.Component {
-	formRef = React.createRef();
+	lodgeFormRef = React.createRef();
 	render() {
 		const { visible, onCancel, onCreate } = this.props; // values/functions passed from its parent component 'RequestCenter'
 		const formItemLayout = {
@@ -44,8 +44,8 @@ class LodgereqForm extends React.Component {
 					visible={visible}
 					title='Add New Lodge Request'
 					onOk={() => {
-						console.log(this.formRef);
-						const { current } = this.formRef;
+						console.log(this.lodgeFormRef);
+						const { current } = this.lodgeFormRef;
 
 						current
 							.validateFields()
@@ -59,7 +59,7 @@ class LodgereqForm extends React.Component {
 					}}
 					onCancel={onCancel}
 				>
-					<Form {...formItemLayout} ref={this.formRef}>
+					<Form {...formItemLayout} ref={this.lodgeFormRef}>
 						<Form.Item label='Start Date' name='startDate' rules={requirement.rules}>
 							<DatePicker disabledDate={disabledDate} format={dateFormat} />
 						</Form.Item>

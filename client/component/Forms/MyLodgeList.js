@@ -28,7 +28,7 @@ class MyLodgeList extends React.Component {
 
 	// open the modal
 	handleEdit = request => {
-		this.setState({ ...this.state, lodgeVisible: true, data: request });
+		this.setState({ ...this.state, lodgeVisible: true, lodgeData: request });
 	};
 
 	// delete the record
@@ -41,7 +41,7 @@ class MyLodgeList extends React.Component {
 	// handle update the current lodge request
 	handleSubmit = (values, reqId) => {
 		console.log('submitting update');
-		this.setState({ lodgeVisible: false, data: null, loading: true });
+		this.setState({ lodgeVisible: false, lodgeData: null, loading: true });
 		// Should format date value before submit.
 		const updateLodgeReqVal = {
 			...values,
@@ -56,19 +56,19 @@ class MyLodgeList extends React.Component {
 	};
 
 	handleCancel = () => {
-		this.setState({ lodgeVisible: false, data: null });
+		this.setState({ lodgeVisible: false, lodgeData: null });
 	};
 
 	updateForm = formRef => {
 		this.formRef = formRef;
 	};
 
-	showVolunteerInfo = data => {
-		console.log(data);
+	showVolunteerInfo = lodgeData => {
+		console.log(lodgeData);
 		this.setState({
 			...this.state,
 			volunteerInfoVisible: true,
-			volunteerInfo: data
+			volunteerInfo: lodgeData
 		});
 	};
 
@@ -77,7 +77,7 @@ class MyLodgeList extends React.Component {
 	};
 
 	render() {
-		const tmp = this.props.data;  // parsed in from MyRequestCenter.js
+		const tmp = this.props.lodgeData;  // parsed in from MyRequestCenter.js
 		const list = tmp.map(item => {
 			return {
 				key: item._id,
@@ -180,7 +180,7 @@ class MyLodgeList extends React.Component {
 						lodgeVisible={this.state.lodgeVisible}
 						onCreate={this.handleSubmit}
 						onCancel={this.handleCancel}
-						data={this.state.data}
+						lodgeData={this.state.lodgeData}
 					></LodgeEditModal>
 					{/* <VolunteerModel
 						visible={this.state.volunteerInfoVisible}

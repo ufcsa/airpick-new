@@ -12,7 +12,7 @@ const { TextArea } = Input;
 class LodgeEditForm extends React.Component {
 	formRef = React.createRef();
 	render() {
-		const { lodgeVisible, onCancel, onCreate, data } = this.props; // all these values are passed from its parent component 'MyLodgeList
+		const { lodgeVisible, onCancel, onCreate, lodgeData } = this.props; // all these values are passed from its parent component 'MyLodgeList
 		const formItemLayout = {
 			labelCol: {
 				xs: { span: 20 },
@@ -39,7 +39,7 @@ class LodgeEditForm extends React.Component {
 
 		return (
 			<div>
-				{data ? (
+				{lodgeData ? (
 					<Modal
 						width={700}
 						visible={lodgeVisible}
@@ -50,7 +50,7 @@ class LodgeEditForm extends React.Component {
 								.validateFields()
 								.then(values => {
 									current.resetFields();
-									onCreate(values, data.key);
+									onCreate(values, lodgeData.key);
 								})
 								.catch(info => {
 									console.log('Update lodge failed:', info);
@@ -61,10 +61,10 @@ class LodgeEditForm extends React.Component {
 						<Form
 							{...formItemLayout}
 							initialValues={{
-								startDate: moment(data.startDate).tz('America/New_York'),
-								leaveDate: moment(data.leaveDate).tz('America/New_York'),
-								pickupLocation: data.pickupLocation,
-								notes: data.notes
+								startDate: moment(lodgeData.startDate).tz('America/New_York'),
+								leaveDate: moment(lodgeData.leaveDate).tz('America/New_York'),
+								pickupLocation: lodgeData.pickupLocation,
+								notes: lodgeData.notes
 							}}
 							ref={this.formRef}
 						>

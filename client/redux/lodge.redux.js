@@ -90,8 +90,8 @@ const parsePickreqInput = userInput => {
 	const request = {
 		published: userInput.publish,
 		pickupLocation: userInput.pickupLocation,
-		startDate: new Date(userInput.startDate),
-		leaveDate: new Date(userInput.leaveDate),
+		startDate: moment(userInput.startDate).tz('America/New_York'),
+		leaveDate: moment(userInput.leaveDate).tz('America/New_York'),
 		notes: userInput.notes
 	};
 
