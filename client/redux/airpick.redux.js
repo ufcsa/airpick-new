@@ -215,12 +215,11 @@ export function acceptReq(reqId, username, reqList) {
 }
 
 // load all accepted request as a volunteer
-export const loadAcceptedReq = volunteer => {
-	console.log('loading accepted req');
+export const loadAcceptedAirpick = volunteer => {
 	return dispatch => {
 		return axios.get(`/api/requests/volunteer/${volunteer}`).then(res => {
 			if (res.status === 200) {
-				console.log('load accept');
+				console.log('load air accept',res.data.acceptedList);
 				dispatch(loadAcceptReqSuc(res.data.msg, res.data.acceptedList));
 			}
 		});
@@ -243,7 +242,7 @@ export const cancelRequest = (reqId, volunteerId) => {
 				return res;
 			})
 			.then(() => {
-				return dispatch(loadAcceptedReq(volunteerId));
+				return dispatch(loadAcceptedAirpick(volunteerId));
 			});
 	};
 };

@@ -371,6 +371,7 @@ module.exports = router => {
 
 	// List all accepted requests
 	router.route('/volunteer/:volunteer').get((req, res) => {
+		console.log('air accpepted');
 		Pickreq.find({ volunteer: req.volunteer })
 			.lean()
 			.exec((err, doc) => {
@@ -409,7 +410,6 @@ module.exports = router => {
 								new Date(a.acceptedReq.arrivalTime).getTime() -
 								new Date(b.acceptedReq.arrivalTime).getTime()
 						);
-						console.log(result);
 						res.json({
 							msg: 'Get Accepted List Successfully',
 							acceptedList: result

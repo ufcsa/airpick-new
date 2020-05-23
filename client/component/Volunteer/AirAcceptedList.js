@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Table, Button, Modal, Row, Col, ConfigProvider } from 'antd';
-import { loadAcceptedReq } from '@/redux/airpick.redux';
+import { loadAcceptedAirpick } from '@/redux/airpick.redux';
 import { CancelModal } from './CancelModal';
 import RenderEmpty from '@/component/Empty/CustomEmpty';
 import moment from 'moment';
 
 const { Column } = Table;
 
-export const AcceptedList = () => {
+export const AirAcceptedList = () => {
 	const fontStyle = { fontSize: 16 };
 	const gutter = [0, 5];
 
@@ -21,12 +21,12 @@ export const AcceptedList = () => {
 	});
 	const userState = useSelector(state => state.user);
 	const reqState = useSelector(state => state.airpick);
-	const dispatch = useDispatch();
-	useEffect(() => {
-		if (userState.username) {
-			dispatch(loadAcceptedReq(userState.username));
-		}
-	}, [dispatch, userState.username]);
+	// const dispatch = useDispatch();
+	// useEffect(() => {
+	// 	if (userState.username) {
+	// 		dispatch(loadAcceptedAirpick(userState.username));
+	// 	}
+	// }, [dispatch, userState.username]);
 
 	//functions to handle modal
 	const handleOk = () => {
@@ -61,7 +61,7 @@ export const AcceptedList = () => {
 				<Table
 					dataSource={acceptedList}
 					loading={acceptedList ? false : true}
-					pagination={false}
+					pagination={{ pageSize:5,hideOnSinglePage:true,showQuickJumper:true }}
 					tableLayout='fixed'
 				>
 					<Column
@@ -187,3 +187,5 @@ export const AcceptedList = () => {
 		</div>
 	);
 };
+
+

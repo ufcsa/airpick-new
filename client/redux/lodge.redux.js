@@ -164,7 +164,7 @@ export function deleteLodgereq(data) {
 	const id = data.key;
 	return dispatch => {
 		// console.log('deleting request', id);
-		return axios.delete(`/api/requests/request/lodge/${id}`).then(res => {
+		return axios.delete(`/api/lodgeRequests/request/lodge/${id}`).then(res => {
 			if (res.status === 200 && res.data.code === 0) {
 				dispatch(deleteSuccess());
 			} else {
@@ -174,17 +174,16 @@ export function deleteLodgereq(data) {
 	};
 }
 
-// for volunteer center page. List all the current available requests
+// for volunteer center page. List all the current available lodge requests
 export function loadAllReq() {
 	return dispatch => {
 		console.log('loading all the request');
-		return axios.get('/api/requests/list').then(res => {
+		return axios.get('/api/lodgeRequests/lodge/list').then(res => {
 			if (res.status === 200 && res.data.code === 0) {
-				// console.log(res.data.reqList)
 				res.data.reqList.sort(
 					(a, b) =>
-						new Date(a.request.arrivalTime).getTime() -
-						new Date(b.request.arrivalTime).getTime()
+						new Date(a.request.createdAt).getTime() -
+						new Date(b.request.createdAt).getTime()
 				);
 				dispatch(getListSuc(res.data.reqList));
 			} else {
@@ -200,8 +199,9 @@ export function acceptReq(reqId, username, reqList) {
 	return dispatch => {
 		console.log(`${username} requesting the request ${reqId}`);
 		return axios
-			.post(`/api/requests/request/${reqId}`, { volunteer: username })
+			.post(`/api/lodgeRequests/request/lodge/${reqId}`, { volunteer: username })
 			.then(res => {
+				console.log('res data:',res.data);
 				if (res.status === 200) {
 					console.log(res.data);
 					dispatch(acceptSuc(res.data.msg, newList));
@@ -214,12 +214,12 @@ export function acceptReq(reqId, username, reqList) {
 }
 
 // load all accepted request as a volunteer
-export const loadAcceptedReq = volunteer => {
-	console.log('loading accepted req');
+export const loadAcceptedLodge = volunteer => {
+	console.log('volunteer',volunteer);
 	return dispatch => {
-		return axios.get(`/api/requests/volunteer/${volunteer}`).then(res => {
+		return axios.get(`/api/lodgeRequests/volunteer2/${volunteer}`).then(res => {
 			if (res.status === 200) {
-				console.log('load accept');
+				console.log('load lodge accept',res.data.acceptedList);
 				dispatch(loadAcceptReqSuc(res.data.msg, res.data.acceptedList));
 			}
 		});
@@ -242,7 +242,7 @@ export const cancelRequest = (reqId, volunteerId) => {
 				return res;
 			})
 			.then(() => {
-				return dispatch(loadAcceptedReq(volunteerId));
+				return dispatch(loadAcceptedLodge(volunteerId));
 			});
 	};
 };

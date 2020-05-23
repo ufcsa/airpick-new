@@ -8,7 +8,7 @@ import RenderEmpty from '@/component/Empty/CustomEmpty';
 const { Column } = Table;
 
 @connect(state => state, { loadAllReq, acceptReq })
-class ReqList extends React.Component {
+class AirReqList extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -33,13 +33,16 @@ class ReqList extends React.Component {
 	};
 
 	render() {
+		console.log(this.props);
+
 		return (
 			<div>
 				<ConfigProvider renderEmpty={RenderEmpty}>
 					<Table
 						dataSource={this.props.airpick.list}
+					
 						loading={this.state.loading}
-						pagination={false}
+						pagination={{ hideOnSinglePage:true,showQuickJumper:true }}
 						tableLayout='fixed'
 					>
 						<Column
@@ -101,9 +104,10 @@ class ReqList extends React.Component {
 						></Column>
 					</Table>
 				</ConfigProvider>
+
 			</div>
 		);
 	}
 }
 
-export default ReqList;
+export default AirReqList;

@@ -1,13 +1,24 @@
 import React from 'react';
 import { Typography, Divider, Tag } from 'antd';
-import { useSelector } from 'react-redux';
-import { AcceptedList } from '../../component/Volunteer/AcceptedList';
+import { useSelector, useDispatch } from 'react-redux';
+import {useEffect} from 'react';
+import { AirAcceptedList } from '../../component/Volunteer/AirAcceptedList';
+import {LodgeAcceptedList} from '../../component/Volunteer/LodgeAcceptedList';
+import { loadAcceptedLodge} from '../../redux/lodge.redux';
+import { loadAcceptedAirpick } from '@/redux/airpick.redux';
 
 const { Title, Paragraph } = Typography;
 
 const MyAccept = () => {
 	// using useSelector hook to get user store from redux
 	const userState = useSelector(state => state.user);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		if (userState.username) {
+			dispatch(loadAcceptedAirpick(userState.username));
+			dispatch(loadAcceptedLodge(userState.username));
+		}
+	}, [dispatch, userState.username]);
 
 	if (userState) {
 		return (
@@ -23,7 +34,10 @@ const MyAccept = () => {
 					changes.
 				</Paragraph>
 				<Divider></Divider>
-				<AcceptedList></AcceptedList>
+				<AirAcceptedList></AirAcceptedList>
+				<br></br>
+				<br></br>
+				<LodgeAcceptedList></LodgeAcceptedList>
 			</Typography>
 		);
 	} else {
