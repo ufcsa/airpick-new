@@ -16,6 +16,30 @@ module.exports = router => {
 		console.log('middleware get username:', req.username);
 		next();
 	});
+
+	// middleware to parse the requestId that to be cancelled by volunteer
+	router.param('cancelId', (req, res, next, cancelId) => {
+		req.cancelId = cancelId;
+		return next();
+	});
+
+	// cancel volunteer
+	router.route('/cancel2/:cancelId').put((req, res) => {
+
+		console.log('gonna cancel the volunteer in lodge req ', req.cancelId);
+		Lodgereq.updateOne({ _id: req.cancelId }, { volunteer: '' }, (err) => {
+			if (err) {
+				return res.json({
+					code: 1,
+					msg: 'Cancel failed!'
+				});
+			}
+			return res.json({
+				code: 0,
+				msg: 'Cancel successfully!'
+			});
+		});
+	});
 	
 	router.route('/lodge/list')
 		.get((req,res)=>{

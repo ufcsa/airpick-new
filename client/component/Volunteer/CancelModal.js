@@ -2,15 +2,25 @@
 import React from 'react';
 import { Modal, message } from 'antd';
 import { cancelRequest } from '../../redux/airpick.redux';
+import {cancelLodgeRequest} from '../../redux/lodge.redux';
 import { useDispatch } from 'react-redux';
 
-export const CancelModal = ({ visible, reqId, changeVsb, volunteerId }) => {
+export const CancelModal = ({ visible,reqType ,reqId, changeVsb, volunteerId }) => {
 	const dispatch = useDispatch();
 	const onOk = () => {
-		dispatch(cancelRequest(reqId, volunteerId)).then(() => {
-			message.success('Cancel successfully', 1);
-			console.log('ok');
-		});
+		if (reqType == 'airpick'){
+			dispatch(cancelRequest(reqId, volunteerId)).then(() => {
+				message.success('Cancel successfully', 1);
+				console.log('ok');
+			});
+		}
+		else if (reqType == 'lodge'){
+			console.log('cancel Lodge Req');
+			dispatch(cancelLodgeRequest(reqId, volunteerId)).then(() => {
+				message.success('Cancel successfully', 1);
+				console.log('ok');
+			});
+		}
 		changeVsb(false);
 	};
 	const onCancel = () => {

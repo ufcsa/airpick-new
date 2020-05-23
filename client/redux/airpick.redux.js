@@ -8,10 +8,10 @@ const UPDATE_SUC = 'UPDATE_SUC';
 const ERROR_SUBMIT = 'ERROR_SUBMIT';
 const DELETE_SUC = 'DELETE_SUC';
 const ACCEPT_REQ_SUC = 'ACCEPT_REQ_SUC';
-const LOAD_ACCEPTED_SUC = 'LOAD_ACCEPTED_SUC';
+const LOAD_ACCEPTED_AIR_SUC = 'LOAD_ACCEPTED_AIR_SUC';
 const ADD_SUC = 'ADD_SUC';
 
-const initState = {
+const initAirState = {
 	msg: '',
 	redirectTo: '',
 	username: '',
@@ -21,7 +21,7 @@ const initState = {
 // store
 
 //reducer
-export function airpickRedux(state = initState, action) {
+export function airpickRedux(state = initAirState, action) {
 	switch (action.type) {
 	case LOAD_ALL:
 		return { ...state, list: action.payload, msg: action.msg };
@@ -42,8 +42,8 @@ export function airpickRedux(state = initState, action) {
 		return { ...state, msg: action.msg };
 	case ACCEPT_REQ_SUC:
 		return { ...state, msg: action.msg, list: action.payload };
-	case LOAD_ACCEPTED_SUC:
-		return { ...state, msg: action.msg, acceptedList: action.acceptedList };
+	case LOAD_ACCEPTED_AIR_SUC:
+		return { ...state, msg: action.msg, acceptedAirPick: action.acceptedList };
 	default:
 		return state;
 	}
@@ -81,7 +81,8 @@ function acceptSuc(msg, newList) {
 }
 
 function loadAcceptReqSuc(msg, acceptedList) {
-	return { type: LOAD_ACCEPTED_SUC, msg, acceptedList };
+	console.log(2);
+	return { type: LOAD_ACCEPTED_AIR_SUC, msg, acceptedList };
 }
 
 const parsePickreqInput = userInput => {
@@ -220,6 +221,7 @@ export const loadAcceptedAirpick = volunteer => {
 		return axios.get(`/api/requests/volunteer/${volunteer}`).then(res => {
 			if (res.status === 200) {
 				console.log('load air accept',res.data.acceptedList);
+
 				dispatch(loadAcceptReqSuc(res.data.msg, res.data.acceptedList));
 			}
 		});
@@ -228,7 +230,7 @@ export const loadAcceptedAirpick = volunteer => {
 
 // volunteer cancel request
 export const cancelRequest = (reqId, volunteerId) => {
-	console.log('canceling request ', reqId);
+
 	return dispatch => {
 		return axios
 			.put(`/api/requests/cancel/${reqId}`)

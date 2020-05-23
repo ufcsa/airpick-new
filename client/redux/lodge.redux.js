@@ -8,10 +8,10 @@ const UPDATE_SUC = 'UPDATE_SUC';
 const ERROR_SUBMIT = 'ERROR_SUBMIT';
 const DELETE_SUC = 'DELETE_SUC';
 const ACCEPT_REQ_SUC = 'ACCEPT_REQ_SUC';
-const LOAD_ACCEPTED_SUC = 'LOAD_ACCEPTED_SUC';
+const LOAD_ACCEPTED_LODGE_SUC = 'LOAD_ACCEPTED_LODGE_SUC';
 const ADD_SUC = 'ADD_SUC';
 
-const initState = {
+const initLodgeState = {
 	msg: '',
 	redirectTo: '',
 	username: '',
@@ -21,7 +21,7 @@ const initState = {
 // store
 
 //reducer
-export function lodgeRedux(state = initState, action) {
+export function lodgeRedux(state = initLodgeState, action) {
 	switch (action.type) {
 	case LOAD_ALL:
 		return { ...state, list: action.payload, msg: action.msg };
@@ -42,8 +42,8 @@ export function lodgeRedux(state = initState, action) {
 		return { ...state, msg: action.msg };
 	case ACCEPT_REQ_SUC:
 		return { ...state, msg: action.msg, list: action.payload };
-	case LOAD_ACCEPTED_SUC:
-		return { ...state, msg: action.msg, acceptedList: action.acceptedList };
+	case LOAD_ACCEPTED_LODGE_SUC:
+		return { ...state, msg: action.msg, acceptedLodge: action.acceptedList };
 	default:
 		return state;
 	}
@@ -81,7 +81,8 @@ function acceptSuc(msg, newList) {
 }
 
 function loadAcceptReqSuc(msg, acceptedList) {
-	return { type: LOAD_ACCEPTED_SUC, msg, acceptedList };
+	console.log(1);
+	return { type: LOAD_ACCEPTED_LODGE_SUC, msg, acceptedList };
 }
 
 const parsePickreqInput = userInput => {
@@ -227,11 +228,10 @@ export const loadAcceptedLodge = volunteer => {
 };
 
 // volunteer cancel request
-export const cancelRequest = (reqId, volunteerId) => {
-	console.log('canceling request ', reqId);
+export const cancelLodgeRequest = (reqId, volunteerId) => {
 	return dispatch => {
 		return axios
-			.put(`/api/requests/cancel/${reqId}`)
+			.put(`/api/lodgeRequests/cancel2/${reqId}`)
 			.then(res => {
 				if (res.data.code === 1) {
 					dispatch(errorMsg(res.data.msg));

@@ -40,16 +40,18 @@ export const AirAcceptedList = () => {
 	const cancelReq = e => {
 		console.log(e);
 		setCancelModal({
+			reqType:'airpick',
 			reqId: e.key,
 			visible: true,
 			volunteerId: userState.username
 		});
 	};
 	// wait for loading
-	if (reqState.acceptedList === undefined) {
+	console.log(reqState);
+	if (reqState.acceptedAirPick === undefined) {
 		return null;
 	}
-	const acceptedList = reqState.acceptedList.map(v => ({
+	const acceptedList = reqState.acceptedAirPick.map(v => ({
 		...v,
 		key: v.acceptedReq._id
 	}));
@@ -138,6 +140,7 @@ export const AirAcceptedList = () => {
 
 			<CancelModal
 				visible={cancelModal.visible}
+				reqType = {cancelModal.reqType}
 				reqId={cancelModal.reqId}
 				volunteerId={cancelModal.volunteerId}
 				changeVsb={vsb => setCancelModal({ ...cancelModal, visible: vsb })}

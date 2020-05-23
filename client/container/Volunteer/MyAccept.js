@@ -20,6 +20,8 @@ const MyAccept = () => {
 		}
 	}, [dispatch, userState.username]);
 
+
+
 	if (userState) {
 		return (
 			<Typography style={{ padding: '15px' }}>

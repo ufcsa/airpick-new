@@ -9,6 +9,7 @@ import moment from 'moment';
 const { Column } = Table;
 
 export const LodgeAcceptedList = () => {
+	
 	const fontStyle = { fontSize: 16 };
 	const gutter = [0, 5];
 	// hooks
@@ -28,6 +29,9 @@ export const LodgeAcceptedList = () => {
 	// }, [dispatch, userState.username]);
 
 	//functions to handle modal
+
+
+	console.log(reqState);
 	const handleOk = e => {
 		setModalState({ ...modalState, visible: false });
 	};
@@ -40,15 +44,16 @@ export const LodgeAcceptedList = () => {
 		console.log(e);
 		setCancelModal({
 			reqId: e.key,
+			reqType:'lodge',
 			visible: true,
 			volunteerId: userState.username
 		});
 	};
 	// wait for loading
-	if (reqState.acceptedList === undefined) {
+	if (reqState.acceptedLodge === undefined) {
 		return null;
 	}
-	const acceptedList = reqState.acceptedList.map(v => ({
+	const acceptedList = reqState.acceptedLodge.map(v => ({
 		...v,
 		key: v.acceptedReq._id
 	}));
@@ -145,6 +150,7 @@ export const LodgeAcceptedList = () => {
 
 			<CancelModal
 				visible={cancelModal.visible}
+				reqType={cancelModal.reqType}
 				reqId={cancelModal.reqId}
 				volunteerId={cancelModal.volunteerId}
 				changeVsb={vsb => setCancelModal({ ...cancelModal, visible: vsb })}
