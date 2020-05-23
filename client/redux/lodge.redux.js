@@ -3,13 +3,13 @@ import moment from 'moment-timezone';
 import { message } from 'antd';
 // action
 const LOAD_LODGE = 'LOAD_LODGE';
-const LOAD_ALL = 'LOAD_ALL';
-const UPDATE_SUC = 'UPDATE_SUC';
-const ERROR_SUBMIT = 'ERROR_SUBMIT';
-const DELETE_SUC = 'DELETE_SUC';
-const ACCEPT_REQ_SUC = 'ACCEPT_REQ_SUC';
+const LOAD_LODGE_ALL = 'LOAD_LODGE_ALL';
+const UPDATE_LODGE_SUC = 'UPDATE_LODGE_SUC';
+const ERROR_LODGE_SUBMIT = 'ERROR_LODGE_SUBMIT';
+const DELETE_LODGE_SUC = 'DELETE_LODGE_SUC';
+const ACCEPT_LODGE_REQ_SUC = 'ACCEPT_LODGE_REQ_SUC';
 const LOAD_ACCEPTED_LODGE_SUC = 'LOAD_ACCEPTED_LODGE_SUC';
-const ADD_SUC = 'ADD_SUC';
+const ADD_LODGE_SUC = 'ADD_LODGE_SUC';
 
 const initLodgeState = {
 	msg: '',
@@ -23,24 +23,24 @@ const initLodgeState = {
 //reducer
 export function lodgeRedux(state = initLodgeState, action) {
 	switch (action.type) {
-	case LOAD_ALL:
+	case LOAD_LODGE_ALL:
 		return { ...state, list: action.payload, msg: action.msg };
 	case LOAD_LODGE:
 		return { ...state, lodgeRequests: action.payload };
-	case ERROR_SUBMIT:
+	case ERROR_LODGE_SUBMIT:
 		return { ...state, msg: action.msg };
-	case ADD_SUC:
+	case ADD_LODGE_SUC:
 		return { ...state, msg: action.paylaod };
-	case UPDATE_SUC:
+	case UPDATE_LODGE_SUC:
 		return {
 			...state,
 			msg: action.msg,
 			lodgeRequests: action.payload,
 			redirectTo: '/myrequest'
 		};
-	case DELETE_SUC:
+	case DELETE_LODGE_SUC:
 		return { ...state, msg: action.msg };
-	case ACCEPT_REQ_SUC:
+	case ACCEPT_LODGE_REQ_SUC:
 		return { ...state, msg: action.msg, list: action.payload };
 	case LOAD_ACCEPTED_LODGE_SUC:
 		return { ...state, msg: action.msg, acceptedLodge: action.acceptedList };
@@ -52,7 +52,7 @@ export function lodgeRedux(state = initLodgeState, action) {
 //helper
 function errorMsg(msg) {
 	message.error(msg);
-	return { type: ERROR_SUBMIT, msg: msg }; // =>action
+	return { type: ERROR_LODGE_SUBMIT, msg: msg }; // =>action
 }
 
 function loadReq(request) {
@@ -61,23 +61,23 @@ function loadReq(request) {
 }
 
 function updateSuccess(request) {
-	return { type: UPDATE_SUC, msg: 'Update Successfully!', payload: request };
+	return { type: UPDATE_LODGE_SUC, msg: 'Update Successfully!', payload: request };
 }
 
 function addReqSuccess(reqList) {
-	return { type: ADD_SUC, payload: reqList };
+	return { type: ADD_LODGE_SUC, payload: reqList };
 }
 
 function deleteSuccess() {
-	return { type: DELETE_SUC, msg: 'delete successfully' };
+	return { type: DELETE_LODGE_SUC, msg: 'delete successfully' };
 }
 
 function getListSuc(list) {
-	return { type: LOAD_ALL, msg: 'Get list success', payload: list };
+	return { type: LOAD_LODGE_ALL, msg: 'Get list success', payload: list };
 }
 
 function acceptSuc(msg, newList) {
-	return { type: ACCEPT_REQ_SUC, msg: msg, payload: newList };
+	return { type: ACCEPT_LODGE_REQ_SUC, msg: msg, payload: newList };
 }
 
 function loadAcceptReqSuc(msg, acceptedList) {
