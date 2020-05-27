@@ -119,7 +119,6 @@ export const addLodgereq = userInput => {
 			.then(res => {
 				if(res.data.code === 0) {
 					message.success(res.data.msg);
-					console.log(res.data.data);
 					dispatch(addReqSuccess(res.data.data));
 				} else {
 					message.error(res.data.msg);
@@ -133,8 +132,7 @@ export function updateLodgereq(userInput, reqId) {
 	if (
 		!userInput.pickupLocation ||
 		!userInput.startDate ||
-		!userInput.leaveDate ||
-		userInput.publish == null
+		!userInput.leaveDate
 	) {
 		console.log(userInput);
 		return errorMsg('Missing key fields!');

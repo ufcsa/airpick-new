@@ -10,9 +10,24 @@ import moment from 'moment';
 const { TextArea } = Input;
 
 class LodgeEditForm extends React.Component {
-	formRef = React.createRef();
+	constructor() {
+		super();
+		this.lodgeFormRef = React.createRef();
+		this.state = {
+			startDate: null
+		};
+	}
+
+	componentDidUpdate(prevProps) {
+		console.log(this.props);
+		if(this.props.lodgeData && !prevProps.lodgeData) {
+			this.setState({ startDate: moment(this.props.lodgeData.startDate).tz('America/New_York')} );
+		}
+	}
+
 	render() {
 		const { lodgeVisible, onCancel, onCreate, lodgeData } = this.props; // all these values are passed from its parent component 'MyLodgeList
+
 		const formItemLayout = {
 			labelCol: {
 				xs: { span: 20 },
@@ -24,8 +39,11 @@ class LodgeEditForm extends React.Component {
 			}
 		};
 		const dateFormat = 'YYYY-MM-DD';
-		const disabledDate = current => {
+		const disabledStartDate = current => {
 			return current && current < moment().endOf('day');
+		};
+		const disabledEndDate = current => {
+			return current && current < this.state.startDate.endOf('day');
 		};
 
 		const requirement = {
@@ -45,7 +63,7 @@ class LodgeEditForm extends React.Component {
 						visible={lodgeVisible}
 						title='Update New Lodge Request'
 						onOk={() => {
-							const { current } = this.formRef;
+							const { current } = this.lodgeFormRef;
 							current
 								.validateFields()
 								.then(values => {
@@ -66,13 +84,13 @@ class LodgeEditForm extends React.Component {
 								pickupLocation: lodgeData.pickupLocation,
 								notes: lodgeData.notes
 							}}
-							ref={this.formRef}
+							ref={this.lodgeFormRef}
 						>
 							<Form.Item label='Start Date' name='startDate' rules={requirement.rules}>
-								<DatePicker disabledDate={disabledDate} format={dateFormat} />
+								<DatePicker disabledDate={disabledStartDate} format={dateFormat} onChange={(date) => this.setState({startDate: date})} />
 							</Form.Item>
 							<Form.Item label='Leave Date' name='leaveDate' rules={requirement.rules}>
-								<DatePicker disabledDate={disabledDate} format={dateFormat} />
+								<DatePicker disabledDate={disabledEndDate} format={dateFormat} />
 							</Form.Item>
 							<Form.Item
 								label='Pick-up location'

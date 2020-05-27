@@ -34,7 +34,7 @@ class LodgereqForm extends React.Component {
 		const disabledStartDate = current => {
 			return current && current < moment().endOf('day');
 		};
-		const disabledDate = current => {
+		const disabledEndDate = current => {
 			return current && current < this.state.startDate.endOf('day');
 		};
 
@@ -74,7 +74,7 @@ class LodgereqForm extends React.Component {
 							<DatePicker disabledDate={disabledStartDate} format={dateFormat} onChange={(date) => this.setState({startDate: date})} />
 						</Form.Item>
 						<Form.Item label='Leave Date' name='leaveDate' rules={requirement.rules}>
-							<DatePicker disabledDate={disabledDate} format={dateFormat} />
+							<DatePicker disabledDate={disabledEndDate} format={dateFormat} />
 						</Form.Item>
 						<Form.Item
 							label='Pick-up location'
