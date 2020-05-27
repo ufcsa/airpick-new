@@ -10,7 +10,14 @@ import moment from 'moment';
 const { TextArea } = Input;
 
 class LodgereqForm extends React.Component {
-	lodgeFormRef = React.createRef();
+	constructor(){
+		super();
+		this.lodgeFormRef = React.createRef();
+		this.state = {
+			startDate: null
+		};
+	}
+
 	render() {
 		const { visible, onCancel, onCreate } = this.props; // values/functions passed from its parent component 'RequestCenter'
 		const formItemLayout = {
@@ -24,8 +31,11 @@ class LodgereqForm extends React.Component {
 			}
 		};
 		const dateFormat = 'YYYY-MM-DD';
-		const disabledDate = current => {
+		const disabledStartDate = current => {
 			return current && current < moment().endOf('day');
+		};
+		const disabledDate = current => {
+			return current && current < this.state.startDate.endOf('day');
 		};
 
 		const requirement = {
@@ -61,7 +71,7 @@ class LodgereqForm extends React.Component {
 				>
 					<Form {...formItemLayout} ref={this.lodgeFormRef}>
 						<Form.Item label='Start Date' name='startDate' rules={requirement.rules}>
-							<DatePicker disabledDate={disabledDate} format={dateFormat} />
+							<DatePicker disabledDate={disabledStartDate} format={dateFormat} onChange={(date) => this.setState({startDate: date})} />
 						</Form.Item>
 						<Form.Item label='Leave Date' name='leaveDate' rules={requirement.rules}>
 							<DatePicker disabledDate={disabledDate} format={dateFormat} />
