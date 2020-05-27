@@ -30,7 +30,7 @@ export function airpickRedux(state = initAirState, action) {
 	case ERROR_SUBMIT:
 		return { ...state, msg: action.msg };
 	case ADD_SUC:
-		return { ...state, msg: action.paylaod };
+		return { ...state, myRequests: action.payload };
 	case UPDATE_SUC:
 		return {
 			...state,

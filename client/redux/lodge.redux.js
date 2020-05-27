@@ -30,7 +30,7 @@ export function lodgeRedux(state = initLodgeState, action) {
 	case ERROR_LODGE_SUBMIT:
 		return { ...state, msg: action.msg };
 	case ADD_LODGE_SUC:
-		return { ...state, msg: action.paylaod };
+		return { ...state, lodgeRequests: action.payload };
 	case UPDATE_LODGE_SUC:
 		return {
 			...state,
@@ -119,6 +119,7 @@ export const addLodgereq = userInput => {
 			.then(res => {
 				if(res.data.code === 0) {
 					message.success(res.data.msg);
+					console.log(res.data.data);
 					dispatch(addReqSuccess(res.data.data));
 				} else {
 					message.error(res.data.msg);
