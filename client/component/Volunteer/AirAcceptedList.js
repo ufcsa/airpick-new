@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Table, Button, Modal, Row, Col, ConfigProvider } from 'antd';
-import { loadAcceptedAirpick } from '@/redux/airpick.redux';
+
 import { CancelModal } from './CancelModal';
 import RenderEmpty from '@/component/Empty/CustomEmpty';
 import moment from 'moment';
@@ -21,13 +21,6 @@ export const AirAcceptedList = () => {
 	});
 	const userState = useSelector(state => state.user);
 	const reqState = useSelector(state => state.airpick);
-	// const dispatch = useDispatch();
-	// useEffect(() => {
-	// 	if (userState.username) {
-	// 		dispatch(loadAcceptedAirpick(userState.username));
-	// 	}
-	// }, [dispatch, userState.username]);
-
 	//functions to handle modal
 	const handleOk = () => {
 		setModalState({ ...modalState, visible: false });

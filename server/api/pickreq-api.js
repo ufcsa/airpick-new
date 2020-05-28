@@ -136,7 +136,7 @@ module.exports = router => {
 	router.route('/user/:username')
 		.get((req, res) => {
 			console.log('getting current user\'s request info', req.currRequest);
-			Pickreq.find({username: req.username}).exec((err, doc) => {
+			Pickreq.find({username: req.username}, null, {lean: true}).exec(async (err, docs) => {
 				if(err) {
 					console.log(err.stack);
 					return res.json({
@@ -144,11 +144,19 @@ module.exports = router => {
 						msg: err.errmsg,
 					});
 				}
-				console.log('pick requests,', doc);
+				
+				const ret = await Promise.all(docs.map(async (doc) => {
+					let volunteerInfo = null;
+					if(doc.volunteer !== '') {
+						volunteerInfo = await User.findOne({ username: doc.volunteer });
+					}
+					return { ...doc, volunteer: volunteerInfo };
+				}));
+				
 				return res.json({
 					code: 0,
 					msg: 'Get current requests successfully',
-					data: doc,
+					data: ret,
 				});
 			});
 		})

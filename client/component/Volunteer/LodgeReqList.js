@@ -48,11 +48,10 @@ class LodgeReqList extends React.Component {
 						<Column
 							title='Accept'
 							key='accept'
-							render={(text, record) => {
-								// TODO: add click event
+							render={(text, record) => {								
 								if (this.props.user.username === record.request.username) {
 									return (
-										<Button type='ghost' size='middle' disabled>
+										<Button type='ghost' size='small' disabled>
 											Accept
 										</Button>
 									);
@@ -60,7 +59,7 @@ class LodgeReqList extends React.Component {
 								return (
 									<Button
 										type='primary'
-										size='middle'
+										size='small'
 										onClick={() => this.handleAccept(record.request)}
 									>
 										Accept

@@ -23,8 +23,6 @@ class AirReqList extends React.Component {
 	}
 
 	handleAccept = request => {
-		console.log(request);
-		console.log(this.props.user.username);
 		const reqId = request._id;
 		const volunteer = this.props.user.username;
 		this.props.acceptReq(reqId, volunteer, this.props.airpick.list).then(() => {
@@ -33,8 +31,6 @@ class AirReqList extends React.Component {
 	};
 
 	render() {
-		console.log(this.props);
-
 		return (
 			<div>
 				<ConfigProvider renderEmpty={RenderEmpty}>
@@ -52,7 +48,7 @@ class AirReqList extends React.Component {
 								// TODO: add click event
 								if (this.props.user.username === record.request.username) {
 									return (
-										<Button type='ghost' size='middle' disabled>
+										<Button type='ghost' size='small' disabled>
 											Accept
 										</Button>
 									);
@@ -60,7 +56,7 @@ class AirReqList extends React.Component {
 								return (
 									<Button
 										type='primary'
-										size='middle'
+										size='small'
 										onClick={() => this.handleAccept(record.request)}
 									>
 										Accept

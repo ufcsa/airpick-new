@@ -35,6 +35,9 @@ code {
 .navbar-right {
 	float: right;
 }
+.navbar-left {
+	float: left;
+}
 .navbar-title {
 	font-size: 16pt;
 }
@@ -47,4 +50,30 @@ code {
 .table-margin-sides {
 	margin-left: 50px;
 	margin-right: 50px;
+}
+
+.header {
+	height: 46px;
+	box-shadow: none;
+	position: relative;
+	z-index: 999;
+	width: 100%;
+}
+@media screen and (max-width: 374px) {
+	.navbar-left {
+		display: none;
+	}
+}
+
+.logo {
+	float: left;
+	display: flex;
+	height: 100%;
+}
+.header-nav {
+	align-items: center;
+	height: 100%;
+}
+.content {
+	clear: both;
 }

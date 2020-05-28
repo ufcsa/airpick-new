@@ -97,6 +97,7 @@ class MyReqList extends React.Component {
 			};
 		});
 
+
 		return (
 			<div>
 				<div>
@@ -167,7 +168,7 @@ class MyReqList extends React.Component {
 											type='primary'
 											onClick={() =>
 												this.showVolunteerInfo(
-													this.props.request.request.volunteer
+													record.volunteer
 												)
 											}
 										>
@@ -191,6 +192,7 @@ class MyReqList extends React.Component {
 						onCancel={this.closeVolunteerModal}
 						onOk={this.closeVolunteerModal}
 					></VolunteerModel>
+					
 				</div>
 			</div>
 		);

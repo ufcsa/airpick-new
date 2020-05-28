@@ -164,7 +164,7 @@ class MyLodgeList extends React.Component {
 											type='primary'
 											onClick={() =>
 												this.showVolunteerInfo(
-													this.props.request.request.volunteer
+													record.volunteer
 												)
 											}
 										>

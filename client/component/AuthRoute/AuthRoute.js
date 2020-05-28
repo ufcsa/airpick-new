@@ -110,8 +110,10 @@ class AuthRoute extends React.Component {
 
 	render() {
 		const isAuth = this.props.user.isAuth;
-		const rightNavbarClass = 'navbar-right';
-		const navList = [
+		const rightNavbarClass = 'navbar-right header-nav';
+		const leftNavbarClass = 'navbar-left header-nav';
+		
+		const home = [
 			{
 				path: '/',
 				text: 'UF CSA Airpick',
@@ -119,7 +121,9 @@ class AuthRoute extends React.Component {
 				className: 'navbar-title',
 				auth: false,
 				hide: false
-			},
+			}
+		];
+		const needAuth = [
 			{
 				path: '/myrequestcenter',
 				text: 'My Requests',
@@ -151,7 +155,9 @@ class AuthRoute extends React.Component {
 						auth: true
 					}
 				]
-			},
+			}
+		];
+		const userAuth = [
 			{
 				path: '/register',
 				text: 'Register',
@@ -193,11 +199,24 @@ class AuthRoute extends React.Component {
 			}
 		];
 
-		console.log(isAuth);
+		const allRouteList = [...home, ...needAuth, ...userAuth];
+
 		return (
 			<div>
-				<NavBar data={navList}></NavBar>
-				<Switch>{navListRouting(navList, isAuth)}</Switch>
+				<div className='header'>
+					<div className='logo'>
+						<NavBar data={home}></NavBar>
+					</div>
+					<div className={rightNavbarClass}>
+						<NavBar data={userAuth}></NavBar>
+					</div>
+					<div className={leftNavbarClass}>
+						<NavBar data={needAuth}></NavBar>
+					</div>
+				</div>
+				<div className='content'>
+					<Switch>{navListRouting(allRouteList, isAuth)}</Switch>
+				</div>
 			</div>
 		);
 	}
