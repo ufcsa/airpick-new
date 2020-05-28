@@ -6,7 +6,7 @@ import LodgeReqList from '../../component/Volunteer/LodgeReqList';
 const { Title, Paragraph } = Typography;
 
 class AllLodgeReq extends React.Component {
-	render() {
+	render () {
 		return (
 			<div>
 

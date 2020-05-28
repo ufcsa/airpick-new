@@ -24,7 +24,7 @@ const deepFilter = (arr, filterFunc) => {
 @withRouter
 @connect(state => state, { logoutRedux })
 class NavBar extends React.Component {
-	constructor(props) {
+	constructor (props) {
 		super(props);
 		this.state = {
 			modalVisible: false,
@@ -33,12 +33,12 @@ class NavBar extends React.Component {
 		};
 	}
 
-	componentDidMount() {
+	componentDidMount () {
 		this.setState({ location: this.props.location.pathname });
 		window.addEventListener('resize', this.updateWindowSize.bind(this));
 	}
 
-	componentWillUnmount() {
+	componentWillUnmount () {
 		window.removeAllListener('resize');
 	}
 
@@ -46,7 +46,7 @@ class NavBar extends React.Component {
 		this.setState({ ...this.state, screenWidth: e.target.innerWidth });
 	};
 
-	logout() {
+	logout () {
 		console.log('logout');
 		this.setState({
 			modalVisible: true
@@ -91,7 +91,7 @@ class NavBar extends React.Component {
 		});
 	};
 
-	render() {
+	render () {
 		let currItem = null;
 		if (this.props.location) {
 			currItem = deepFilter(

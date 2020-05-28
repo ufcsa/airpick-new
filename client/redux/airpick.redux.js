@@ -21,7 +21,7 @@ const initAirState = {
 // store
 
 //reducer
-export function airpickRedux(state = initAirState, action) {
+export function airpickRedux (state = initAirState, action) {
 	switch (action.type) {
 	case LOAD_ALL:
 		return { ...state, list: action.payload, msg: action.msg };
@@ -50,37 +50,37 @@ export function airpickRedux(state = initAirState, action) {
 }
 
 //helper
-function errorMsg(msg) {
+function errorMsg (msg) {
 	message.error(msg);
 	return { type: ERROR_SUBMIT, msg: msg }; // =>action
 }
 
-function loadReq(request) {
+function loadReq (request) {
 	console.log(request);
 	return { type: LOAD_REQ, payload: request };
 }
 
-function updateSuccess(request) {
+function updateSuccess (request) {
 	return { type: UPDATE_SUC, msg: 'Update Successfully!', payload: request };
 }
 
-function addReqSuccess(reqList) {
+function addReqSuccess (reqList) {
 	return { type: ADD_SUC, payload: reqList };
 }
 
-function deleteSuccess() {
+function deleteSuccess () {
 	return { type: DELETE_SUC, msg: 'delete successfully' };
 }
 
-function getListSuc(list) {
+function getListSuc (list) {
 	return { type: LOAD_ALL, msg: 'Get list success', payload: list };
 }
 
-function acceptSuc(msg, newList) {
+function acceptSuc (msg, newList) {
 	return { type: ACCEPT_REQ_SUC, msg: msg, payload: newList };
 }
 
-function loadAcceptReqSuc(msg, acceptedList) {
+function loadAcceptReqSuc (msg, acceptedList) {
 	console.log(2);
 	return { type: LOAD_ACCEPTED_AIR_SUC, msg, acceptedList };
 }
@@ -100,7 +100,7 @@ const parsePickreqInput = userInput => {
 	return request;
 };
 // action creator
-export function loadPickreq(username) {
+export function loadPickreq (username) {
 	// load pickreq from db once and save it inside the redux store
 	console.log('loading existing pick req in redux %s', username);
 	return dispatch => {
@@ -129,7 +129,7 @@ export const addPickreq = userInput => {
 };
 
 // update a published pickreq
-export function updatePickreq(userInput, reqId) {
+export function updatePickreq (userInput, reqId) {
 	if (
 		!userInput.airport ||
 		!userInput.date ||
@@ -162,7 +162,7 @@ export function updatePickreq(userInput, reqId) {
 }
 
 // delete an published pickreq
-export function deletePickreq(data) {
+export function deletePickreq (data) {
 	const id = data.key;
 	return dispatch => {
 		// console.log('deleting request', id);
@@ -177,7 +177,7 @@ export function deletePickreq(data) {
 }
 
 // for volunteer center page. List all the current available requests
-export function loadAllReq() {
+export function loadAllReq () {
 	return dispatch => {
 		console.log('loading all the request');
 		return axios.get('/api/requests/list').then(res => {
@@ -197,7 +197,7 @@ export function loadAllReq() {
 }
 
 // for volunteer to accept one request
-export function acceptReq(reqId, username, reqList) {
+export function acceptReq (reqId, username, reqList) {
 	const newList = reqList.filter(item => item.request._id !== reqId);
 	return dispatch => {
 		console.log(`${username} requesting the request ${reqId}`);

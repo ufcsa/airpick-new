@@ -12,7 +12,7 @@ const { TextArea } = Input;
 
 class EditForm extends React.Component {
 	formRef = React.createRef();
-	render() {
+	render () {
 		const { visible, onCancel, onCreate, data } = this.props; // all these values are passed from its parent component 'MyReqList'
 		// const { getFieldDecorator } = this.props.form;
 		const formItemLayout = {

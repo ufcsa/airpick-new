@@ -9,14 +9,14 @@ const { Column } = Table;
 
 @connect(state => state, { loadAllReq, acceptReq })
 class LodgeReqList extends React.Component {
-	constructor(props) {
+	constructor (props) {
 		super(props);
 		this.state = {
 			loading: true
 		};
 	}
 
-	componentDidMount() {
+	componentDidMount () {
 		this.props.loadAllReq().then(() => {
 			this.setState({ loading: false });
 		});
@@ -33,7 +33,7 @@ class LodgeReqList extends React.Component {
 		});
 	};
 
-	render() {
+	render () {
 		console.log(this.props);
 		return (
 			<div>

@@ -77,7 +77,7 @@ const UserSchema = new Schema({
 	}
 });
 
-UserSchema.methods.comparePassword = function(pwd) {
+UserSchema.methods.comparePassword = function (pwd) {
 	return bcrypt.compareSync(pwd, this.pwd);
 };
 

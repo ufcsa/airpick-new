@@ -8,7 +8,7 @@ import { Redirect } from 'react-router-dom';
 const { Paragraph } = Typography;
 @connect(state => state.user, { register })
 class RegisterForm extends React.Component {
-	constructor(props) {
+	constructor (props) {
 		super(props);
 		this.state = {
 			confirmDirty: false
@@ -16,7 +16,7 @@ class RegisterForm extends React.Component {
 		this.formRef = React.createRef();
 	}
 
-	handleSubmit(e) {
+	handleSubmit (e) {
 		e.preventDefault();
 		this.props.form.validateFieldsAndScroll((err, values) => {
 			if (!err) {
@@ -55,7 +55,7 @@ class RegisterForm extends React.Component {
 		}
 	};
 
-	render() {
+	render () {
 		const formItemLayout = {
 			labelCol: {
 				xs: { span: 18 },

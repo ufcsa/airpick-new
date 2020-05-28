@@ -45,6 +45,8 @@ module.exports = {
 		'no-undef': 2, // 禁用未声明的变量
 		'react/prop-types': 0,
 		'no-unused-vars': 1,
+		'space-before-blocks': 2,
+		'space-before-function-paren': 2,
 		indent: [2, 'tab'],
 		'no-mixed-spaces-and-tabs': ['error', 'smart-tabs'],
 		quotes: [2, 'single'] // 强制使用一致的单引号

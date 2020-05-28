@@ -14,15 +14,15 @@ import MyAccept from '../../container/Volunteer/MyAccept';
 import PrivateRoute from './PrivateRoute';
 import { EditProfile } from '../../container/UserCenter/EditProfile';
 
-function Home() {
+function Home () {
 	return <h2>Airpick homepage</h2>;
 }
 
-function NoMatch() {
+function NoMatch () {
 	return <h2>404 Not Found</h2>;
 }
 
-function ChangePassword() {
+function ChangePassword () {
 	return <h2>Change password</h2>;
 }
 
@@ -88,7 +88,7 @@ const navListRouting = (navList, isAuth) => {
 @withRouter
 @connect(state => state, { loadData })
 class AuthRoute extends React.Component {
-	constructor(props) {
+	constructor (props) {
 		super(props);
 		console.log('checking if logged');
 
@@ -108,7 +108,7 @@ class AuthRoute extends React.Component {
 		}
 	}
 
-	render() {
+	render () {
 		const isAuth = this.props.user.isAuth;
 		const rightNavbarClass = 'navbar-right header-nav';
 		const leftNavbarClass = 'navbar-left header-nav';

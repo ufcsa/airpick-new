@@ -10,7 +10,7 @@ import moment from 'moment';
 const { TextArea } = Input;
 
 class LodgeEditForm extends React.Component {
-	constructor() {
+	constructor () {
 		super();
 		this.lodgeFormRef = React.createRef();
 		this.state = {
@@ -18,14 +18,14 @@ class LodgeEditForm extends React.Component {
 		};
 	}
 
-	componentDidUpdate(prevProps) {
+	componentDidUpdate (prevProps) {
 		console.log(this.props);
 		if(this.props.lodgeData && !prevProps.lodgeData) {
 			this.setState({ startDate: moment(this.props.lodgeData.startDate).tz('America/New_York')} );
 		}
 	}
 
-	render() {
+	render () {
 		const { lodgeVisible, onCancel, onCreate, lodgeData } = this.props; // all these values are passed from its parent component 'MyLodgeList
 
 		const formItemLayout = {

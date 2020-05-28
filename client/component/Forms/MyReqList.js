@@ -17,7 +17,7 @@ const { Step } = Steps;
 
 @connect(state => state, { updatePickreq, deletePickreq, loadPickreq })
 class MyReqList extends React.Component {
-	constructor(props) {
+	constructor (props) {
 		super(props);
 		this.state = {
 			loading: false,
@@ -75,7 +75,7 @@ class MyReqList extends React.Component {
 		this.setState({ volunteerInfoVisible: false });
 	};
 
-	render() {
+	render () {
 		const tmp = this.props.data;  // parsed in from MyRequestCenter.js
 		const list = tmp.map(item => {
 			return {

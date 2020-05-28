@@ -10,7 +10,7 @@ class MyRequest extends React.Component {
 		this.setState({ collapsed });
 	};
 
-	render() {
+	render () {
 		return (
 			<Typography style={{ padding: '15px' }}>
 				<Title level={3} style={{ textAlign: 'center' }}>

@@ -15,7 +15,7 @@ import MyLodgeList from './MyLodgeList';
 
 @connect(state => state, { addPickreq ,loadPickreq, addLodgereq, loadLodgereq })
 class RequestCenter extends React.Component {
-	constructor(props) {
+	constructor (props) {
 		super(props);
 		this.state = {
 			visible: false,
@@ -82,12 +82,12 @@ class RequestCenter extends React.Component {
 		this.formRef = formRef;
 	};
 
-	componentDidMount() {
+	componentDidMount () {
 		this.props.loadPickreq(this.props.user.username);
 		this.props.loadLodgereq(this.props.user.username);
 	}
 
-	render() {
+	render () {
 		let previousReq = this.props.airpick.myRequests;
 		let previousLodgeReq = this.props.lodge.lodgeRequests;
 

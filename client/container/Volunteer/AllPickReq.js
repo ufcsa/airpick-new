@@ -6,7 +6,7 @@ import LodgeReqList from '../../component/Volunteer/LodgeReqList';
 const { Title, Paragraph } = Typography;
 
 class AllPickReq extends React.Component {
-	render() {
+	render () {
 		return (
 			<div>
 				<Typography style={{ padding: '15px' }}>

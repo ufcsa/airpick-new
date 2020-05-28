@@ -8,13 +8,13 @@ import { useDispatch } from 'react-redux';
 export const CancelModal = ({ visible,reqType ,reqId, changeVsb, volunteerId }) => {
 	const dispatch = useDispatch();
 	const onOk = () => {
-		if (reqType == 'airpick'){
+		if (reqType == 'airpick') {
 			dispatch(cancelRequest(reqId, volunteerId)).then(() => {
 				message.success('Cancel successfully', 1);
 				console.log('ok');
 			});
 		}
-		else if (reqType == 'lodge'){
+		else if (reqType == 'lodge') {
 			console.log('cancel Lodge Req');
 			dispatch(cancelLodgeRequest(reqId, volunteerId)).then(() => {
 				message.success('Cancel successfully', 1);

@@ -25,7 +25,7 @@ class LoginForm extends React.Component {
 		this.formRef.current.scrollToField(errorFields[0].name);
 	};
 
-	render() {
+	render () {
 		console.log(this.props);
 		const formItemLayout = {
 			labelCol: {

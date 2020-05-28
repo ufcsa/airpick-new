@@ -21,7 +21,7 @@ const initLodgeState = {
 // store
 
 //reducer
-export function lodgeRedux(state = initLodgeState, action) {
+export function lodgeRedux (state = initLodgeState, action) {
 	switch (action.type) {
 	case LOAD_LODGE_ALL:
 		return { ...state, list: action.payload, msg: action.msg };
@@ -50,37 +50,37 @@ export function lodgeRedux(state = initLodgeState, action) {
 }
 
 //helper
-function errorMsg(msg) {
+function errorMsg (msg) {
 	message.error(msg);
 	return { type: ERROR_LODGE_SUBMIT, msg: msg }; // =>action
 }
 
-function loadReq(request) {
+function loadReq (request) {
 	console.log(request);
 	return { type: LOAD_LODGE, payload: request };
 }
 
-function updateSuccess(request) {
+function updateSuccess (request) {
 	return { type: UPDATE_LODGE_SUC, msg: 'Update Successfully!', payload: request };
 }
 
-function addReqSuccess(reqList) {
+function addReqSuccess (reqList) {
 	return { type: ADD_LODGE_SUC, payload: reqList };
 }
 
-function deleteSuccess() {
+function deleteSuccess () {
 	return { type: DELETE_LODGE_SUC, msg: 'delete successfully' };
 }
 
-function getListSuc(list) {
+function getListSuc (list) {
 	return { type: LOAD_LODGE_ALL, msg: 'Get list success', payload: list };
 }
 
-function acceptSuc(msg, newList) {
+function acceptSuc (msg, newList) {
 	return { type: ACCEPT_LODGE_REQ_SUC, msg: msg, payload: newList };
 }
 
-function loadAcceptReqSuc(msg, acceptedList) {
+function loadAcceptReqSuc (msg, acceptedList) {
 	console.log(1);
 	return { type: LOAD_ACCEPTED_LODGE_SUC, msg, acceptedList };
 }
@@ -99,7 +99,7 @@ const parsePickreqInput = userInput => {
 	return request;
 };
 // action creator
-export function loadLodgereq(username) {
+export function loadLodgereq (username) {
 	// load pickreq from db once and save it inside the redux store
 	console.log('loading existing lodge req in redux %s', username);
 	return dispatch => {
@@ -128,7 +128,7 @@ export const addLodgereq = userInput => {
 };
 
 // update a published lodgereq
-export function updateLodgereq(userInput, reqId) {
+export function updateLodgereq (userInput, reqId) {
 	if (
 		!userInput.pickupLocation ||
 		!userInput.startDate ||
@@ -160,7 +160,7 @@ export function updateLodgereq(userInput, reqId) {
 }
 
 // delete an published pickreq
-export function deleteLodgereq(data) {
+export function deleteLodgereq (data) {
 	const id = data.key;
 	return dispatch => {
 		// console.log('deleting request', id);
@@ -175,7 +175,7 @@ export function deleteLodgereq(data) {
 }
 
 // for volunteer center page. List all the current available lodge requests
-export function loadAllReq() {
+export function loadAllReq () {
 	return dispatch => {
 		console.log('loading all the request');
 		return axios.get('/api/lodgeRequests/lodge/list').then(res => {
@@ -194,7 +194,7 @@ export function loadAllReq() {
 }
 
 // for volunteer to accept one request
-export function acceptReq(reqId, username, reqList) {
+export function acceptReq (reqId, username, reqList) {
 	const newList = reqList.filter(item => item.request._id !== reqId);
 	return dispatch => {
 		console.log(`${username} requesting the request ${reqId}`);

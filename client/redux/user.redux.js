@@ -14,7 +14,7 @@ const initState = {
 };
 
 //reducer
-export function userRedux(state = initState, action) {
+export function userRedux (state = initState, action) {
 	switch (action.type) {
 	case LOAD_DATA:
 		return { ...state, ...action.payload, isAuth: true };
@@ -41,21 +41,21 @@ const authSuccess = obj => {
 	return { type: AUTH_SUCC, payload: data };
 };
 
-function errorMsg(msg) {
+function errorMsg (msg) {
 	message.error(msg);
 	return { msg, type: ERROR_MSG };
 }
 
 //对外暴露的action creator
-export function loadData(userinfo) {
+export function loadData (userinfo) {
 	return { type: LOAD_DATA, payload: userinfo };
 }
 
-export function logoutRedux() {
+export function logoutRedux () {
 	return { type: LOGOUT };
 }
 
-export function login({ input, pwd }) {
+export function login ({ input, pwd }) {
 	// console.log(input, pwd);
 	if (!input || !pwd) {
 		return errorMsg('missing fields!');
@@ -74,7 +74,7 @@ export function login({ input, pwd }) {
 }
 
 //editProfile
-export function editProfile(userProfile) {
+export function editProfile (userProfile) {
 	if (!userProfile.firstName || !userProfile.lastName || !userProfile.email) {
 		return errorMsg('missing Fields');
 	}
@@ -96,7 +96,7 @@ export function editProfile(userProfile) {
 	};
 }
 
-export function register(userInput) {
+export function register (userInput) {
 	console.log(userInput);
 	const {
 		email,

@@ -9,14 +9,14 @@ const { Column } = Table;
 
 @connect(state => state, { loadAllReq, acceptReq })
 class AirReqList extends React.Component {
-	constructor(props) {
+	constructor (props) {
 		super(props);
 		this.state = {
 			loading: true
 		};
 	}
 
-	componentDidMount() {
+	componentDidMount () {
 		this.props.loadAllReq().then(() => {
 			this.setState({ loading: false });
 		});
@@ -30,7 +30,7 @@ class AirReqList extends React.Component {
 		});
 	};
 
-	render() {
+	render () {
 		return (
 			<div>
 				<ConfigProvider renderEmpty={RenderEmpty}>

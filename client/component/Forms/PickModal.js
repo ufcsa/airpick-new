@@ -11,7 +11,7 @@ const { TextArea } = Input;
 
 class PickreqForm extends React.Component {
 	formRef = React.createRef();
-	render() {
+	render () {
 		const { visible, onCancel, onCreate } = this.props; // values/functions passed from its parent component 'RequestCenter'
 		const formItemLayout = {
 			labelCol: {

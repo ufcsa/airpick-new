@@ -4,7 +4,7 @@ import PickreqForm from '../../component/Forms/PickreqForm';
 const { Title } = Typography;
 
 class PickReq extends React.Component {
-	render() {
+	render () {
 		return (
 			<Typography style={{ padding: '15px' }}>
 				<Title level={3} style={{ textAlign: 'center' }}>

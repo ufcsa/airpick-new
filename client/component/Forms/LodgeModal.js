@@ -10,7 +10,7 @@ import moment from 'moment';
 const { TextArea } = Input;
 
 class LodgereqForm extends React.Component {
-	constructor(){
+	constructor () {
 		super();
 		this.lodgeFormRef = React.createRef();
 		this.state = {
@@ -18,7 +18,7 @@ class LodgereqForm extends React.Component {
 		};
 	}
 
-	render() {
+	render () {
 		const { visible, onCancel, onCreate } = this.props; // values/functions passed from its parent component 'RequestCenter'
 		const formItemLayout = {
 			labelCol: {
