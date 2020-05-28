@@ -35,7 +35,6 @@ class MyReqList extends React.Component {
 
 	// delete the record
 	handleDelete = request => {
-		// call the function from redux
 		this.setState({ ...this.state, deleteModalVisible: true, deleteReqID: request.key });
 	};
 
@@ -76,7 +75,7 @@ class MyReqList extends React.Component {
 		this.setState({ ...this.state, volunteerInfoVisible: false });
 	};
 
-	changeDeleteModalVisible = () => {
+	closeDeleteModal = () => {
 		this.setState({ ...this.state, deleteModalVisible: false, deleteReqID: null });
 	}
 
@@ -201,9 +200,8 @@ class MyReqList extends React.Component {
 						reqID={this.state.deleteReqID}
 						username={this.props.user.username}
 						isAirpick={true}
-						changeVisible={this.changeDeleteModalVisible}
-					>
-					</DeleteModal>
+						closeModal={this.closeDeleteModal}
+					></DeleteModal>
 				</div>
 			</div>
 		);

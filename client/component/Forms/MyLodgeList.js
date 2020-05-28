@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
 	DeleteOutlined,
 	EditOutlined,
@@ -9,7 +10,7 @@ import { Table, Button, Tooltip, Steps } from 'antd';
 import moment from 'moment-timezone';
 import LodgeEditModal from './LodgeEditModal';
 import VolunteerModel from './VolunteerInfoModal';
-import { connect } from 'react-redux';
+import DeleteModal from './DeleteModal';
 import { updateLodgereq, deleteLodgereq, loadLodgereq } from '../../redux/lodge.redux';
 
 const { Column } = Table;
@@ -22,7 +23,8 @@ class MyLodgeList extends React.Component {
 		this.state = {
 			loading: false,
 			lodgeVisible: false,
-			volunteerInfoVisible: false
+			volunteerInfoVisible: false,
+			deleteModalVisible: false
 		};
 	}
 
@@ -33,9 +35,7 @@ class MyLodgeList extends React.Component {
 
 	// delete the record
 	handleDelete = request => {
-		// call the function from redux
-		this.props.deleteLodgereq(request)
-			.then(() => this.props.loadLodgereq(this.props.user.username));
+		this.setState({ ...this.state, deleteModalVisible: true, deleteReqID: request.key });
 	};
 
 	// handle update the current lodge request
@@ -56,7 +56,7 @@ class MyLodgeList extends React.Component {
 	};
 
 	handleCancel = () => {
-		this.setState({ lodgeVisible: false, lodgeData: null });
+		this.setState({ ...this.state, lodgeVisible: false, lodgeData: null });
 	};
 
 	updateForm = formRef => {
@@ -74,6 +74,10 @@ class MyLodgeList extends React.Component {
 	closeVolunteerModal = () => {
 		this.setState({ volunteerInfoVisible: false });
 	};
+
+	closeDeleteModal = () => {
+		this.setState({ ...this.state, deleteModalVisible: false, deleteReqID: null });
+	}
 
 	render () {
 		const tmp = this.props.lodgeData;  // parsed in from MyRequestCenter.js
@@ -187,6 +191,13 @@ class MyLodgeList extends React.Component {
 						onCancel={this.closeVolunteerModal}
 						onOk={this.closeVolunteerModal}
 					></VolunteerModel>
+					<DeleteModal
+						visible={this.state.deleteModalVisible}
+						reqID={this.state.deleteReqID}
+						username={this.props.user.username}
+						isAirpick={false}
+						closeModal={this.closeDeleteModal}
+					></DeleteModal>
 				</div>
 			</div>
 		);

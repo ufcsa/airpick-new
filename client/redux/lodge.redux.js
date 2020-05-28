@@ -160,12 +160,13 @@ export function updateLodgereq (userInput, reqId) {
 }
 
 // delete an published pickreq
-export function deleteLodgereq (id) {
+export function deleteLodgereq (id, username) {
 	return dispatch => {
 		// console.log('deleting request', id);
 		return axios.delete(`/api/lodgeRequests/request/lodge/${id}`).then(res => {
 			if (res.status === 200 && res.data.code === 0) {
 				dispatch(deleteSuccess());
+				dispatch(loadLodgereq(username));
 			} else {
 				dispatch(errorMsg('Error happened when deleting this record!'));
 			}

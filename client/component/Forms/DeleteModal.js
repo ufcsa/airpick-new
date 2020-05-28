@@ -5,7 +5,7 @@ import { WarningTwoTone } from '@ant-design/icons';
 import { deletePickreq } from '@/redux/airpick.redux';
 import { deleteLodgereq } from '@/redux/lodge.redux';
 
-export default function DeleteModal ({ isAirpick, reqID, username, visible, changeVisible }) {
+export default function DeleteModal ({ isAirpick, reqID, username, visible, closeModal }) {
 	const dispatch = useDispatch();
 	const onOk = function hanldeModalOk () {
 		if (isAirpick) {
@@ -17,11 +17,11 @@ export default function DeleteModal ({ isAirpick, reqID, username, visible, chan
 				console.log(reqID, ' deleted');
 			});
 		}
-		changeVisible(false);
+		closeModal();
 	};
   
 	const onCancel = function handleModalCancel () {
-		changeVisible(false);
+		closeModal();
 	};
   
 	return (
