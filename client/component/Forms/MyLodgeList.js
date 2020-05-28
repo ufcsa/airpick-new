@@ -52,7 +52,7 @@ class MyLodgeList extends React.Component {
 			username: this.props.user.username,
 		};
 		this.props.updateLodgereq(updateLodgeReqVal, reqId)
-			.then(() => this.setState({ ...this.state, loading: false}));
+			.then(() => this.setState({ ...this.state, loading: false }));
 	};
 
 	handleCancel = () => {

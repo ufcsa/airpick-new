@@ -4,7 +4,7 @@
 
 import React from 'react';
 import '@ant-design/compatible/assets/index.css';
-import { Form, Modal, Input, DatePicker} from 'antd';
+import { Form, Modal, Input, DatePicker } from 'antd';
 import moment from 'moment';
 
 const { TextArea } = Input;
@@ -20,8 +20,8 @@ class LodgeEditForm extends React.Component {
 
 	componentDidUpdate (prevProps) {
 		console.log(this.props);
-		if(this.props.lodgeData && !prevProps.lodgeData) {
-			this.setState({ startDate: moment(this.props.lodgeData.startDate).tz('America/New_York')} );
+		if (this.props.lodgeData && !prevProps.lodgeData) {
+			this.setState({ startDate: moment(this.props.lodgeData.startDate).tz('America/New_York') } );
 		}
 	}
 
@@ -87,7 +87,7 @@ class LodgeEditForm extends React.Component {
 							ref={this.lodgeFormRef}
 						>
 							<Form.Item label='Start Date' name='startDate' rules={requirement.rules}>
-								<DatePicker disabledDate={disabledStartDate} format={dateFormat} onChange={(date) => this.setState({startDate: date})} />
+								<DatePicker disabledDate={disabledStartDate} format={dateFormat} onChange={(date) => this.setState({ startDate: date })} />
 							</Form.Item>
 							<Form.Item label='Leave Date' name='leaveDate' rules={requirement.rules}>
 								<DatePicker disabledDate={disabledEndDate} format={dateFormat} />

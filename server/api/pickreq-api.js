@@ -54,7 +54,7 @@ new CronJob(
 		// clean lodging request
 		Lodgereq.find({ leaveDate: { $lt: now }, published: true }).exec(
 			(err, docs) => {
-				if(err) {
+				if (err) {
 					console.log(err.stack);
 				}
 				const count = docs.length;
@@ -68,14 +68,14 @@ new CronJob(
 					complete.arrivalTime = r.startDate;
 					complete.notes = r.notes;
 					complete.save(err2 => {
-						if(err2) console.error(err2.stack);
+						if (err2) console.error(err2.stack);
 					});
 					// change published to false
 					Lodgereq.updateOne(
 						{ _id: r._id }, 
 						{ volunteer: '', published: false }, 
 						(err3, ret) => {
-							if(err3) {
+							if (err3) {
 								console.error(err3.stack);
 							}
 							console.log(`cleared ${ret.n} lodging records`);
@@ -136,8 +136,8 @@ module.exports = router => {
 	router.route('/user/:username')
 		.get((req, res) => {
 			console.log('getting current user\'s request info', req.currRequest);
-			Pickreq.find({username: req.username}, null, {lean: true}).exec(async (err, docs) => {
-				if(err) {
+			Pickreq.find({ username: req.username }, null, { lean: true }).exec(async (err, docs) => {
+				if (err) {
 					console.log(err.stack);
 					return res.json({
 						code: 1,
@@ -147,7 +147,7 @@ module.exports = router => {
 				
 				const ret = await Promise.all(docs.map(async (doc) => {
 					let volunteerInfo = null;
-					if(doc.volunteer !== '') {
+					if (doc.volunteer !== '') {
 						volunteerInfo = await User.findOne({ username: doc.volunteer });
 					}
 					return { ...doc, volunteer: volunteerInfo };
@@ -163,17 +163,17 @@ module.exports = router => {
 		// Add new request
 		.post((req, res) => {
 			console.log(req.body);
-			const airpickRequest = new Pickreq({...req.body, username: req.username});
+			const airpickRequest = new Pickreq({ ...req.body, username: req.username });
 			airpickRequest.save(async (err) => {
-				if(err) {
+				if (err) {
 					console.log(err.stack);
 					return res.json({
 						code: 1,
 						msg: err.errmsg,
 					});
 				}
-				Pickreq.find({username: req.username}).exec((err1, docs) => {
-					if(err1) {
+				Pickreq.find({ username: req.username }).exec((err1, docs) => {
+					if (err1) {
 						console.log(err1.stack);
 						return res.json({
 							code: 1,
@@ -200,7 +200,7 @@ module.exports = router => {
 					{ $set: updatedRequestContent },
 					{ new: false },
 					(err, doc) => {
-						if(err) {
+						if (err) {
 							console.log(err.stack);
 							return res.json({
 								code: 1,
@@ -210,7 +210,7 @@ module.exports = router => {
 						console.log(doc);
 						Pickreq.find({ username: req.username })
 							.exec((err1, docs) => {
-								if(err1) {
+								if (err1) {
 									console.log(err1.stack);
 									return res.json({
 										code: 1,

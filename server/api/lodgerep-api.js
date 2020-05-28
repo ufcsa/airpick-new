@@ -113,7 +113,7 @@ module.exports = router => {
 	router.route('/lodge/:username')
 		.get((req, res) => {
 			console.log('getting current user\'s lodge info', req.currRequest);
-			Lodgereq.find({username: req.username}, null, { lean: true }).exec(async (err, doc) => {
+			Lodgereq.find({ username: req.username }, null, { lean: true }).exec(async (err, doc) => {
 				if (err) {
 					console.log(err.stack);
 					return res.json({
@@ -124,7 +124,7 @@ module.exports = router => {
 				
 				const ret = await Promise.all(doc.map(async (d) => {
 					let volunteerInfo = null;
-					if(d.volunteer !== '') {
+					if (d.volunteer !== '') {
 						volunteerInfo = await User.findOne({ username: d.volunteer });
 					}
 					return { ...d, volunteer: volunteerInfo };
@@ -140,17 +140,17 @@ module.exports = router => {
 		// Add new request
 		.post((req, res) => {
 			console.log(req.body);
-			const lodgeRequest = new Lodgereq({...req.body, username: req.username});
+			const lodgeRequest = new Lodgereq({ ...req.body, username: req.username });
 			lodgeRequest.save(async (err) => {
-				if(err) {
+				if (err) {
 					console.log(err.stack);
 					return res.json({
 						code: 1,
 						msg: err.errmsg,
 					});
 				}
-				Lodgereq.find({username: req.username}).exec((err1, docs) => {
-					if(err1) {
+				Lodgereq.find({ username: req.username }).exec((err1, docs) => {
+					if (err1) {
 						console.log(err1.stack);
 						return res.json({
 							code: 1,
@@ -178,7 +178,7 @@ module.exports = router => {
 					{ $set: updatedRequestContent },
 					{ new: false },
 					(err, doc) => {
-						if(err) {
+						if (err) {
 							console.log(err.stack);
 							return res.json({
 								code: 1,
@@ -188,7 +188,7 @@ module.exports = router => {
 						console.log(doc);
 						Lodgereq.find({ username: req.username })
 							.exec((err1, docs) => {
-								if(err1) {
+								if (err1) {
 									console.log(err1.stack);
 									return res.json({
 										code: 1,

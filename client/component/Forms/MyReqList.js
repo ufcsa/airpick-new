@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
 	DeleteOutlined,
 	EditOutlined,
@@ -9,7 +10,7 @@ import { Table, Button, Tooltip, Steps } from 'antd';
 import moment from 'moment-timezone';
 import EditModal from './EditModal';
 import VolunteerModel from './VolunteerInfoModal';
-import { connect } from 'react-redux';
+import DeleteModal from './DeleteModal';
 import { updatePickreq, deletePickreq, loadPickreq } from '../../redux/airpick.redux';
 
 const { Column } = Table;
@@ -22,7 +23,8 @@ class MyReqList extends React.Component {
 		this.state = {
 			loading: false,
 			visible: false,
-			volunteerInfoVisible: false
+			volunteerInfoVisible: false,
+			deleteModalVisible: false,
 		};
 	}
 
@@ -34,8 +36,7 @@ class MyReqList extends React.Component {
 	// delete the record
 	handleDelete = request => {
 		// call the function from redux
-		this.props.deletePickreq(request)
-			.then(() => this.props.loadPickreq(this.props.user.username));
+		this.setState({ ...this.state, deleteModalVisible: true, deleteReqID: request.key });
 	};
 
 	// handle update the current reqeust
@@ -52,7 +53,7 @@ class MyReqList extends React.Component {
 			username: this.props.user.username,
 		};
 		this.props.updatePickreq(updatePickReqVal, reqId)
-			.then(() => this.setState({ ...this.state, loading: false}));
+			.then(() => this.setState({ ...this.state, loading: false }));
 	};
 
 	handleCancel = () => {
@@ -72,8 +73,12 @@ class MyReqList extends React.Component {
 	};
 
 	closeVolunteerModal = () => {
-		this.setState({ volunteerInfoVisible: false });
+		this.setState({ ...this.state, volunteerInfoVisible: false });
 	};
+
+	changeDeleteModalVisible = () => {
+		this.setState({ ...this.state, deleteModalVisible: false, deleteReqID: null });
+	}
 
 	render () {
 		const tmp = this.props.data;  // parsed in from MyRequestCenter.js
@@ -191,7 +196,14 @@ class MyReqList extends React.Component {
 						onCancel={this.closeVolunteerModal}
 						onOk={this.closeVolunteerModal}
 					></VolunteerModel>
-					
+					<DeleteModal
+						visible={this.state.deleteModalVisible}
+						reqID={this.state.deleteReqID}
+						username={this.props.user.username}
+						isAirpick={true}
+						changeVisible={this.changeDeleteModalVisible}
+					>
+					</DeleteModal>
 				</div>
 			</div>
 		);

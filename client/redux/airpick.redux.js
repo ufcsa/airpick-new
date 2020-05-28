@@ -100,6 +100,8 @@ const parsePickreqInput = userInput => {
 	return request;
 };
 // action creator
+
+// load current user's pickreq
 export function loadPickreq (username) {
 	// load pickreq from db once and save it inside the redux store
 	console.log('loading existing pick req in redux %s', username);
@@ -118,7 +120,7 @@ export const addPickreq = userInput => {
 	return dispatch => {
 		return axios.post(`/api/requests/user/${username}`, request)
 			.then(res => {
-				if(res.data.code === 0) {
+				if (res.data.code === 0) {
 					message.success(res.data.msg);
 					dispatch(addReqSuccess(res.data.data));
 				} else {
@@ -144,7 +146,7 @@ export function updatePickreq (userInput, reqId) {
 
 	return dispatch => {
 		return axios
-			.put(`/api/requests/user/${username}`, {request, reqId}) //promise   //RESTful api
+			.put(`/api/requests/user/${username}`, { request, reqId }) //promise   //RESTful api
 			.then(
 				res => {
 					if (res.status === 200 && res.data.code === 0) {
@@ -162,13 +164,13 @@ export function updatePickreq (userInput, reqId) {
 }
 
 // delete an published pickreq
-export function deletePickreq (data) {
-	const id = data.key;
+export function deletePickreq (id, username) {
 	return dispatch => {
 		// console.log('deleting request', id);
 		return axios.delete(`/api/requests/request/${id}`).then(res => {
 			if (res.status === 200 && res.data.code === 0) {
 				dispatch(deleteSuccess());
+				dispatch(loadPickreq(username));
 			} else {
 				dispatch(errorMsg('Error happened when deleting this record!'));
 			}

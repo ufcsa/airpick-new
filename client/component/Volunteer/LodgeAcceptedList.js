@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Table, Button, Modal, Row, Col, ConfigProvider } from 'antd';
-import { loadAcceptedLodge} from '../../redux/lodge.redux';
+import { loadAcceptedLodge } from '../../redux/lodge.redux';
 import { CancelModal } from './CancelModal';
 import RenderEmpty from '@/component/Empty/CustomEmpty';
 import moment from 'moment';

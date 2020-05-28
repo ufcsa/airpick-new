@@ -117,7 +117,7 @@ export const addLodgereq = userInput => {
 	return dispatch => {
 		return axios.post(`/api/lodgeRequests/lodge/${username}`, request)
 			.then(res => {
-				if(res.data.code === 0) {
+				if (res.data.code === 0) {
 					message.success(res.data.msg);
 					dispatch(addReqSuccess(res.data.data));
 				} else {
@@ -142,7 +142,7 @@ export function updateLodgereq (userInput, reqId) {
 
 	return dispatch => {
 		return axios
-			.put(`/api/requests/lodge/${username}`, {request, reqId}) //promise   //RESTful api
+			.put(`/api/requests/lodge/${username}`, { request, reqId }) //promise   //RESTful api
 			.then(
 				res => {
 					if (res.status === 200 && res.data.code === 0) {
@@ -160,8 +160,7 @@ export function updateLodgereq (userInput, reqId) {
 }
 
 // delete an published pickreq
-export function deleteLodgereq (data) {
-	const id = data.key;
+export function deleteLodgereq (id) {
 	return dispatch => {
 		// console.log('deleting request', id);
 		return axios.delete(`/api/lodgeRequests/request/lodge/${id}`).then(res => {

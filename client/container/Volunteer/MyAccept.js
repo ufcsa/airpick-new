@@ -1,10 +1,10 @@
 import React from 'react';
 import { Typography, Divider, Tag } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import {useEffect} from 'react';
+import { useEffect } from 'react';
 import { AirAcceptedList } from '../../component/Volunteer/AirAcceptedList';
-import {LodgeAcceptedList} from '../../component/Volunteer/LodgeAcceptedList';
-import { loadAcceptedLodge} from '../../redux/lodge.redux';
+import { LodgeAcceptedList } from '../../component/Volunteer/LodgeAcceptedList';
+import { loadAcceptedLodge } from '../../redux/lodge.redux';
 import { loadAcceptedAirpick } from '@/redux/airpick.redux';
 
 const { Title, Paragraph } = Typography;

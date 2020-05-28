@@ -47,6 +47,8 @@ module.exports = {
 		'no-unused-vars': 1,
 		'space-before-blocks': 2,
 		'space-before-function-paren': 2,
+		'object-curly-spacing': ['error', 'always'],
+		'keyword-spacing': 2,
 		indent: [2, 'tab'],
 		'no-mixed-spaces-and-tabs': ['error', 'smart-tabs'],
 		quotes: [2, 'single'] // 强制使用一致的单引号

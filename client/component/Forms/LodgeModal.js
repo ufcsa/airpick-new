@@ -4,7 +4,7 @@
 
 import React from 'react';
 import '@ant-design/compatible/assets/index.css';
-import { Form, Modal, Input, DatePicker} from 'antd';
+import { Form, Modal, Input, DatePicker } from 'antd';
 import moment from 'moment';
 
 const { TextArea } = Input;
@@ -71,7 +71,7 @@ class LodgereqForm extends React.Component {
 				>
 					<Form {...formItemLayout} ref={this.lodgeFormRef}>
 						<Form.Item label='Start Date' name='startDate' rules={requirement.rules}>
-							<DatePicker disabledDate={disabledStartDate} format={dateFormat} onChange={(date) => this.setState({startDate: date})} />
+							<DatePicker disabledDate={disabledStartDate} format={dateFormat} onChange={(date) => this.setState({ startDate: date })} />
 						</Form.Item>
 						<Form.Item label='Leave Date' name='leaveDate' rules={requirement.rules}>
 							<DatePicker disabledDate={disabledEndDate} format={dateFormat} />

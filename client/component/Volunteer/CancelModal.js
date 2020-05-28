@@ -2,7 +2,7 @@
 import React from 'react';
 import { Modal, message } from 'antd';
 import { cancelRequest } from '../../redux/airpick.redux';
-import {cancelLodgeRequest} from '../../redux/lodge.redux';
+import { cancelLodgeRequest } from '../../redux/lodge.redux';
 import { useDispatch } from 'react-redux';
 
 export const CancelModal = ({ visible,reqType ,reqId, changeVsb, volunteerId }) => {
