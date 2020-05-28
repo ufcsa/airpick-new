@@ -63,12 +63,11 @@ class MyLodgeList extends React.Component {
 		this.formRef = formRef;
 	};
 
-	showVolunteerInfo = lodgeData => {
-		console.log(lodgeData);
+	showVolunteerInfo = volunteerInfo => {
 		this.setState({
 			...this.state,
 			volunteerInfoVisible: true,
-			volunteerInfo: lodgeData
+			volunteerInfo: volunteerInfo
 		});
 	};
 
@@ -182,12 +181,12 @@ class MyLodgeList extends React.Component {
 						onCancel={this.handleCancel}
 						lodgeData={this.state.lodgeData}
 					></LodgeEditModal>
-					{/* <VolunteerModel
+					<VolunteerModel
 						visible={this.state.volunteerInfoVisible}
 						volunteerInfo={this.state.volunteerInfo}
 						onCancel={this.closeVolunteerModal}
 						onOk={this.closeVolunteerModal}
-					></VolunteerModel> */}
+					></VolunteerModel>
 				</div>
 			</div>
 		);

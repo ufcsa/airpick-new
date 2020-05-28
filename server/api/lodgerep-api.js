@@ -108,10 +108,12 @@ module.exports = router => {
 				}
 			});
 		});
+
+	// get current user's lodging request
 	router.route('/lodge/:username')
 		.get((req, res) => {
 			console.log('getting current user\'s lodge info', req.currRequest);
-			Lodgereq.find({username: req.username}).exec((err, doc) => {
+			Lodgereq.find({username: req.username}, null, { lean: true }).exec(async (err, doc) => {
 				if (err) {
 					console.log(err.stack);
 					return res.json({
@@ -119,11 +121,19 @@ module.exports = router => {
 						msg: err.errmsg,
 					});
 				}
-				console.log('lodge requests,', doc);
+				
+				const ret = await Promise.all(doc.map(async (d) => {
+					let volunteerInfo = null;
+					if(d.volunteer !== '') {
+						volunteerInfo = await User.findOne({ username: d.volunteer });
+					}
+					return { ...d, volunteer: volunteerInfo };
+				}));
+
 				return res.json({
 					code: 0,
 					msg: 'Get current requests successfully',
-					data: doc,
+					data: ret,
 				});
 			});
 		})

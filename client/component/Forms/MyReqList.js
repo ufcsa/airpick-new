@@ -64,7 +64,6 @@ class MyReqList extends React.Component {
 	};
 
 	showVolunteerInfo = data => {
-		console.log(data);
 		this.setState({
 			...this.state,
 			volunteerInfoVisible: true,
