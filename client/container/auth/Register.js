@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import { register } from '../../redux/user.redux';
 import { Redirect } from 'react-router-dom';
 const { Paragraph } = Typography;
+
+
 @connect(state => state.user, { register })
 class RegisterForm extends React.Component {
 	constructor (props) {

@@ -5,6 +5,15 @@ import { WarningTwoTone } from '@ant-design/icons';
 import { deletePickreq } from '@/redux/airpick.redux';
 import { deleteLodgereq } from '@/redux/lodge.redux';
 
+/**
+ * Control the delete modal which let user to confirm deleting
+ * the selected requests. 
+ * Work for both airpick request or lodging request
+ *
+ * @export
+ * @param {{isAirpick:boolean, reqID:string, username:string, visible:string, closeModal:(() => void)}} { isAirpick, reqID, username, visible, closeModal }
+ * @returns
+ */
 export default function DeleteModal ({ isAirpick, reqID, username, visible, closeModal }) {
 	const dispatch = useDispatch();
 	const onOk = function hanldeModalOk () {

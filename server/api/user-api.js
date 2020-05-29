@@ -32,7 +32,7 @@ module.exports = function (router) {
 						code: 1,
 						msg: 'cannot authenticate this user'
 					});
-				} else if (!doc.comparePassword(pwd)) {
+				} else if (!doc.comparePassword(pwd.toString())) {
 					res.send({
 						code: 1,
 						msg: 'username / password error'
@@ -50,9 +50,6 @@ module.exports = function (router) {
 		);
 	});
 
-	/**
-	 * todo: finish register
-	 */
 	router.post('/register', (req, res) => {
 		let user = new User();
 		const {
@@ -160,6 +157,54 @@ module.exports = function (router) {
 		});
 	});
 
+	// update password
+	router.put('/editpassword', (req, res) => {
+		const { oldPassword, newPassword, username } = req.body;
+		console.log(req.body);
+		User.findOne({ username: username }).exec((err, doc) => {
+			if (err) {
+				res.json({
+					code: 1,
+					msg: err
+				});
+				return;
+			}
+			if (doc.comparePassword(oldPassword)) {
+				// auth successfully
+				console.log('query doc', doc);
+				bcrypt.hash(newPassword, null, null, async (cryptErr, passHash) =>{
+					if (cryptErr) {
+						res.json({
+							code: 1,
+							msg: cryptErr
+						});
+						return;
+					}
+					doc.pwd = passHash;
+					try {
+						await doc.save();	
+					} catch (e) {
+						console.error(e);
+					}
+				
+					res.json({
+						code: 0,
+						msg: 'Update password successfully',
+					});
+					return;
+				});
+			} else {
+				// auth failed
+				console.log('password wrong');
+				res.json({
+					code: 1,
+					msg: 'Old password failed to authenicate!'
+				});
+				return;
+			}
+		});
+	});
+
 	//editProfile
 	router.put('/editProfile', (req, res) => {
 		const id = req.body.userProfile._id;
@@ -218,8 +263,6 @@ module.exports = function (router) {
 					catch (e) {
 						console.log(e);
 					}
-
-
 				//
 				console.log('success');
 				return res.json({

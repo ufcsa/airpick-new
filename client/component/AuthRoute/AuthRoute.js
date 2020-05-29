@@ -11,6 +11,7 @@ import MyRequest from '../../container/myRequest/MyRequest';
 import AllPickReq from '../../container/Volunteer/AllPickReq';
 import AllLodgeReq from '@/container/Volunteer/AllLodgeReq';
 import MyAccept from '../../container/Volunteer/MyAccept';
+import { EditPassword } from '@/container/UserCenter/EditPassword';
 import PrivateRoute from './PrivateRoute';
 import { EditProfile } from '../../container/UserCenter/EditProfile';
 
@@ -20,10 +21,6 @@ function Home () {
 
 function NoMatch () {
 	return <h2>404 Not Found</h2>;
-}
-
-function ChangePassword () {
-	return <h2>Change password</h2>;
 }
 
 const navListRouting = (navList, isAuth) => {
@@ -188,7 +185,7 @@ class AuthRoute extends React.Component {
 					{
 						path: '/change-password',
 						text: 'Change Password',
-						component: ChangePassword,
+						component: EditPassword,
 						auth: true
 					},
 					{

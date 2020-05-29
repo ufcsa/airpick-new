@@ -94,7 +94,7 @@ module.exports = router => {
 	//middleware to search requester info
 	router.param('username', (req, res, next, username) => {
 		req.username = username;
-		console.log('middleware get username:', req.username);
+		// console.log('middleware get username:', req.username);
 		next();
 	});
 
@@ -135,7 +135,6 @@ module.exports = router => {
 	// get current user's request
 	router.route('/user/:username')
 		.get((req, res) => {
-			console.log('getting current user\'s request info', req.currRequest);
 			Pickreq.find({ username: req.username }, null, { lean: true }).exec(async (err, docs) => {
 				if (err) {
 					console.log(err.stack);
@@ -162,7 +161,7 @@ module.exports = router => {
 		})
 		// Add new request
 		.post((req, res) => {
-			console.log(req.body);
+			console.log('new request added\n', req.body);
 			const airpickRequest = new Pickreq({ ...req.body, username: req.username });
 			airpickRequest.save(async (err) => {
 				if (err) {
@@ -192,7 +191,6 @@ module.exports = router => {
 		// Update existing request
 		.put((req, res) => {
 			if (req.body) {
-				console.log(req.body);
 				const reqId = req.body.reqId;
 				const updatedRequestContent = req.body.request;
 				Pickreq.findOneAndUpdate(
@@ -207,7 +205,6 @@ module.exports = router => {
 								msg: err.errmsg,
 							});
 						}
-						console.log(doc);
 						Pickreq.find({ username: req.username })
 							.exec((err1, docs) => {
 								if (err1) {
@@ -365,7 +362,6 @@ module.exports = router => {
 					// return all promises at once
 					Promise.all(promiseList)
 						.then(() => {
-							console.log({ ...result, code: 0 });
 							res.json({ ...result, code: 0 });
 						})
 						.catch(err1 => {

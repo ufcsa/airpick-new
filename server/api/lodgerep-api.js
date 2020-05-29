@@ -13,7 +13,7 @@ module.exports = router => {
 
 	router.param('username', (req, res, next, username) => {
 		req.username = username;
-		console.log('middleware get username:', req.username);
+		// console.log('middleware get username:', req.username);
 		next();
 	});
 
@@ -25,7 +25,6 @@ module.exports = router => {
 
 	// cancel volunteer
 	router.route('/cancel2/:cancelId').put((req, res) => {
-
 		console.log('gonna cancel the volunteer in lodge req ', req.cancelId);
 		Lodgereq.updateOne({ _id: req.cancelId }, { volunteer: '' }, (err) => {
 			if (err) {
@@ -112,7 +111,6 @@ module.exports = router => {
 	// get current user's lodging request
 	router.route('/lodge/:username')
 		.get((req, res) => {
-			console.log('getting current user\'s lodge info', req.currRequest);
 			Lodgereq.find({ username: req.username }, null, { lean: true }).exec(async (err, doc) => {
 				if (err) {
 					console.log(err.stack);
@@ -139,7 +137,7 @@ module.exports = router => {
 		})
 		// Add new request
 		.post((req, res) => {
-			console.log(req.body);
+			console.log('new request added\n', req.body);
 			const lodgeRequest = new Lodgereq({ ...req.body, username: req.username });
 			lodgeRequest.save(async (err) => {
 				if (err) {
@@ -170,7 +168,6 @@ module.exports = router => {
 		// Update existing request
 		.put((req, res) => {
 			if (req.body) {
-				console.log(req.body);
 				const reqId = req.body.reqId;
 				const updatedRequestContent = req.body.request;
 				Lodgereq.findOneAndUpdate(
@@ -185,7 +182,6 @@ module.exports = router => {
 								msg: err.errmsg,
 							});
 						}
-						console.log(doc);
 						Lodgereq.find({ username: req.username })
 							.exec((err1, docs) => {
 								if (err1) {
@@ -329,7 +325,6 @@ module.exports = router => {
 								new Date(a.acceptedReq.arrivalTime).getTime() -
 									new Date(b.acceptedReq.arrivalTime).getTime()
 						);
-						console.log(result);
 						res.json({
 							msg: 'Get Accepted List Successfully',
 							acceptedList: result
