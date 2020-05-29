@@ -83,7 +83,7 @@ class LodgeReqList extends React.Component {
 							render={(text, record) => {
 								return moment(record.request.startDate)
 									.tz('America/New_York')
-									.format('ddd, MMM Do YYYY HH:mm');
+									.format('ddd, MMM Do YYYY');
 							}}
 						></Column>
 						<Column
@@ -92,23 +92,13 @@ class LodgeReqList extends React.Component {
 							render={(text, record) => {
 								return moment(record.request.leaveDate)
 									.tz('America/New_York')
-									.format('ddd, MMM Do YYYY HH:mm');
+									.format('ddd, MMM Do YYYY');
 							}}
 						></Column>
 						<Column
 							title = "Notes"
 							key="nontes"
 							dataIndex = {['request','notes']}
-						></Column>
-						<Column
-							title = "Created at"
-							key="createdAt"
-							//dataIndex = {['request','createdAt']}
-							render={(text, record) => {
-								return moment(record.request.createdAt)
-									.tz('America/New_York')
-									.format('ddd, MMM Do YYYY HH:mm');
-							}}
 						></Column>
 					</Table>
 					

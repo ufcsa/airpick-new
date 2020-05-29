@@ -15,7 +15,6 @@ new CronJob(
 	function () {
 		console.log('fucking myself');
 		const now = new Date();
-		console.log(now);
 		// clean airpick request
 		Pickreq.find({ arrivalTime: { $lt: now }, published: true }).exec(
 			(err, docs) => {
