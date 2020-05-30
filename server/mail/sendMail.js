@@ -18,7 +18,7 @@ exports.sendMail = (recipent, subject, body) => {
 		if (err) {
 			return console.log(err);
 		} else {
-			console.log(JSON.stringify(res));
+			console.log('Send mail to %s successfully', recipent);
 		}
 	});
 };

@@ -73,6 +73,8 @@ module.exports = function (router) {
 		user.wechatId = wechatId;
 		user.gender = gender;
 
+		// verify code
+		
 		bcrypt.hash(pwd, null, null, (_, hash) => {
 			user.pwd = hash;
 			user.save(async (err1, doc) => {
@@ -277,6 +279,7 @@ module.exports = function (router) {
 	// get verification code and send to email
 	router.get('/emailVeriCode', async (req, res) => {
 		const email = req.query.email;
+		const sendCodeTplt = PATH.resolve(__dirname, '../mail/userTemplate/email-verify.template.html');
 		const digits = '0123456789';
 		let code = '';
 		for (let i = 0; i < 6; i++) {
@@ -291,25 +294,55 @@ module.exports = function (router) {
 				updatedAt: Date.now()
 			});
 			await model.save();
+			// send email
+			try {
+				await res.render(
+					sendCodeTplt,
+					{ code },
+					(err, content) => {
+						if (err) {
+							throw err;
+						}
+						const subject = '[AIRPICK] Verify Your Email';
+						mailer.sendMail(email, subject, content);
+					}
+				);
+			} catch (e) {
+				console.log(e.stack);
+			}
 			res.json({
 				code: 0,
-				msg: code
+				msg: 'Please check your email for the verification code'
 			});
-			return;
 		} else {
 			// time too close between two requests
 			if (Date.now() - new Date(prev.updatedAt).getTime() < 10000) {
 				res.json({
 					code: 2,
-					msg: 'wait',
+					msg: 'Request too fast! Please wait until the button becomes available',
 				});
 			} else {
 				prev.code = code;
 				prev.updatedAt = Date.now();
 				await prev.save();
+				try {
+					await res.render(
+						sendCodeTplt,
+						{ code },
+						(err, content) => {
+							if (err) {
+								throw err;
+							}
+							const subject = '[AIRPICK] Verify Your Email';
+							mailer.sendMail(email, subject, content);
+						}
+					);
+				} catch (e) {
+					console.log(e.stack);
+				}
 				res.json({
 					code: 0,
-					msg: code
+					msg: 'Please check your email for the verification code'
 				});
 			}
 		}
