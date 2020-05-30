@@ -5,9 +5,10 @@ import { Form, Input, Typography, Button, Radio, Row, Col, Tooltip } from 'antd'
 import { connect } from 'react-redux';
 import { register } from '../../redux/user.redux';
 import { Redirect } from 'react-router-dom';
+import axios from 'axios';
 const { Paragraph } = Typography;
 
-const EMAIL_COOL_DOWN = 10;
+const EMAIL_COOL_DOWN = 5;
 
 @connect(state => state.user, { register })
 class RegisterForm extends React.Component {
@@ -31,9 +32,9 @@ class RegisterForm extends React.Component {
 		}
 	}
 
-	handleSendButton = () => {
+	handleSendButton = async () => {
 		const email = this.formRef.current.getFieldValue('email');
-		this.sendEmail(email);
+		await this.sendEmail(email);
 		this.setState({ codeResendLoading: true });
 		const interval = setInterval(() => {
 			this.setState((state) => {
@@ -48,7 +49,10 @@ class RegisterForm extends React.Component {
 	}
 
 	sendEmail = (email) => {
-		console.log(email);
+		return axios.get(`/api/user/emailVeriCode?email=${email}`)
+			.then(res=>{
+				console.log(res.data);
+			});
 	}
 
 	onFinish = values => {

@@ -1,5 +1,6 @@
 const User = require('../model/user.model');
 const Pickreq = require('../model/pickreq.model');
+const Email = require('../model/emailVeriCode.model');
 const bcrypt = require('bcrypt-nodejs');
 const _filter = { pwd: 0, __v: 0 };
 const mailer = require('../mail/sendMail');
@@ -250,7 +251,7 @@ module.exports = function (router) {
 										}
 										console.log(content);
 										const recipient = volEmail;
-										const subject = '[AirPick] The Requester\' phone numebr is changed!';
+										const subject = '[AirPick] The Requester\'s phone numebr is changed!';
 										mailer.sendMail(recipient, subject, content);
 									});
 								} catch (e) {
@@ -271,6 +272,47 @@ module.exports = function (router) {
 				});
 			}
 		});
+	});
+
+	// get verification code and send to email
+	router.get('/emailVeriCode', async (req, res) => {
+		const email = req.query.email;
+		const digits = '0123456789';
+		let code = '';
+		for (let i = 0; i < 6; i++) {
+			code += digits[Math.floor(Math.random() * 10)];
+		}
+
+		const prev = await Email.findOne({ email }, 'code updatedAt');
+		if (!prev) {
+			const model = new Email({
+				code: code,
+				email: email,
+				updatedAt: Date.now()
+			});
+			await model.save();
+			res.json({
+				code: 0,
+				msg: code
+			});
+			return;
+		} else {
+			// time too close between two requests
+			if (Date.now() - new Date(prev.updatedAt).getTime() < 10000) {
+				res.json({
+					code: 2,
+					msg: 'wait',
+				});
+			} else {
+				prev.code = code;
+				prev.updatedAt = Date.now();
+				await prev.save();
+				res.json({
+					code: 0,
+					msg: code
+				});
+			}
+		}
 	});
 
 	return router;
