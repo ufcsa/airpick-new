@@ -16,7 +16,6 @@ module.exports = function (router) {
 				console.error(err);
 				next();
 			} else {
-				console.log(ret);
 				next();
 			}
 		});
@@ -51,8 +50,23 @@ module.exports = function (router) {
 		);
 	});
 
-	router.post('/register', (req, res) => {
-		let user = new User();
+	router.post('/register', async (req, res) => {
+		/*
+		req.body:
+		{
+			username: '111111',
+			firstName: 'Yinghan',
+			lastName: 'Ma',
+			email: 'MAYINGHAN97@GMAIL.COM',
+			pwd: '123',
+			confirm: '123',
+			gender: 'male',
+			wechatId: '123123',
+			phone: '',
+			code: '123123',
+			displayName: 'Yinghan Ma'
+		}
+		*/
 		const {
 			email,
 			firstName,
@@ -62,8 +76,29 @@ module.exports = function (router) {
 			phone,
 			wechatId,
 			username,
-			displayName
+			displayName,
+			code
 		} = req.body;
+		// first verify the email code
+		const rightInfo = await Email.findOne({ email }, 'code');
+		if (rightInfo.code !== code) {
+			res.json({
+				code: 1,
+				msg: 'Wrong verification code! Please re-check the code we sent to your email',
+			});
+			return;
+		}
+		// delete the email code
+		await Email.deleteOne({ email }, (err) => {
+			console.error(err);
+			res.json({
+				code: 1,
+				msg: err
+			});
+			return;
+		});
+		// create new user
+		let user = new User();
 		user.username = username;
 		user.email = email;
 		user.phone = phone;
@@ -74,7 +109,6 @@ module.exports = function (router) {
 		user.gender = gender;
 
 		// verify code
-		
 		bcrypt.hash(pwd, null, null, (_, hash) => {
 			user.pwd = hash;
 			user.save(async (err1, doc) => {
@@ -316,10 +350,10 @@ module.exports = function (router) {
 			});
 		} else {
 			// time too close between two requests
-			if (Date.now() - new Date(prev.updatedAt).getTime() < 10000) {
+			if (Date.now() - new Date(prev.updatedAt).getTime() < 25000) {
 				res.json({
 					code: 2,
-					msg: 'Request too fast! Please wait until the button becomes available',
+					msg: 'Request too fast! Please wait for 30 seconds',
 				});
 			} else {
 				prev.code = code;

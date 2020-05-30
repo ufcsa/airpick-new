@@ -1,14 +1,14 @@
 import React from 'react';
 import { UserOutlined } from '@ant-design/icons';
 import '@ant-design/compatible/assets/index.css';
-import { Form, Input, Typography, Button, Radio, Row, Col, Tooltip } from 'antd';
+import { Form, Input, Typography, Button, Radio, Row, Col, Tooltip, message } from 'antd';
 import { connect } from 'react-redux';
 import { register } from '../../redux/user.redux';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 const { Paragraph } = Typography;
 
-const EMAIL_COOL_DOWN = 5;
+const EMAIL_COOL_DOWN = 30;
 
 @connect(state => state.user, { register })
 class RegisterForm extends React.Component {
@@ -34,24 +34,31 @@ class RegisterForm extends React.Component {
 
 	handleSendButton = async () => {
 		const email = this.formRef.current.getFieldValue('email');
-		await this.sendEmail(email);
-		this.setState({ codeResendLoading: true });
-		const interval = setInterval(() => {
-			this.setState((state) => {
-				if (state.codeResendCoolTime <= 0) {
-					clearInterval(interval);
-					return { codeResendLoading: false, codeResendCoolTime: EMAIL_COOL_DOWN };
-				} else {
-					return { codeResendCoolTime: state.codeResendCoolTime - 1 };
-				}
-			});
-		}, 1000);
-	}
-
-	sendEmail = (email) => {
-		return axios.get(`/api/user/emailVeriCode?email=${email}`)
+		axios.get(`/api/user/emailVeriCode?email=${email}`)
 			.then(res=>{
 				console.log(res.data);
+				if (res.data.code === 0) {
+					message.success(res.data.msg);
+					this.setState({ codeResendLoading: true });
+					const interval = setInterval(() => {
+						this.setState((state) => {
+							if (state.codeResendCoolTime <= 1) {
+								clearInterval(interval);
+								return { codeResendLoading: false, codeResendCoolTime: EMAIL_COOL_DOWN };
+							} else {
+								return { codeResendCoolTime: state.codeResendCoolTime - 1 };
+							}
+						});
+					}, 1000);
+				} else if (res.data.code === 2) {
+					message.warning(res.data.msg);
+				} else {
+					message.error(res.data.msg);
+				}
+			})
+			.catch(err => {
+				console.log(err.response);
+				message.error(err.response);
 			});
 	}
 

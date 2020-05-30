@@ -106,7 +106,7 @@ export function register (userInput) {
 		confirm,
 		gender,
 		wechatId,
-		username
+		username,
 	} = userInput;
 	if (
 		!email ||
