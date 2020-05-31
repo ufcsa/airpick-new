@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title></title>
+	</head>
+
+	<body>
+		<p>Dear {{volunteer.firstName}}</p>
+		<p></p>
+		<p>
+			The requester {{user.displayname}}'s request has been cancelled. If you
+			have already contacted with {{#if user.isMale}} him {{#else}} her {{/if}},
+			please double check with {{#if user.isMale}} him {{#else}} her {{/if}}.
+		</p>
+		<br />
+		<br />
+		<p>The UF CSA Airpick Support Team</p>
+		<br />
+		<p>
+			If you have any questions or concerns, please feel free to reply to this
+			email.
+		</p>
+	</body>
+</html>

@@ -115,7 +115,7 @@ module.exports = router => {
 		return next();
 	});
 
-	// cancel volunteer
+	// volunteer cancel a request
 	router.route('/cancel/:cancelId').put((req, res) => {
 		console.log('gonna cancel the volunteer in req ', req.cancelId);
 		Pickreq.updateOne({ _id: req.cancelId }, { volunteer: '' }, (err) => {
@@ -290,14 +290,18 @@ module.exports = router => {
 			// delete a request
 			const id = req.requestId;
 			console.log('delete', id);
-			Pickreq.deleteOne({ _id: id }, err => {
+			Pickreq.findOneAndDelete({ _id: id }, async (err, doc) => {
 				if (err) {
-					return res.status(422).json({
+					return res.json({
 						code: 1,
 						msg: 'Error happened when deleting!'
 					});
 				}
-
+				// notify the volunteer if there is any
+				if (doc.volunteer) {
+					const volunteerInfo = await User.findOne({ username: doc.volunteer }, { _id: 0, email: 1 });
+					console.log(volunteerInfo);
+				}
 				return res.status(200).json({
 					code: 0,
 					msg: 'Delete successully!'

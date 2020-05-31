@@ -119,7 +119,7 @@ export const LodgeAcceptedList = () => {
 						render={(text, record) => {
 							return moment(record.acceptedReq.startDate)
 								.tz('America/New_York')
-								.format('ddd, MMM Do YYYY HH:mm');
+								.format('ddd, MMM Do YYYY');
 						}}
 					></Column>
 					<Column
@@ -128,22 +128,13 @@ export const LodgeAcceptedList = () => {
 						render={(text, record) => {
 							return moment(record.acceptedReq.leaveDate)
 								.tz('America/New_York')
-								.format('ddd, MMM Do YYYY HH:mm');
+								.format('ddd, MMM Do YYYY');
 						}}
 					></Column>
 					<Column
 						title='Notes'
 						dataIndex={['acceptedReq', 'notes']}
 						key='notes'
-					></Column>
-					<Column
-						title='Created at'
-						key = 'createdAt'
-						render={(text, record) => {
-							return moment(record.acceptedReq.createdAt)
-								.tz('America/New_York')
-								.format('ddd, MMM Do YYYY HH:mm');
-						}}
 					></Column>
 				</Table>
 			</ConfigProvider>

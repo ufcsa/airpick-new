@@ -38,7 +38,7 @@ app.set('view engine', 'html');
 app.engine('html', hbs.__express);
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
 	res.header('Access-Control-Allow-Origin', '*');
 	res.header(
 		'Access-Control-Allow-Headers',
@@ -55,6 +55,6 @@ app.use('/api/lodgeRequests', lodgeRequestRouter);
 app.use('/api/email', mailRouter);
 
 //bound with io server+express instead of express app itself
-server.listen(port, function() {
+server.listen(port, function () {
 	console.log('Node app starts at port ', port);
 });
