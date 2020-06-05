@@ -269,14 +269,50 @@ module.exports = router => {
 			// delete a request
 			const id = req.requestId;
 			console.log('delete', id);
-			Lodgereq.deleteOne({ _id: id }, err => {
+			Lodgereq.findOneAndDelete({ _id: id }, async (err, doc) => {
 				if (err) {
 					return res.status(422).json({
 						code: 1,
 						msg: 'Error happened when deleting!'
 					});
 				}
-
+				if (doc.volunteer && doc.published) {
+					let volunteerInfo = null, userInfo = null;
+					try {
+						volunteerInfo = await User.findOne({ username: doc.volunteer }, { _id: 0, email: 1, firstName: 1 });
+						userInfo = await User.findOne({ username: doc.username }, { _id: 0, email: 1, displayName: 1, gender: 1 });
+					} catch (e) {
+						console.log(e.stack);
+					}
+					console.log(`Sending email to ${volunteerInfo.email} to notify this request has been cancelled`);
+					// if volunteer exists
+					if (volunteerInfo && volunteerInfo.email) {
+						const rqstCancelTplt = PATH.resolve(__dirname, '../mail/toVolunteerTemplate/requestDelete.html');
+						const infoToInsert = {
+							volunteer: {
+								firstName: volunteerInfo.firstName
+							},
+							user: {
+								displayName: userInfo.displayName,
+								isMale: userInfo.gender === 'male' ? true : false,
+								email: userInfo.email
+							}
+						};
+						try {
+							await res.render(rqstCancelTplt, infoToInsert, (renderErr, content) => {
+								if (renderErr) {
+									console.log(renderErr.stack);
+									return;
+								}
+								const recipient = volunteerInfo.email;
+								const subject = `[Airpick] Request Cancelled! ${userInfo.displayName}'s request has been cancelled`;
+								mailer.sendMail(recipient, subject, content);
+							});
+						} catch (e) {
+							console.log(e.stack);
+						}
+					}
+				}
 				return res.status(200).json({
 					code: 0,
 					msg: 'Delete successully!'
