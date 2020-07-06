@@ -74,6 +74,263 @@ code {
 	align-items: center;
 	height: 100%;
 }
+
+/* imported */
 .content {
 	clear: both;
+}
+
+.content {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+.undecorated-link:hover {
+	text-decoration: none;
+}
+
+.header-profile-image {
+	border-radius: 50%;
+	height: 28px;
+	margin-right: 5px;
+	opacity: 0.8;
+	width: 28px;
+}
+.open .header-profile-image,
+a:hover .header-profile-image {
+	opacity: 1;
+}
+.user-header-dropdown-toggle {
+	padding-bottom: 11px !important;
+	padding-top: 11px !important;
+}
+.user-primary-account {
+	font-size: 30px;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+}
+.error-text {
+	display: none;
+}
+.has-error .help-block.error-text {
+	display: block;
+}
+.has-error .help-inline.error-text {
+	display: inline;
+}
+
+.collapsible.active {
+	background: rgba(166, 166, 166, 1);
+	opacity: 1;
+}
+
+.collapsible {
+	background: rgba(159, 234, 249, 0.5);
+	cursor: pointer;
+	padding: 18px;
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+	border: none;
+	text-align: left;
+	outline: none;
+	font-size: 20px;
+	font-weight: bold;
+	font-family: 'Microsoft YaHei';
+	cursor: pointer;
+	transition: background-color 0.6s linear;
+	color: #0047a4;
+}
+
+.collapsible:hover,
+.small-collapsible:hover,
+.single-step:hover {
+	background: rgba(159, 234, 249, 0.9);
+	opacity: 1;
+}
+
+/* .detail {
+	padding: 0 0px;
+	overflow: hidden;
+	background: #f1f1f1;
+	display: none;
+} */
+
+.single-step {
+	background: rgba(250, 70, 22, 0);
+	padding: 20px;
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+	border: solid;
+	border-color: #0021a5;
+	border-width: 2px;
+	text-align: left;
+	outline: none;
+	font-size: 18px;
+	font-weight: 800;
+	font-family: 'Microsoft YaHei';
+	cursor: auto;
+	transition: background-color 0.3s linear;
+	color: #0047a4;
+	text-shadow: -1px 0 rgba(255, 255, 255, 0.5), 0 1px rgba(255, 255, 255, 0.5),
+		1px 0 rgba(255, 255, 255, 0.5), 0 -1px rgba(255, 255, 255, 0.5);
+}
+
+.tutorial_pic {
+	max-height: 700px;
+	max-width: 500px;
+	height: 70%;
+	width: 70%;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.bottom {
+	text-align: center;
+	font-size: 11px;
+	font-weight: 900;
+	font-family: 'Microsoft YaHei';
+}
+
+.background {
+	background-image: linear-gradient(
+			to top left,
+			rgba(255, 255, 255, 0.5) 0%,
+			rgba(255, 255, 255, 1) 100%
+		),
+		url(img/background/UF.jpg);
+	background-repeat: repeat;
+	background-position: center;
+	background-attachment: fixed;
+	background-size: auto 100%;
+	padding: 0;
+	display: block;
+	margin: 0 auto;
+	max-height: 100%;
+	max-width: 100%;
+}
+
+.main_body {
+	background-image: linear-gradient(
+			to top left,
+			rgba(255, 255, 255, 0.5) 0%,
+			rgba(255, 255, 255, 0.5) 100%
+		),
+		url(img/background/main.jpg);
+	background-repeat: repeat;
+	background-position: center;
+	background-attachment: fixed;
+	background-size: auto 100%;
+	padding: 0;
+	display: block;
+	margin: 0 auto;
+	max-height: 100%;
+	max-width: 100%;
+}
+
+.body_detail {
+	padding-top: 5em;
+	padding-bottom: 5em;
+}
+
+.h1 {
+	margin: 0;
+	color: white;
+	text-align: center;
+	font-family: 'Microsoft YaHei';
+	font-size: 55px;
+	text-shadow: -1px 0 rgba(255, 255, 255, 0.5), 0 1px rgba(255, 255, 255, 0.5),
+		1px 0 rgba(255, 255, 255, 0.5), 0 -1px rgba(255, 255, 255, 0.5);
+	font-weight: 800;
+}
+
+h2 {
+	color: #0021a5;
+	text-shadow: 0.35px 0 #0021a5, 0 0.35px #0021a5, -0.35px 0 #0021a5,
+		0 -0.35px #0021a5;
+	font-size: 25px;
+}
+
+.chinese {
+	font-family: 'Microsoft YaHei';
+	font-size: 18px;
+	font-weight: 800;
+}
+
+.english {
+	font-size: 18px;
+	text-shadow: -1px 0 rgba(255, 255, 255, 0.5), 0 1px rgba(255, 255, 255, 0.5),
+		1px 0 rgba(255, 255, 255, 0.5), 0 -1px rgba(255, 255, 255, 0.5);
+	font-weight: 800;
+}
+
+.highlight {
+	margin: 0 0 0px;
+	border-radius: 30px;
+	background-color: rgba(0, 0, 0, 0);
+	border: 0px #e5e5e5 solid;
+}
+.highlight pre {
+	padding: 12px;
+	overflow: auto;
+	font-size: 14px;
+	line-height: 1.45;
+}
+.highlight pre code {
+	display: inline;
+	max-width: initial;
+	padding: 0;
+	margin: 0;
+	overflow: initial;
+	line-height: inherit;
+	word-wrap: normal;
+	background-color: transparent;
+	border: 0;
+}
+.highlight pre code:before,
+.highlight pre code:after {
+	content: none;
+}
+
+.highlight-dark {
+	color: #a94442;
+	background-image: linear-gradient(
+		to right,
+		rgba(159, 234, 249, 0.5) 40%,
+		rgba(250, 70, 22, 0.5) 100%
+	);
+	border-color: #ffffff;
+}
+.highlight-dark code {
+	color: inherit;
+}
+.highlight-dark .c1.c1 {
+	color: #2b2e3b;
+}
+
+.overflow-hidden {
+	overflow: hidden !important;
+}
+
+pre {
+	overflow: visible;
+}
+pre .btn-clipboard {
+	outline: 0;
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	padding: 0.25rem 0.5rem;
+	font-size: 1.2em;
+	border: 0px #e5e5e5 solid;
+	background-color: #f8f8f8;
+	border-radius: 0rem;
+}
+pre .btn-clipboard:hover {
+	background-color: #eee;
+}
+pre .btn-clipboard:active {
+	background-color: #dfdfdf;
 }
