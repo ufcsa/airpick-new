@@ -27,24 +27,23 @@ function Home () {
 						<p className='h1'>Welcome to the Gator Nation!</p>
 					</pre>
 					<br />
-					<pre className='highlight'>
-						<p className='chinese'>CSA在此预祝大家旅途顺利</p>
-						<p className='chinese'>为保证顺利安排每个新生的接机</p>
-						<p className='chinese'>我们通过接机系统收集新生信息</p>
-						<p className='chinese'>安排志愿者接机</p>
-						<p className='chinese'>请您仔细阅读以下的接机系统注册指南</p>
-					</pre>
+					<div className='highlight single-step'>
+						<span className='text-danger'>
+							<p className='typewriter english'>CSA would like to wish you all a pleasant trip. To ensure safe and efficient pick-ups for new students and our volunteers, we coordinate travel agendas here through the pick-up system. </p>
+							<p className='typewriter english'>Please follow the registration and restrictions guidelines accordingly.</p>
+						</span>
+					</div>
 					<br />
 				</center>
 				<p />
 				<div className='single-step'>
 					<span className='text-danger'>
+						<p className='english'>Important announcement: CSA is a non-profit student organization under the UF Student Government. 
+						This application serves only as a platform for new international students to find a ride home.
+						CSA never charges new students in any way shape or form. If you come across a volunteer that asks for a payment,
+						please <a href='mailto:ufcsainfo@gmail.com'>inform CSA</a> immediately, or contact a CSA member to report the incident. </p>
 						<p className='chinese'>重要声明：CSA作为UF学生政府下属的官方非营利性组织，本接机系统的作用仅限于提供新同学联系志愿者接机的平台，
 							CSA不以任何形式向新同学收费。如遇志愿者收费行为，请及时与我们<a href='mailto:ufcsainfo@gmail.com'>联系</a>。</p>
-						<p className='english'>Important announcement: CSA is a non-profit student organization under UF Student Government. 
-							This web application serves only as a platform for new international students&apos; convenience in finding pick-up ride
-							volunteers. CSA never asks for any forms of payment. If you have encountered volunteer trying to get a payment,
-							please immediately <a href='mailto:ufcsainfo@gmail.com'>inform CSA</a>, or contact any CSA members to report the incidence.</p>
 					</span>
 				</div>
 				<br />
