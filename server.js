@@ -33,6 +33,7 @@ db.on('error', () => {
 mongoose.connect(config.db, dbConfig);
 
 var port = process.env.PORT || 5000;
+var env = process.env.NODE_ENV || 'dev';
 
 app.set('view engine', 'html');
 app.engine('html', hbs.__express);
@@ -46,6 +47,17 @@ app.use(function (req, res, next) {
 	);
 	next();
 });
+
+if(env != 'dev') {
+	app.use('/', express.static(path.resolve('build')));
+	app.use((req, res, next) => {
+		if(req.url.startsWith('/api/')) {
+			return next();
+		}
+		return res.sendFile(path.resolve('build/index.html'));
+	})
+}
+
 
 app.use('/api/user', userRouter);
 app.use('/api/requests', requestRouter);
