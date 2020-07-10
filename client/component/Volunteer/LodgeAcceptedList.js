@@ -31,7 +31,7 @@ export const LodgeAcceptedList = () => {
 	//functions to handle modal
 
 
-	console.log(reqState);
+	// console.log(reqState);
 	const handleOk = e => {
 		setModalState({ ...modalState, visible: false });
 	};
@@ -41,7 +41,7 @@ export const LodgeAcceptedList = () => {
 	};
 
 	const cancelReq = e => {
-		console.log(e);
+		// console.log(e);
 		setCancelModal({
 			reqId: e.key,
 			reqType:'lodge',
@@ -57,7 +57,7 @@ export const LodgeAcceptedList = () => {
 		...v,
 		key: v.acceptedReq._id
 	}));
-	console.log(acceptedList);
+	// console.log(acceptedList);
 
 	return (
 		<div>

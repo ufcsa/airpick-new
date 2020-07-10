@@ -19,11 +19,11 @@ export default function DeleteModal ({ isAirpick, reqID, username, visible, clos
 	const onOk = function hanldeModalOk () {
 		if (isAirpick) {
 			dispatch(deletePickreq(reqID, username)).then(() => {
-				console.log(reqID, ' deleted');
+				// console.log(reqID, ' deleted');
 			});
 		} else {
 			dispatch(deleteLodgereq(reqID, username)).then(() => {
-				console.log(reqID, ' deleted');
+				// console.log(reqID, ' deleted');
 			});
 		}
 		closeModal();

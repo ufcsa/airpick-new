@@ -49,11 +49,11 @@ export default function ChangePassword () {
 			} else {
 				message.error(res.data.msg);
 			}
-		}).catch(console.error);
+		}).catch();
 	};
 
 	const onFinishFailed = function submitFormFailed (errorInfo) {
-		console.log(errorInfo);
+		// console.log(errorInfo);
 		form.scrollToField(errorInfo.errorFields[0].name);
 	};
   

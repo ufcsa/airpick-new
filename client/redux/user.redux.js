@@ -56,7 +56,7 @@ export function logoutRedux () {
 }
 
 export function login ({ input, pwd }) {
-	// console.log(input, pwd);
+	// // console.log(input, pwd);
 	if (!input || !pwd) {
 		return errorMsg('missing fields!');
 	}
@@ -97,7 +97,7 @@ export function editProfile (userProfile) {
 }
 
 export function register (userInput) {
-	console.log(userInput);
+	// // console.log(userInput);
 	const {
 		email,
 		firstName,

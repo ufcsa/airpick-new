@@ -17,7 +17,7 @@ class LoginForm extends React.Component {
 			.then(() => {
 				this.props.loadPickreq(this.props.username);
 			})
-			.catch(err => console.error(err));
+			.catch();
 	};
 
 	onFinishFailed = ({ errorFields }) => {
@@ -26,7 +26,7 @@ class LoginForm extends React.Component {
 	};
 
 	render () {
-		console.log(this.props);
+		// console.log(this.props);
 		const formItemLayout = {
 			labelCol: {
 				xs: { span: 24 },

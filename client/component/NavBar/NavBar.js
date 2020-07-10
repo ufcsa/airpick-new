@@ -47,7 +47,7 @@ class NavBar extends React.Component {
 	};
 
 	logout () {
-		console.log('logout');
+		// console.log('logout');
 		this.setState({
 			modalVisible: true
 		});
@@ -98,7 +98,7 @@ class NavBar extends React.Component {
 				this.props.data,
 				v => v.path === this.props.location.pathname
 			);
-			// console.log(currItem);
+			// // console.log(currItem);
 		}
 		const list = this.props.data.filter(v => !v.hide);
 		const displayName = this.props.user.displayName;

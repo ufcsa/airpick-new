@@ -47,7 +47,7 @@ class RequestCenter extends React.Component {
 
 	// handle adding a new request
 	handleSubmit = values => {
-		console.log('ok airpick clicked');
+		// console.log('ok airpick clicked');
 		this.setState({ visible: false });
 		// Should format date value before submit.
 		const newPickreqValues = {
@@ -63,7 +63,7 @@ class RequestCenter extends React.Component {
 	};
 
 	lodgeHandleSubmit = values => {
-		console.log('ok lodge clicked');
+		// console.log('ok lodge clicked');
 		this.setState({ lodgeVisible: false });
 		// Should format date value before submit.
 		const newLodgereqValues = {

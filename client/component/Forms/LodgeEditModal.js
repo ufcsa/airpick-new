@@ -19,7 +19,7 @@ class LodgeEditForm extends React.Component {
 	}
 
 	componentDidUpdate (prevProps) {
-		console.log(this.props);
+		// console.log(this.props);
 		if (this.props.lodgeData && !prevProps.lodgeData) {
 			this.setState({ startDate: moment(this.props.lodgeData.startDate).tz('America/New_York') } );
 		}
@@ -71,7 +71,7 @@ class LodgeEditForm extends React.Component {
 									onCreate(values, lodgeData.key);
 								})
 								.catch(info => {
-									console.log('Update lodge failed:', info);
+									// console.log('Update lodge failed:', info);
 								});
 						}}
 						onCancel={onCancel}

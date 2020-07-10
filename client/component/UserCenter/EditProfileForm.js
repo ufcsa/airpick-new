@@ -56,7 +56,7 @@ export const EditProfileForm = () => {
 
 	const onFinish = values => {
 		let userProfile = { _id: user._id, ...values };
-		console.log(editProfile(userProfile));
+		// console.log(editProfile(userProfile));
 		dispatch(editProfile(userProfile));
 	};
 

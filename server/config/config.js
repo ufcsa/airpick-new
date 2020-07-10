@@ -3,7 +3,7 @@
  */
 const db =
 	process.env.NODE_ENV === 'production'
-		? ''
+		? 'mongodb+srv://yinghan:yinghan@cluster0-fvwc6.mongodb.net/airpick-prod?retryWrites=true&w=majority'
 		: 'mongodb+srv://yinghan:yinghan@cluster0-fvwc6.mongodb.net/airpick-dev?retryWrites=true&w=majority';
 const mailer = {
 	authInfo: {

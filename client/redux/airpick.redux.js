@@ -56,7 +56,7 @@ function errorMsg (msg) {
 }
 
 function loadReq (request) {
-	console.log(request);
+	// console.log(request);
 	return { type: LOAD_REQ, payload: request };
 }
 
@@ -81,7 +81,7 @@ function acceptSuc (msg, newList) {
 }
 
 function loadAcceptReqSuc (msg, acceptedList) {
-	console.log(2);
+	// console.log(2);
 	return { type: LOAD_ACCEPTED_AIR_SUC, msg, acceptedList };
 }
 
@@ -104,7 +104,7 @@ const parsePickreqInput = userInput => {
 // load current user's pickreq
 export function loadPickreq (username) {
 	// load pickreq from db once and save it inside the redux store
-	console.log('loading existing pick req in redux %s', username);
+	// console.log('loading existing pick req in redux %s', username);
 	return dispatch => {
 		return axios
 			.get(`/api/requests/user/${username}`)
@@ -138,7 +138,7 @@ export function updatePickreq (userInput, reqId) {
 		!userInput.time ||
 		userInput.publish == null
 	) {
-		console.log(userInput);
+		// console.log(userInput);
 		return errorMsg('Missing key fields!');
 	}
 	const username = userInput.username;
@@ -156,7 +156,7 @@ export function updatePickreq (userInput, reqId) {
 					}
 				},
 				err => {
-					console.log(err.stack);
+					// console.log(err.stack);
 					dispatch(errorMsg('Error happened when update!'));
 				}
 			);
@@ -166,7 +166,7 @@ export function updatePickreq (userInput, reqId) {
 // delete an published pickreq
 export function deletePickreq (id, username) {
 	return dispatch => {
-		// console.log('deleting request', id);
+		// // console.log('deleting request', id);
 		return axios.delete(`/api/requests/request/${id}`).then(res => {
 			if (res.status === 200 && res.data.code === 0) {
 				dispatch(deleteSuccess());
@@ -181,10 +181,10 @@ export function deletePickreq (id, username) {
 // for volunteer center page. List all the current available requests
 export function loadAllReq () {
 	return dispatch => {
-		console.log('loading all the request');
+		// console.log('loading all the request');
 		return axios.get('/api/requests/list').then(res => {
 			if (res.status === 200 && res.data.code === 0) {
-				// console.log(res.data.reqList)
+				// // console.log(res.data.reqList)
 				res.data.reqList.sort(
 					(a, b) =>
 						new Date(a.request.arrivalTime).getTime() -
@@ -202,15 +202,15 @@ export function loadAllReq () {
 export function acceptReq (reqId, username, reqList) {
 	const newList = reqList.filter(item => item.request._id !== reqId);
 	return dispatch => {
-		console.log(`${username} requesting the request ${reqId}`);
+		// console.log(`${username} requesting the request ${reqId}`);
 		return axios
 			.post(`/api/requests/request/${reqId}`, { volunteer: username })
 			.then(res => {
 				if (res.status === 200) {
-					console.log(res.data);
+					// console.log(res.data);
 					dispatch(acceptSuc(res.data.msg, newList));
 				} else {
-					console.error(res.data.err);
+					// console.error(res.data.err);
 					dispatch(errorMsg(res.data.msg));
 				}
 			});
@@ -222,7 +222,7 @@ export const loadAcceptedAirpick = volunteer => {
 	return dispatch => {
 		return axios.get(`/api/requests/volunteer/${volunteer}`).then(res => {
 			if (res.status === 200) {
-				console.log('load air accept',res.data.acceptedList);
+				// console.log('load air accept',res.data.acceptedList);
 
 				dispatch(loadAcceptReqSuc(res.data.msg, res.data.acceptedList));
 			}
@@ -241,8 +241,8 @@ export const cancelRequest = (reqId, volunteerId) => {
 					dispatch(errorMsg(res.data.msg));
 					return;
 				}
-				console.log(res.data.msg);
-				console.log(volunteerId);
+				// console.log(res.data.msg);
+				// console.log(volunteerId);
 				return res;
 			})
 			.then(() => {

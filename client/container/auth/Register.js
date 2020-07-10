@@ -36,7 +36,7 @@ class RegisterForm extends React.Component {
 		const email = this.formRef.current.getFieldValue('email');
 		axios.get(`/api/user/emailVeriCode?email=${email}`)
 			.then(res=>{
-				console.log(res.data);
+				// console.log(res.data);
 				if (res.data.code === 0) {
 					message.success(res.data.msg);
 					this.setState({ codeResendLoading: true });
@@ -57,7 +57,7 @@ class RegisterForm extends React.Component {
 				}
 			})
 			.catch(err => {
-				console.log(err.response);
+				// console.log(err.response);
 				message.error(err.response);
 			});
 	}

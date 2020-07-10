@@ -31,7 +31,7 @@ export const AirAcceptedList = () => {
 	};
 
 	const cancelReq = e => {
-		console.log(e);
+		// console.log(e);
 		setCancelModal({
 			reqType:'airpick',
 			reqId: e.key,
@@ -40,7 +40,7 @@ export const AirAcceptedList = () => {
 		});
 	};
 	// wait for loading
-	console.log(reqState);
+	// console.log(reqState);
 	if (reqState.acceptedAirPick === undefined) {
 		return null;
 	}
@@ -48,7 +48,7 @@ export const AirAcceptedList = () => {
 		...v,
 		key: v.acceptedReq._id
 	}));
-	console.log(acceptedList);
+	// console.log(acceptedList);
 
 	return (
 		<div>

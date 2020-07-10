@@ -54,7 +54,7 @@ class LodgereqForm extends React.Component {
 					visible={visible}
 					title='Add New Lodge Request'
 					onOk={() => {
-						console.log(this.lodgeFormRef);
+						// console.log(this.lodgeFormRef);
 						const { current } = this.lodgeFormRef;
 
 						current
@@ -64,7 +64,7 @@ class LodgereqForm extends React.Component {
 								onCreate(values);
 							})
 							.catch(info => {
-								console.log('Update failed:', info);
+								// console.log('Update failed:', info);
 							});
 					}}
 					onCancel={onCancel}

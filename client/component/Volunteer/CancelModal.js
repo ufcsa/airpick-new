@@ -11,14 +11,14 @@ export const CancelModal = ({ visible,reqType ,reqId, changeVsb, volunteerId }) 
 		if (reqType == 'airpick') {
 			dispatch(cancelRequest(reqId, volunteerId)).then(() => {
 				message.success('Cancel successfully', 1);
-				console.log('ok');
+				// console.log('ok');
 			});
 		}
 		else if (reqType == 'lodge') {
-			console.log('cancel Lodge Req');
+			// console.log('cancel Lodge Req');
 			dispatch(cancelLodgeRequest(reqId, volunteerId)).then(() => {
 				message.success('Cancel successfully', 1);
-				console.log('ok');
+				// console.log('ok');
 			});
 		}
 		changeVsb(false);

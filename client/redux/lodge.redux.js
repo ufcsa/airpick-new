@@ -56,7 +56,7 @@ function errorMsg (msg) {
 }
 
 function loadReq (request) {
-	console.log(request);
+	// console.log(request);
 	return { type: LOAD_LODGE, payload: request };
 }
 
@@ -81,7 +81,7 @@ function acceptSuc (msg, newList) {
 }
 
 function loadAcceptReqSuc (msg, acceptedList) {
-	console.log(1);
+	// console.log(1);
 	return { type: LOAD_ACCEPTED_LODGE_SUC, msg, acceptedList };
 }
 
@@ -101,7 +101,7 @@ const parsePickreqInput = userInput => {
 // action creator
 export function loadLodgereq (username) {
 	// load pickreq from db once and save it inside the redux store
-	console.log('loading existing lodge req in redux %s', username);
+	// console.log('loading existing lodge req in redux %s', username);
 	return dispatch => {
 		return axios
 			.get(`/api/lodgeRequests/lodge/${username}`)
@@ -134,7 +134,7 @@ export function updateLodgereq (userInput, reqId) {
 		!userInput.startDate ||
 		!userInput.leaveDate
 	) {
-		console.log(userInput);
+		// console.log(userInput);
 		return errorMsg('Missing key fields!');
 	}
 	const username = userInput.username;
@@ -152,7 +152,7 @@ export function updateLodgereq (userInput, reqId) {
 					}
 				},
 				err => {
-					console.log(err.stack);
+					// console.log(err.stack);
 					dispatch(errorMsg('Error happened when update!'));
 				}
 			);
@@ -162,7 +162,7 @@ export function updateLodgereq (userInput, reqId) {
 // delete an published pickreq
 export function deleteLodgereq (id, username) {
 	return dispatch => {
-		// console.log('deleting request', id);
+		// // console.log('deleting request', id);
 		return axios.delete(`/api/lodgeRequests/request/lodge/${id}`).then(res => {
 			if (res.status === 200 && res.data.code === 0) {
 				dispatch(deleteSuccess());
@@ -177,7 +177,7 @@ export function deleteLodgereq (id, username) {
 // for volunteer center page. List all the current available lodge requests
 export function loadAllReq () {
 	return dispatch => {
-		console.log('loading all the request');
+		// console.log('loading all the request');
 		return axios.get('/api/lodgeRequests/lodge/list').then(res => {
 			if (res.status === 200 && res.data.code === 0) {
 				res.data.reqList.sort(
@@ -197,16 +197,16 @@ export function loadAllReq () {
 export function acceptReq (reqId, username, reqList) {
 	const newList = reqList.filter(item => item.request._id !== reqId);
 	return dispatch => {
-		console.log(`${username} requesting the request ${reqId}`);
+		// console.log(`${username} requesting the request ${reqId}`);
 		return axios
 			.post(`/api/lodgeRequests/request/lodge/${reqId}`, { volunteer: username })
 			.then(res => {
-				console.log('res data:',res.data);
+				// console.log('res data:',res.data);
 				if (res.status === 200) {
-					console.log(res.data);
+					// console.log(res.data);
 					dispatch(acceptSuc(res.data.msg, newList));
 				} else {
-					console.error(res.data.err);
+					// console.error(res.data.err);
 					dispatch(errorMsg(res.data.msg));
 				}
 			});
@@ -215,11 +215,11 @@ export function acceptReq (reqId, username, reqList) {
 
 // load all accepted request as a volunteer
 export const loadAcceptedLodge = volunteer => {
-	console.log('volunteer',volunteer);
+	// console.log('volunteer',volunteer);
 	return dispatch => {
 		return axios.get(`/api/lodgeRequests/volunteer2/${volunteer}`).then(res => {
 			if (res.status === 200) {
-				console.log('load lodge accept',res.data.acceptedList);
+				// console.log('load lodge accept',res.data.acceptedList);
 				dispatch(loadAcceptReqSuc(res.data.msg, res.data.acceptedList));
 			}
 		});
@@ -236,8 +236,8 @@ export const cancelLodgeRequest = (reqId, volunteerId) => {
 					dispatch(errorMsg(res.data.msg));
 					return;
 				}
-				console.log(res.data.msg);
-				console.log(volunteerId);
+				// console.log(res.data.msg);
+				// console.log(volunteerId);
 				return res;
 			})
 			.then(() => {

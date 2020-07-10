@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const config = require('./server/config/config');
+const path = require('path');
 const app = express();
 const Router = express.Router();
 const hbs = require('hbs');
@@ -34,6 +35,7 @@ mongoose.connect(config.db, dbConfig);
 
 var port = process.env.PORT || 5000;
 var env = process.env.NODE_ENV || 'dev';
+console.log('current env: ', env);
 
 app.set('view engine', 'html');
 app.engine('html', hbs.__express);
@@ -48,14 +50,14 @@ app.use(function (req, res, next) {
 	next();
 });
 
-if(env != 'dev') {
+if (env != 'dev') {
 	app.use('/', express.static(path.resolve('build')));
 	app.use((req, res, next) => {
-		if(req.url.startsWith('/api/')) {
+		if (req.url.startsWith('/api/')) {
 			return next();
 		}
 		return res.sendFile(path.resolve('build/index.html'));
-	})
+	});
 }
 
 

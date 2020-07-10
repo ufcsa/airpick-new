@@ -130,7 +130,7 @@ const navListRouting = (navList, isAuth) => {
 class AuthRoute extends React.Component {
 	constructor (props) {
 		super(props);
-		console.log('checking if logged');
+		// console.log('checking if logged');
 
 		const publicList = ['/login', '/register'];
 		const pathname = this.props.location.pathname;
@@ -140,7 +140,7 @@ class AuthRoute extends React.Component {
 					if (res.data.code === 0) {
 						this.props.loadData(res.data.data);
 					} else {
-						console.log('going to login');
+						// console.log('going to login');
 						this.props.history.push('/login');
 					}
 				}

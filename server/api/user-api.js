@@ -81,7 +81,7 @@ module.exports = function (router) {
 		} = req.body;
 		// first verify the email code
 		const rightInfo = await Email.findOne({ email }, 'code');
-		if (rightInfo.code !== code) {
+		if (!rightInfo.code || rightInfo.code !== code) {
 			res.json({
 				code: 1,
 				msg: 'Wrong verification code! Please re-check the code we sent to your email',
@@ -90,12 +90,14 @@ module.exports = function (router) {
 		}
 		// delete the email code
 		await Email.deleteOne({ email }, (err) => {
-			console.error(err);
-			res.json({
-				code: 1,
-				msg: err
-			});
-			return;
+			if (err) {
+				console.error(err);
+				res.json({
+					code: 1,
+					msg: err
+				});
+				return;
+			}
 		});
 		// create new user
 		let user = new User();

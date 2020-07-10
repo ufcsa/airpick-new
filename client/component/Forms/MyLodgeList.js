@@ -40,7 +40,7 @@ class MyLodgeList extends React.Component {
 
 	// handle update the current lodge request
 	handleSubmit = (values, reqId) => {
-		console.log('submitting update');
+		// console.log('submitting update');
 		this.setState({ lodgeVisible: false, lodgeData: null, loading: true });
 		// Should format date value before submit.
 		const updateLodgeReqVal = {

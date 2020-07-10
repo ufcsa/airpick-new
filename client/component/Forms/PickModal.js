@@ -45,7 +45,7 @@ class PickreqForm extends React.Component {
 					visible={visible}
 					title='Add New Pickup Request'
 					onOk={() => {
-						console.log(this.formRef);
+						// console.log(this.formRef);
 						const { current } = this.formRef;
 
 						current
@@ -55,7 +55,7 @@ class PickreqForm extends React.Component {
 								onCreate(values);
 							})
 							.catch(info => {
-								console.log('Update failed:', info);
+								// console.log('Update failed:', info);
 							});
 					}}
 					onCancel={onCancel}

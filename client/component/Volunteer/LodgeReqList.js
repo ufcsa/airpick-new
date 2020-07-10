@@ -24,17 +24,17 @@ class LodgeReqList extends React.Component {
 
 
 	handleAccept = request => {
-		console.log(1);
+		// console.log(1);
 		const reqId = request._id;
 		const volunteer = this.props.user.username;
 		this.props.acceptReq(reqId, volunteer, this.props.lodge.list).then(() => {
-			console.log(this.props);
+			// console.log(this.props);
 			message.success(this.props.airpick.msg, 1);
 		});
 	};
 
 	render () {
-		console.log(this.props);
+		// console.log(this.props);
 		return (
 			<div>
 				<ConfigProvider renderEmpty={RenderEmpty}>

@@ -32,7 +32,7 @@ module.exports = {
 		'linebreak-style': [2, 'unix'],
 		semi: [2, 'always'],
 		'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0, // 打包时禁止debugger
-		'no-console': process.env.NODE_ENV === 'production' ? 2 : 0, // 打包时禁止console
+		'no-console': process.env.NODE_ENV === 'production' ? 0 : 0, // 打包时禁止console
 		'no-alert': process.env.NODE_ENV === 'production' ? 2 : 0, // 打包时禁止console
 		'for-direction': 2, // 禁止for无限循环
 		'no-compare-neg-zero': 2, // 禁止与-0进行比较
