@@ -2,6 +2,10 @@
 	"name": "airpick-new",
 	"version": "0.1.0",
 	"private": true,
+	"engines": {
+		"node": "^12.14.1",
+		"npm": "~6.13.4"
+	},
 	"dependencies": {
 		"@ant-design/compatible": "0.0.1-rc.0",
 		"@babel/core": "7.4.3",
@@ -83,7 +87,7 @@
 	},
 	"scripts": {
 		"start": "node scripts/start.js",
-		"produce": "node scripts/build.js",
+		"build": "node scripts/build.js",
 		"test": "node scripts/test.js"
 	},
 	"eslintConfig": {
