@@ -5,6 +5,7 @@ A platform for new international students and volunteers, providing free local a
 
 ## Project Structure
 Airpick's frontend and backend are separated. Frontend uses React.js, backend uses Nodejs. Frontend communicates with backend through RESTful APIs and JSON.  
+```
 |-----client/           #client side     
 |-----public/           #public resources for frontend   
 |-----server/           #server side   
@@ -15,3 +16,4 @@ Airpick's frontend and backend are separated. Frontend uses React.js, backend us
 |-----package.json      #dependency   
 |-----package-lock.json #dependency with version and integrity checking  
 |-----Dockerfile        #docker for deploy  
+```
