@@ -8,12 +8,12 @@ const db =
 const mailer = {
 	authInfo: {
 		type: 'oauth2',
-		user: 'ufcsaAirPick@gmail.com',
+		user: 'uflcsa.airpick@gmail.com',
 		clientId:
-			'990532027381-540b9jllvs4cqh0sr1e656ubnf8h4siu.apps.googleusercontent.com',
-		clientSecret: 'YlwBYc-25YPsdYQOJTxie--K',
+			'753259254316-8fh1o9tg2rrhs1e23h93l75hqmqmmifv.apps.googleusercontent.com',
+		clientSecret: 'J7O3Mqow262BnPkg7qn71CV4',
 		refreshToken:
-			'1//04RPTGN9RV3RCCgYIARAAGAQSNwF-L9IrTDgSusru4ZqoIQGtTHR9Kw6PuH1y5vgvcBxMUfbqL4t8MGQ_SojLGSMHXf0wnlPOBFY'
+			'1//04Vsqr7azaKErCgYIARAAGAQSNwF-L9Ir2DVCltGD-0LTXsstAaEdlpdt7fGztagyXfN7rqfED2oQgbp3oU2gOMOSZ8p6VXoJG-0'
 	}
 };
 
