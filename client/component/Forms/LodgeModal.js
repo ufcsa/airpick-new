@@ -64,7 +64,7 @@ class LodgereqForm extends React.Component {
 								onCreate(values);
 							})
 							.catch(info => {
-								// console.log('Update failed:', info);
+								console.log('Update failed:', info);
 							});
 					}}
 					onCancel={onCancel}

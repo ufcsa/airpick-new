@@ -38,6 +38,7 @@ export function userRedux (state = initState, action) {
 //helper
 const authSuccess = obj => {
 	const { pwd, ...data } = obj;
+	console.log(pwd);
 	return { type: AUTH_SUCC, payload: data };
 };
 

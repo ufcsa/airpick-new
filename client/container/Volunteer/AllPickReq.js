@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography, Divider, Tag } from 'antd';
 import AirReqList from '../../component/Volunteer/AirReqList';
-import LodgeReqList from '../../component/Volunteer/LodgeReqList';
+// import LodgeReqList from '../../component/Volunteer/LodgeReqList';
 
 const { Title, Paragraph } = Typography;
 
