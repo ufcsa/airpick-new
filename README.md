@@ -130,5 +130,6 @@ Airpick's frontend and backend are separated. Frontend uses React.js, backend us
     * 电话：3523284686
 *  服务部负责人：Yu Zhu
     * 微信：yuyu-zuzu
+    * 电话：8509829497
 *  IT部负责人：Shida Yang
     * 微信：da_417645885
