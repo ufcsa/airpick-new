@@ -22,8 +22,8 @@ Airpick's frontend and backend are separated. Frontend uses React.js, backend us
 ```
 
 ## 新生接机使用指南/Getting Started
-**请使用电脑浏览器打开[接机系统](http://airpick.uflcsa.org/)以保证所有功能正常显示**
-进入网站后会自动跳转至登录/注册界面
+* **请使用电脑浏览器打开[接机系统](http://airpick.uflcsa.org/)以保证所有功能正常显示**
+* 进入网站后会自动跳转至登录/注册界面
 
 ### 注册-登录/Registration-Login
 
