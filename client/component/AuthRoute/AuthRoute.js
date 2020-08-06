@@ -16,7 +16,6 @@ import { EditPassword } from '@/container/UserCenter/EditPassword';
 import PrivateRoute from './PrivateRoute';
 import { EditProfile } from '../../container/UserCenter/EditProfile';
 
-
 function Home () {
 	return (
 		<section>
@@ -24,6 +23,8 @@ function Home () {
 				<br />
 				<center>
 					<img src={require('../../img/brand/CSA logo.png')} alt='CSA logo' className='center' />
+					<br />
+					<br />
 					<pre className='highlight highlight-dark'>
 						<p className='h1'>Welcome to the Gator Nation!</p>
 					</pre>
@@ -253,18 +254,23 @@ class AuthRoute extends React.Component {
 		return (
 			<div>
 				<div className='header'>
-					<div className='logo'>
-						<NavBar data={home}></NavBar>
+					<div className='clearfix'>
+						<div className='logo'>
+							<NavBar data={home}></NavBar>
+						</div>
+						<div className={rightNavbarClass}>
+							<NavBar data={userAuth}></NavBar>
+						</div>
+						<div className={leftNavbarClass}>
+							<NavBar data={needAuth}></NavBar>
+						</div>
 					</div>
-					<div className={rightNavbarClass}>
-						<NavBar data={userAuth}></NavBar>
-					</div>
-					<div className={leftNavbarClass}>
-						<NavBar data={needAuth}></NavBar>
-					</div>
+					
 				</div>
-				<div className=''>
-					<Switch>{navListRouting(allRouteList, isAuth)}</Switch>
+				<div className='main-wrapper'>
+					<div className="main-content">
+						<Switch>{navListRouting(allRouteList, isAuth)}</Switch>
+					</div>
 				</div>
 			</div>
 		);
