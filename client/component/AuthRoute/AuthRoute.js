@@ -23,6 +23,8 @@ function Home () {
 				<br />
 				<center>
 					<img src={require('../../img/brand/CSA logo.png')} alt='CSA logo' className='center' />
+					<br />
+					<br />
 					<pre className='highlight highlight-dark'>
 						<p className='h1'>Welcome to the Gator Nation!</p>
 					</pre>

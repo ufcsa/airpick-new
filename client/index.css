@@ -262,7 +262,7 @@ a:hover .header-profile-image {
 	color: white;
 	text-align: center;
 	font-family: 'Microsoft YaHei';
-	font-size: 55px;
+	font-size: 6vw;
 	text-shadow: -1px 0 rgba(255, 255, 255, 0.5), 0 1px rgba(255, 255, 255, 0.5),
 		1px 0 rgba(255, 255, 255, 0.5), 0 -1px rgba(255, 255, 255, 0.5);
 	font-weight: 800;
