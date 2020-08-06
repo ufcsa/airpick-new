@@ -23,7 +23,7 @@ Airpick's frontend and backend are separated. Frontend uses React.js, backend us
 
 ## Author
 
-Yinghan Ma (mayinghan97@gmail.com)
-Yanghaoyu Chen
-Lutong Zhang
-Shida Yang
+Yinghan Ma (mayinghan97@gmail.com)  
+Yanghaoyu Chen  
+Lutong Zhang  
+Shida Yang  
