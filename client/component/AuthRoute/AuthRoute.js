@@ -11,6 +11,7 @@ import MyRequest from '../../container/myRequest/MyRequest';
 import AllPickReq from '../../container/Volunteer/AllPickReq';
 import AllLodgeReq from '@/container/Volunteer/AllLodgeReq';
 import MyAccept from '../../container/Volunteer/MyAccept';
+import Guide from '../../container/Guide/Guide';
 import { EditPassword } from '@/container/UserCenter/EditPassword';
 import PrivateRoute from './PrivateRoute';
 import { EditProfile } from '../../container/UserCenter/EditProfile';
@@ -195,6 +196,14 @@ class AuthRoute extends React.Component {
 						auth: true
 					}
 				]
+			},
+			{
+				path: '/guide',
+				text: 'Guide',
+				className: '',
+				hide: !isAuth,
+				component: Guide,
+				auth: true
 			}
 		];
 		const userAuth = [
