@@ -35,7 +35,10 @@ class LodgereqForm extends React.Component {
 			return current && current < moment().endOf('day');
 		};
 		const disabledEndDate = current => {
-			return current && current < this.state.startDate.endOf('day');
+			if (this.state.startDate)
+				return current && current < this.state.startDate.endOf('day');
+			else
+				return current && current < moment(new Date()).tz('America/New_York').endOf('day');
 		};
 
 		const requirement = {
@@ -64,7 +67,7 @@ class LodgereqForm extends React.Component {
 								onCreate(values);
 							})
 							.catch(info => {
-								// console.log('Update failed:', info);
+								console.log('Update failed:', info);
 							});
 					}}
 					onCancel={onCancel}

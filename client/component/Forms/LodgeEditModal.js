@@ -71,7 +71,7 @@ class LodgeEditForm extends React.Component {
 									onCreate(values, lodgeData.key);
 								})
 								.catch(info => {
-									// console.log('Update lodge failed:', info);
+									console.log('Update lodge failed:', info);
 								});
 						}}
 						onCancel={onCancel}

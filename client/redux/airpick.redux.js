@@ -157,7 +157,7 @@ export function updatePickreq (userInput, reqId) {
 				},
 				err => {
 					// console.log(err.stack);
-					dispatch(errorMsg('Error happened when update!'));
+					dispatch(errorMsg('Error happened when update!', err));
 				}
 			);
 	};

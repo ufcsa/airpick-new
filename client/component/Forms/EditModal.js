@@ -55,7 +55,7 @@ class EditForm extends React.Component {
 									onCreate(values, data.key);
 								})
 								.catch(info => {
-									// console.log('Update failed:', info);
+									console.log('Update failed:', info);
 								});
 						}}
 						onCancel={onCancel}
