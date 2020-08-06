@@ -11,14 +11,18 @@ module.exports = function (router) {
 	// middleware for user authentication module
 	// For dev purpose. Auto remove a test account for debugging purpose
 	router.use('/register', (req, res, next) => {
-		User.deleteOne({ email: 'mayinghan97@gmail.com' }, (err, ret) => {
-			if (err) {
-				console.error(err);
-				next();
-			} else {
-				next();
-			}
-		});
+		if (process.env.NODE_ENV === 'development') {
+			User.deleteOne({ email: 'mayinghan97@gmail.com' }, (err, _) => {
+				if (err) {
+					console.error(err);
+					next();
+				} else {
+					next();
+				}
+			});
+		} else {
+			next();
+		}
 	});
 
 	router.post('/login', (req, res) => {
