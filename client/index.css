@@ -37,9 +37,10 @@ code {
 }
 .navbar-left {
 	float: left;
+	background-color: rgba(0, 0, 0, 0);
 }
 .navbar-title {
-	font-size: 16pt;
+	font-size: 14pt;
 }
 
 .col-center {
@@ -59,6 +60,27 @@ code {
 	z-index: 999;
 	width: 100%;
 }
+
+.clearfix {
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	zoom: 1;
+	height: 100%;
+}
+
+.main-wrapper {
+	width: 100%;
+	min-height: calc(100vh - 149px);
+	background: #fafafa;
+}
+
+.main-content {
+	clear: both;
+	overflow-x: hidden;
+	background-color: #fff;
+}
+
 @media screen and (max-width: 374px) {
 	.navbar-left {
 		display: none;
@@ -71,6 +93,7 @@ code {
 	height: 100%;
 }
 .header-nav {
+	display: flex;
 	align-items: center;
 	height: 100%;
 }

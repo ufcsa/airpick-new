@@ -1,9 +1,10 @@
+import { Avatar, Menu, Modal } from 'antd';
+
 import React from 'react';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { Menu, Modal, Avatar } from 'antd';
 import browserCookie from 'browser-cookies';
+import { connect } from 'react-redux';
 import { logoutRedux } from '@/redux/user.redux';
+import { withRouter } from 'react-router-dom';
 
 const { Item, SubMenu } = Menu;
 
@@ -109,6 +110,7 @@ class NavBar extends React.Component {
 				<div>
 					<Menu
 						mode='horizontal'
+						style={{ backgroundColor: 'rgba(0,0,0,0)' }}
 						selectedKeys={(() => {
 							if (currItem) return [currItem.text];
 							else {
