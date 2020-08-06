@@ -163,7 +163,9 @@ class AuthRoute extends React.Component {
 				className: 'navbar-title',
 				auth: false,
 				hide: false
-			},
+			}
+		];
+		const items = [
 			{
 				path: '/guide',
 				text: 'Guide',
@@ -171,9 +173,7 @@ class AuthRoute extends React.Component {
 				hide: false,
 				component: Guide,
 				auth: false
-			}
-		];
-		const needAuth = [
+			},
 			{
 				path: '/myrequestcenter',
 				text: 'My Requests',
@@ -249,20 +249,20 @@ class AuthRoute extends React.Component {
 			}
 		];
 
-		const allRouteList = [...home, ...needAuth, ...userAuth];
+		const allRouteList = [...home, ...items, ...userAuth];
 
 		return (
 			<div>
 				<div className='header'>
 					<div className='clearfix'>
-						<div className='logo'>
+						<div className='logo header-nav'>
 							<NavBar data={home}></NavBar>
 						</div>
 						<div className={rightNavbarClass}>
 							<NavBar data={userAuth}></NavBar>
 						</div>
 						<div className={leftNavbarClass}>
-							<NavBar data={needAuth}></NavBar>
+							<NavBar data={items}></NavBar>
 						</div>
 					</div>
 					
