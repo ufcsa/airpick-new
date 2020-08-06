@@ -162,6 +162,14 @@ class AuthRoute extends React.Component {
 				className: 'navbar-title',
 				auth: false,
 				hide: false
+			},
+			{
+				path: '/guide',
+				text: 'Guide',
+				className: '',
+				hide: false,
+				component: Guide,
+				auth: false
 			}
 		];
 		const needAuth = [
@@ -196,14 +204,6 @@ class AuthRoute extends React.Component {
 						auth: true
 					}
 				]
-			},
-			{
-				path: '/guide',
-				text: 'Guide',
-				className: '',
-				hide: !isAuth,
-				component: Guide,
-				auth: true
 			}
 		];
 		const userAuth = [
