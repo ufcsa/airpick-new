@@ -4,6 +4,7 @@ CSA Airpick was bootstrapped with [Create React App](https://github.com/facebook
 
 A platform for new international students and volunteers, providing free local airport pickup service and temporary lodging service before moving into dorm.
 
+http://airpick.uflcsa.org/
 ## Project Structure
 
 Airpick's frontend and backend are separated. Frontend uses React.js, backend uses Nodejs. Frontend communicates with backend through RESTful APIs and JSON.
