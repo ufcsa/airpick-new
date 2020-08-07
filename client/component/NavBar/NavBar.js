@@ -151,64 +151,23 @@ class NavBar extends React.Component {
 									</SubMenu>
 								);
 							} else if (choice.text === 'usercenter') {
-								if (this.state.screenWidth >= 560) {
-									return (
-										<SubMenu
-											key={choice.text}
-											className={choice.className}
-											title={
-												<React.Fragment>
-													<Avatar style={{ verticalAlign: 'middle' }}>
-														{displayName.charAt(0)}
-													</Avatar>
-													&nbsp; &nbsp;
-													{displayName}
-												</React.Fragment>
-											}
-										>
-											{/* {choice.subItem.map(item => {
-											return <Item key={item.text}>{item.text}</Item>;
-										})} */}
-											{this.handleUserCenter(choice.subItem)}
-										</SubMenu>
-									);
-								} else if (this.state.screenWidth >= 477) {
-									return (
-										<SubMenu
-											key={choice.text}
-											className={choice.className}
-											title={
-												<React.Fragment>
-													<Avatar style={{ verticalAlign: 'middle' }}>
-														{displayName.charAt(0)}
-													</Avatar>
-												</React.Fragment>
-											}
-										>
-											{choice.subItem.map(item => {
-												return <Item key={item.text}>{item.text}</Item>;
-											})}
-										</SubMenu>
-									);
-								} else {
-									return (
-										<SubMenu
-											key={choice.text}
-											title={
-												<div style={{ marginLeft: 0, marginRight: 15 }}>
-													<Avatar style={{ verticalAlign: 'middle' }}>
-														{displayName.charAt(0)}
-													</Avatar>
-													&nbsp; {displayName}
-												</div>
-											}
-										>
-											{choice.subItem.map(item => {
-												return <Item key={item.text}>{item.text}</Item>;
-											})}
-										</SubMenu>
-									);
-								}
+								return (
+									<SubMenu
+										key={choice.text}
+										className={choice.className}
+										title={
+											<React.Fragment>
+												<Avatar style={{ verticalAlign: 'middle' }}>
+													{displayName.charAt(0)}
+												</Avatar>
+												&nbsp; &nbsp;
+												{this.props.user.firstName}
+											</React.Fragment>
+										}
+									>
+										{this.handleUserCenter(choice.subItem)}
+									</SubMenu>
+								);
 							} else {
 								return null;
 							}

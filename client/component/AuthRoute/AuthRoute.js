@@ -271,6 +271,7 @@ class AuthRoute extends React.Component {
 					<div className="main-content">
 						<Switch>{navListRouting(allRouteList, isAuth)}</Switch>
 					</div>
+					{/* <div className="main-remaining"></div> */}
 				</div>
 			</div>
 		);

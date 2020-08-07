@@ -70,16 +70,22 @@ code {
 
 .main-wrapper {
 	width: 100%;
-	min-height: calc(100vh - 149px);
+	/* min-height: calc(100vh - 149px); */
 	background: #fafafa;
+	flex-flow: column;
 }
 
 .main-content {
 	clear: both;
 	overflow-x: hidden;
+	height: 100%;
 	background-color: #fff;
 }
 
+.rmain-remaining {
+	background-color: #fff;
+	flex-grow: 1;
+}
 @media screen and (max-width: 374px) {
 	.navbar-left {
 		display: none;

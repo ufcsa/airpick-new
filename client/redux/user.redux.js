@@ -37,8 +37,8 @@ export function userRedux (state = initState, action) {
 
 //helper
 const authSuccess = obj => {
+	// eslint-disable-next-line no-unused-vars
 	const { pwd, ...data } = obj;
-	console.log(pwd);
 	return { type: AUTH_SUCC, payload: data };
 };
 
