@@ -73,6 +73,11 @@ class LodgeReqList extends React.Component {
 							key='name'
 						/>
 						<Column
+							title='Gender'
+							dataIndex={['user', 'gender']}
+							key='gender'
+						/>
+						<Column
 							title='Pickup Location'
 							dataIndex={['request', 'pickupLocation']}
 							key='pickupLocation'

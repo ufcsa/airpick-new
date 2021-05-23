@@ -121,6 +121,7 @@ export function register (userInput) {
 	) {
 		return errorMsg('missing fields!');
 	}
+	
 	const displayName = [firstName, lastName].join(' ');
 	const registerInfo = { ...userInput, displayName: displayName };
 

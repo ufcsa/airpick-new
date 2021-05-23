@@ -70,6 +70,11 @@ class AirReqList extends React.Component {
 							key='name'
 						/>
 						<Column
+							title='Gender'
+							dataIndex={['user', 'gender']}
+							key='gender'
+						/>
+						<Column
 							title='Time'
 							key='time'
 							render={(text, record) => {

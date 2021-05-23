@@ -78,6 +78,11 @@ export const AirAcceptedList = () => {
 					></Column>
 					<Column title='Name' dataIndex={['userInfo', 'firstName']}></Column>
 					<Column
+						title='Gender'
+						dataIndex={['userInfo', 'gender']}
+						key='gender'
+					/>
+					<Column
 						title='Contact'
 						key='contact'
 						render={(text, record) => {
