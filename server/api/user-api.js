@@ -43,7 +43,7 @@ module.exports = function (router) {
 					});
 				} else {
 					console.log('login success');
-					res.cookie('userid', doc._id);
+					res.cookie('userid', doc._id);z
 					return res.json({
 						code: 0,
 						msg: 'login success!',
