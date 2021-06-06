@@ -112,11 +112,12 @@
 
 ### CSA 负责人联系方式
 
-- 副主席：Yiling Zhang
-  - 微信：bobomomu
-  - 电话：3523284686
-- 服务部负责人：Yu Zhu
-  - 微信：yuyu-zuzu
-  - 电话：8509829497
-- IT 部负责人：Shida Yang
-  - 微信：da_417645885
+- 主席：Xingyian Pan
+  - 微信：pxybeallyoucanbe
+  - 电话：+86 15257517231
+- 服务部负责人：Yixuan He
+  - 微信：hyxuan0630
+  - 电话：+86 18919813166
+- IT 部负责人：Haohui Bao
+  - 微信：Susana_bhh
+  - 电话：+1 8138049063
