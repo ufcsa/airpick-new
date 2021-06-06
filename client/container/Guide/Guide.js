@@ -17,7 +17,7 @@ class Guide extends React.Component {
 				</Title>
 				<Divider />
 				<div>
-					<embed src={require('../../img/airpick_guide.pdf')} width="100%" height="1000px" />
+					<embed src={require('../../img/airpick_guide_21_22.pdf')} width="100%" height="1000px" />
 				</div>
 			</Typography>
 		);
