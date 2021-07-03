@@ -136,6 +136,10 @@ class EditForm extends React.Component {
 							<Form.Item label='Notes' name='notes'>
 								<TextArea placeholder='How many people coming with you?'></TextArea>
 							</Form.Item>
+							<div style={{ color: 'red' }}>
+								(由于MCO到Gainesville的路程比较遥远，可以从MCO接送新生回Gainesville的志愿者很少。
+								如果你的降落机场是MCO，而且你愿意乘坐大巴去Gainesville，可以在Notes开头用英文加一句“I am looking for a ride from MCO to a bus station in Orlando.”这样的话有较大几率会有奥兰多本地的志愿者把你接到大巴站，然后你可以坐大巴来Gainesville。)
+							</div>
 						</Form>
 					</Modal>
 				) : null}

@@ -29,7 +29,7 @@ module.exports = {
 		]
 	},
 	rules: {
-		'linebreak-style': [2, 'unix'],
+		// 'linebreak-style': [2, 'unix'],
 		semi: [2, 'always'],
 		'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0, // 打包时禁止debugger
 		'no-console': process.env.NODE_ENV === 'production' ? 0 : 0, // 打包时禁止console
